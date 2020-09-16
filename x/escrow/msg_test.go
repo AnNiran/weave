@@ -57,7 +57,7 @@ func TestCreateMsg(t *testing.T) {
 			},
 			nil,
 		},
-		"source is required": {
+		"missing source okay, dups okay": {
 			&CreateMsg{
 				Metadata:    &weave.Metadata{Schema: 1},
 				Arbiter:     c.Address(),
@@ -66,7 +66,7 @@ func TestCreateMsg(t *testing.T) {
 				Timeout:     timeout,
 				Memo:        "some string",
 			},
-			errors.ErrEmpty,
+			nil,
 		},
 		"negative amount": {
 			&CreateMsg{

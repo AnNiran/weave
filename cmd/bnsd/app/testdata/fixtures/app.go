@@ -15,7 +15,6 @@ import (
 	"github.com/iov-one/weave/migration"
 	"github.com/iov-one/weave/x/cash"
 	"github.com/iov-one/weave/x/msgfee"
-	"github.com/iov-one/weave/x/txfee"
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/log"
 )
@@ -100,11 +99,6 @@ func appStateGenesis(keyAddress weave.Address) []byte {
 				ValidUsernameName:  `^[a-z0-9\-_.]{3,64}$`,
 				ValidUsernameLabel: `^iov$`,
 			},
-			"txfee": txfee.Configuration{
-				Owner:     mustParseAddr("seq:txfee/admin/1"),
-				BaseFee:   coin.NewCoin(0, 20, "IOV"),
-				FreeBytes: 10240,
-			},
 		},
 		"initialize_schema": []dict{
 			{"ver": 1, "pkg": "batch"},
@@ -121,7 +115,6 @@ func appStateGenesis(keyAddress weave.Address) []byte {
 			{"ver": 1, "pkg": "username"},
 			{"ver": 1, "pkg": "utils"},
 			{"ver": 1, "pkg": "validators"},
-			{"ver": 1, "pkg": "txfee"},
 		},
 		"currencies": []interface{}{
 			dict{

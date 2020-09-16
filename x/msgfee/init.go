@@ -42,8 +42,7 @@ func (*Initializer) FromGenesis(opts weave.Options, params weave.GenesisParams, 
 		}
 	}
 
-	// We allow to initialize configuration but it is not required.
-	if err := gconf.InitConfig(kv, opts, "msgfee", &Configuration{}); err != nil && !errors.ErrNotFound.Is(err) {
+	if err := gconf.InitConfig(kv, opts, "msgfee", &Configuration{}); err != nil {
 		return errors.Wrap(err, "init config")
 	}
 

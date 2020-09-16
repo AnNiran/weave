@@ -3,11 +3,6 @@ package bnsd
 import (
 	"github.com/iov-one/weave"
 	"github.com/iov-one/weave/app"
-	"github.com/iov-one/weave/cmd/bnsd/x/account"
-	"github.com/iov-one/weave/cmd/bnsd/x/preregistration"
-	"github.com/iov-one/weave/cmd/bnsd/x/qualityscore"
-	"github.com/iov-one/weave/cmd/bnsd/x/termdeposit"
-	"github.com/iov-one/weave/datamigration"
 	"github.com/iov-one/weave/errors"
 	"github.com/iov-one/weave/migration"
 	"github.com/iov-one/weave/x/batch"
@@ -16,7 +11,6 @@ import (
 	"github.com/iov-one/weave/x/escrow"
 	"github.com/iov-one/weave/x/gov"
 	"github.com/iov-one/weave/x/msgfee"
-	"github.com/iov-one/weave/x/txfee"
 	"github.com/iov-one/weave/x/utils"
 	"github.com/iov-one/weave/x/validators"
 )
@@ -45,14 +39,8 @@ func proposalOptionsExecutor(ctrl cash.Controller) gov.Executor {
 	escrow.RegisterRoutes(r, auth, ctrl)
 	distribution.RegisterRoutes(r, auth, ctrl)
 	migration.RegisterRoutes(r, auth)
-	datamigration.RegisterRoutes(r, auth)
 	gov.RegisterBasicProposalRouters(r, auth)
 	msgfee.RegisterRoutes(r, auth)
-	txfee.RegisterRoutes(r, auth)
-	termdeposit.RegisterRoutes(r, auth, ctrl)
-	qualityscore.RegisterRoutes(r, auth)
-	account.RegisterRoutes(r, auth)
-	preregistration.RegisterRoutes(r, auth)
 
 	// We must wrap with batch middleware so it can process ExecuteProposalBatchMsg.
 	// We add ActionTagger here, so the messages executed as a result of a governance vote also get properly tagged.

@@ -24,8 +24,7 @@ type Msg interface {
 	// - name must be snake_case
 	// - value must be in format <extension_name>/<message_type_name> where
 	//   extension_name is the same as the Go package name and the
-	//   message_type_name is the snake_case converted message name,
-	//   without the `_msg` suffix.
+	//   message_type_name is the snake_case converted message name.
 	Path() string
 
 	// Validate performs a sanity checks on this message. It returns an

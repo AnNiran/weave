@@ -9,8 +9,6 @@ import (
 
 	"github.com/iov-one/weave"
 	"github.com/iov-one/weave/app"
-	"github.com/iov-one/weave/cmd/bnsd/x/account"
-	"github.com/iov-one/weave/cmd/bnsd/x/termdeposit"
 	"github.com/iov-one/weave/cmd/bnsd/x/username"
 	"github.com/iov-one/weave/coin"
 	"github.com/iov-one/weave/commands/server"
@@ -23,7 +21,6 @@ import (
 	"github.com/iov-one/weave/x/gov"
 	"github.com/iov-one/weave/x/msgfee"
 	"github.com/iov-one/weave/x/multisig"
-	"github.com/iov-one/weave/x/txfee"
 	"github.com/iov-one/weave/x/validators"
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/log"
@@ -106,9 +103,6 @@ func DecorateApp(application app.BaseApp, logger log.Logger) app.BaseApp {
 		&escrow.Initializer{Minter: cash.NewController(cash.NewBucket())},
 		&gov.Initializer{},
 		&username.Initializer{},
-		&account.Initializer{},
-		&txfee.Initializer{},
-		&termdeposit.Initializer{},
 	))
 	application.WithLogger(logger)
 	return application

@@ -8,12 +8,7 @@ import (
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	github_com_iov_one_weave "github.com/iov-one/weave"
-	account "github.com/iov-one/weave/cmd/bnsd/x/account"
-	preregistration "github.com/iov-one/weave/cmd/bnsd/x/preregistration"
-	qualityscore "github.com/iov-one/weave/cmd/bnsd/x/qualityscore"
-	termdeposit "github.com/iov-one/weave/cmd/bnsd/x/termdeposit"
 	username "github.com/iov-one/weave/cmd/bnsd/x/username"
-	datamigration "github.com/iov-one/weave/datamigration"
 	migration "github.com/iov-one/weave/migration"
 	aswap "github.com/iov-one/weave/x/aswap"
 	cash "github.com/iov-one/weave/x/cash"
@@ -24,7 +19,6 @@ import (
 	msgfee "github.com/iov-one/weave/x/msgfee"
 	multisig "github.com/iov-one/weave/x/multisig"
 	sigs "github.com/iov-one/weave/x/sigs"
-	txfee "github.com/iov-one/weave/x/txfee"
 	validators "github.com/iov-one/weave/x/validators"
 	io "io"
 	math "math"
@@ -89,31 +83,6 @@ type Tx struct {
 	//	*Tx_GovUpdateElectorateMsg
 	//	*Tx_GovUpdateElectionRuleMsg
 	//	*Tx_MsgfeeSetMsgFeeMsg
-	//	*Tx_DatamigrationExecuteMigrationMsg
-	//	*Tx_AccountUpdateConfigurationMsg
-	//	*Tx_AccountRegisterDomainMsg
-	//	*Tx_AccountReplaceAccountMsgFeesMsg
-	//	*Tx_AccountTransferDomainMsg
-	//	*Tx_AccountRenewDomainMsg
-	//	*Tx_AccountDeleteDomainMsg
-	//	*Tx_AccountRegisterAccountMsg
-	//	*Tx_AccountTransferAccountMsg
-	//	*Tx_AccountReplaceAccountTargetsMsg
-	//	*Tx_AccountDeleteAccountMsg
-	//	*Tx_AccountFlushDomainMsg
-	//	*Tx_AccountRenewAccountMsg
-	//	*Tx_AccountAddAccountCertificateMsg
-	//	*Tx_AccountDeleteAccountCertificateMsg
-	//	*Tx_PreregistrationRegisterMsg
-	//	*Tx_CashUpdateConfigurationMsg
-	//	*Tx_TxfeeUpdateConfigurationMsg
-	//	*Tx_TermdepositCreateDepositContractMsg
-	//	*Tx_TermdepositDepositMsg
-	//	*Tx_TermdepositReleaseDepositMsg
-	//	*Tx_TermdepositUpdateConfigurationMsg
-	//	*Tx_QualityscoreUpdateConfigurationMsg
-	//	*Tx_PreregistrationUpdateConfigurationMsg
-	//	*Tx_MsgfeeUpdateConfigurationMsg
 	Sum isTx_Sum `protobuf_oneof:"sum"`
 }
 
@@ -237,134 +206,34 @@ type Tx_GovUpdateElectionRuleMsg struct {
 type Tx_MsgfeeSetMsgFeeMsg struct {
 	MsgfeeSetMsgFeeMsg *msgfee.SetMsgFeeMsg `protobuf:"bytes,80,opt,name=msgfee_set_msg_fee_msg,json=msgfeeSetMsgFeeMsg,proto3,oneof"`
 }
-type Tx_DatamigrationExecuteMigrationMsg struct {
-	DatamigrationExecuteMigrationMsg *datamigration.ExecuteMigrationMsg `protobuf:"bytes,81,opt,name=datamigration_execute_migration_msg,json=datamigrationExecuteMigrationMsg,proto3,oneof"`
-}
-type Tx_AccountUpdateConfigurationMsg struct {
-	AccountUpdateConfigurationMsg *account.UpdateConfigurationMsg `protobuf:"bytes,82,opt,name=account_update_configuration_msg,json=accountUpdateConfigurationMsg,proto3,oneof"`
-}
-type Tx_AccountRegisterDomainMsg struct {
-	AccountRegisterDomainMsg *account.RegisterDomainMsg `protobuf:"bytes,83,opt,name=account_register_domain_msg,json=accountRegisterDomainMsg,proto3,oneof"`
-}
-type Tx_AccountReplaceAccountMsgFeesMsg struct {
-	AccountReplaceAccountMsgFeesMsg *account.ReplaceAccountMsgFeesMsg `protobuf:"bytes,84,opt,name=account_replace_account_msg_fees_msg,json=accountReplaceAccountMsgFeesMsg,proto3,oneof"`
-}
-type Tx_AccountTransferDomainMsg struct {
-	AccountTransferDomainMsg *account.TransferDomainMsg `protobuf:"bytes,85,opt,name=account_transfer_domain_msg,json=accountTransferDomainMsg,proto3,oneof"`
-}
-type Tx_AccountRenewDomainMsg struct {
-	AccountRenewDomainMsg *account.RenewDomainMsg `protobuf:"bytes,86,opt,name=account_renew_domain_msg,json=accountRenewDomainMsg,proto3,oneof"`
-}
-type Tx_AccountDeleteDomainMsg struct {
-	AccountDeleteDomainMsg *account.DeleteDomainMsg `protobuf:"bytes,87,opt,name=account_delete_domain_msg,json=accountDeleteDomainMsg,proto3,oneof"`
-}
-type Tx_AccountRegisterAccountMsg struct {
-	AccountRegisterAccountMsg *account.RegisterAccountMsg `protobuf:"bytes,88,opt,name=account_register_account_msg,json=accountRegisterAccountMsg,proto3,oneof"`
-}
-type Tx_AccountTransferAccountMsg struct {
-	AccountTransferAccountMsg *account.TransferAccountMsg `protobuf:"bytes,89,opt,name=account_transfer_account_msg,json=accountTransferAccountMsg,proto3,oneof"`
-}
-type Tx_AccountReplaceAccountTargetsMsg struct {
-	AccountReplaceAccountTargetsMsg *account.ReplaceAccountTargetsMsg `protobuf:"bytes,90,opt,name=account_replace_account_targets_msg,json=accountReplaceAccountTargetsMsg,proto3,oneof"`
-}
-type Tx_AccountDeleteAccountMsg struct {
-	AccountDeleteAccountMsg *account.DeleteAccountMsg `protobuf:"bytes,91,opt,name=account_delete_account_msg,json=accountDeleteAccountMsg,proto3,oneof"`
-}
-type Tx_AccountFlushDomainMsg struct {
-	AccountFlushDomainMsg *account.FlushDomainMsg `protobuf:"bytes,92,opt,name=account_flush_domain_msg,json=accountFlushDomainMsg,proto3,oneof"`
-}
-type Tx_AccountRenewAccountMsg struct {
-	AccountRenewAccountMsg *account.RenewAccountMsg `protobuf:"bytes,93,opt,name=account_renew_account_msg,json=accountRenewAccountMsg,proto3,oneof"`
-}
-type Tx_AccountAddAccountCertificateMsg struct {
-	AccountAddAccountCertificateMsg *account.AddAccountCertificateMsg `protobuf:"bytes,94,opt,name=account_add_account_certificate_msg,json=accountAddAccountCertificateMsg,proto3,oneof"`
-}
-type Tx_AccountDeleteAccountCertificateMsg struct {
-	AccountDeleteAccountCertificateMsg *account.DeleteAccountCertificateMsg `protobuf:"bytes,95,opt,name=account_delete_account_certificate_msg,json=accountDeleteAccountCertificateMsg,proto3,oneof"`
-}
-type Tx_PreregistrationRegisterMsg struct {
-	PreregistrationRegisterMsg *preregistration.RegisterMsg `protobuf:"bytes,96,opt,name=preregistration_register_msg,json=preregistrationRegisterMsg,proto3,oneof"`
-}
-type Tx_CashUpdateConfigurationMsg struct {
-	CashUpdateConfigurationMsg *cash.UpdateConfigurationMsg `protobuf:"bytes,97,opt,name=cash_update_configuration_msg,json=cashUpdateConfigurationMsg,proto3,oneof"`
-}
-type Tx_TxfeeUpdateConfigurationMsg struct {
-	TxfeeUpdateConfigurationMsg *txfee.UpdateConfigurationMsg `protobuf:"bytes,98,opt,name=txfee_update_configuration_msg,json=txfeeUpdateConfigurationMsg,proto3,oneof"`
-}
-type Tx_TermdepositCreateDepositContractMsg struct {
-	TermdepositCreateDepositContractMsg *termdeposit.CreateDepositContractMsg `protobuf:"bytes,99,opt,name=termdeposit_create_deposit_contract_msg,json=termdepositCreateDepositContractMsg,proto3,oneof"`
-}
-type Tx_TermdepositDepositMsg struct {
-	TermdepositDepositMsg *termdeposit.DepositMsg `protobuf:"bytes,100,opt,name=termdeposit_deposit_msg,json=termdepositDepositMsg,proto3,oneof"`
-}
-type Tx_TermdepositReleaseDepositMsg struct {
-	TermdepositReleaseDepositMsg *termdeposit.ReleaseDepositMsg `protobuf:"bytes,101,opt,name=termdeposit_release_deposit_msg,json=termdepositReleaseDepositMsg,proto3,oneof"`
-}
-type Tx_TermdepositUpdateConfigurationMsg struct {
-	TermdepositUpdateConfigurationMsg *termdeposit.UpdateConfigurationMsg `protobuf:"bytes,102,opt,name=termdeposit_update_configuration_msg,json=termdepositUpdateConfigurationMsg,proto3,oneof"`
-}
-type Tx_QualityscoreUpdateConfigurationMsg struct {
-	QualityscoreUpdateConfigurationMsg *qualityscore.UpdateConfigurationMsg `protobuf:"bytes,103,opt,name=qualityscore_update_configuration_msg,json=qualityscoreUpdateConfigurationMsg,proto3,oneof"`
-}
-type Tx_PreregistrationUpdateConfigurationMsg struct {
-	PreregistrationUpdateConfigurationMsg *preregistration.UpdateConfigurationMsg `protobuf:"bytes,104,opt,name=preregistration_update_configuration_msg,json=preregistrationUpdateConfigurationMsg,proto3,oneof"`
-}
-type Tx_MsgfeeUpdateConfigurationMsg struct {
-	MsgfeeUpdateConfigurationMsg *msgfee.UpdateConfigurationMsg `protobuf:"bytes,105,opt,name=msgfee_update_configuration_msg,json=msgfeeUpdateConfigurationMsg,proto3,oneof"`
-}
 
-func (*Tx_CashSendMsg) isTx_Sum()                           {}
-func (*Tx_EscrowCreateMsg) isTx_Sum()                       {}
-func (*Tx_EscrowReleaseMsg) isTx_Sum()                      {}
-func (*Tx_EscrowReturnMsg) isTx_Sum()                       {}
-func (*Tx_EscrowUpdatePartiesMsg) isTx_Sum()                {}
-func (*Tx_MultisigCreateMsg) isTx_Sum()                     {}
-func (*Tx_MultisigUpdateMsg) isTx_Sum()                     {}
-func (*Tx_ValidatorsApplyDiffMsg) isTx_Sum()                {}
-func (*Tx_CurrencyCreateMsg) isTx_Sum()                     {}
-func (*Tx_ExecuteBatchMsg) isTx_Sum()                       {}
-func (*Tx_UsernameRegisterTokenMsg) isTx_Sum()              {}
-func (*Tx_UsernameTransferTokenMsg) isTx_Sum()              {}
-func (*Tx_UsernameChangeTokenTargetsMsg) isTx_Sum()         {}
-func (*Tx_UsernameUpdateConfigurationMsg) isTx_Sum()        {}
-func (*Tx_DistributionCreateMsg) isTx_Sum()                 {}
-func (*Tx_DistributionMsg) isTx_Sum()                       {}
-func (*Tx_DistributionResetMsg) isTx_Sum()                  {}
-func (*Tx_MigrationUpgradeSchemaMsg) isTx_Sum()             {}
-func (*Tx_AswapCreateMsg) isTx_Sum()                        {}
-func (*Tx_AswapReleaseMsg) isTx_Sum()                       {}
-func (*Tx_AswapReturnMsg) isTx_Sum()                        {}
-func (*Tx_GovCreateProposalMsg) isTx_Sum()                  {}
-func (*Tx_GovDeleteProposalMsg) isTx_Sum()                  {}
-func (*Tx_GovVoteMsg) isTx_Sum()                            {}
-func (*Tx_GovUpdateElectorateMsg) isTx_Sum()                {}
-func (*Tx_GovUpdateElectionRuleMsg) isTx_Sum()              {}
-func (*Tx_MsgfeeSetMsgFeeMsg) isTx_Sum()                    {}
-func (*Tx_DatamigrationExecuteMigrationMsg) isTx_Sum()      {}
-func (*Tx_AccountUpdateConfigurationMsg) isTx_Sum()         {}
-func (*Tx_AccountRegisterDomainMsg) isTx_Sum()              {}
-func (*Tx_AccountReplaceAccountMsgFeesMsg) isTx_Sum()       {}
-func (*Tx_AccountTransferDomainMsg) isTx_Sum()              {}
-func (*Tx_AccountRenewDomainMsg) isTx_Sum()                 {}
-func (*Tx_AccountDeleteDomainMsg) isTx_Sum()                {}
-func (*Tx_AccountRegisterAccountMsg) isTx_Sum()             {}
-func (*Tx_AccountTransferAccountMsg) isTx_Sum()             {}
-func (*Tx_AccountReplaceAccountTargetsMsg) isTx_Sum()       {}
-func (*Tx_AccountDeleteAccountMsg) isTx_Sum()               {}
-func (*Tx_AccountFlushDomainMsg) isTx_Sum()                 {}
-func (*Tx_AccountRenewAccountMsg) isTx_Sum()                {}
-func (*Tx_AccountAddAccountCertificateMsg) isTx_Sum()       {}
-func (*Tx_AccountDeleteAccountCertificateMsg) isTx_Sum()    {}
-func (*Tx_PreregistrationRegisterMsg) isTx_Sum()            {}
-func (*Tx_CashUpdateConfigurationMsg) isTx_Sum()            {}
-func (*Tx_TxfeeUpdateConfigurationMsg) isTx_Sum()           {}
-func (*Tx_TermdepositCreateDepositContractMsg) isTx_Sum()   {}
-func (*Tx_TermdepositDepositMsg) isTx_Sum()                 {}
-func (*Tx_TermdepositReleaseDepositMsg) isTx_Sum()          {}
-func (*Tx_TermdepositUpdateConfigurationMsg) isTx_Sum()     {}
-func (*Tx_QualityscoreUpdateConfigurationMsg) isTx_Sum()    {}
-func (*Tx_PreregistrationUpdateConfigurationMsg) isTx_Sum() {}
-func (*Tx_MsgfeeUpdateConfigurationMsg) isTx_Sum()          {}
+func (*Tx_CashSendMsg) isTx_Sum()                    {}
+func (*Tx_EscrowCreateMsg) isTx_Sum()                {}
+func (*Tx_EscrowReleaseMsg) isTx_Sum()               {}
+func (*Tx_EscrowReturnMsg) isTx_Sum()                {}
+func (*Tx_EscrowUpdatePartiesMsg) isTx_Sum()         {}
+func (*Tx_MultisigCreateMsg) isTx_Sum()              {}
+func (*Tx_MultisigUpdateMsg) isTx_Sum()              {}
+func (*Tx_ValidatorsApplyDiffMsg) isTx_Sum()         {}
+func (*Tx_CurrencyCreateMsg) isTx_Sum()              {}
+func (*Tx_ExecuteBatchMsg) isTx_Sum()                {}
+func (*Tx_UsernameRegisterTokenMsg) isTx_Sum()       {}
+func (*Tx_UsernameTransferTokenMsg) isTx_Sum()       {}
+func (*Tx_UsernameChangeTokenTargetsMsg) isTx_Sum()  {}
+func (*Tx_UsernameUpdateConfigurationMsg) isTx_Sum() {}
+func (*Tx_DistributionCreateMsg) isTx_Sum()          {}
+func (*Tx_DistributionMsg) isTx_Sum()                {}
+func (*Tx_DistributionResetMsg) isTx_Sum()           {}
+func (*Tx_MigrationUpgradeSchemaMsg) isTx_Sum()      {}
+func (*Tx_AswapCreateMsg) isTx_Sum()                 {}
+func (*Tx_AswapReleaseMsg) isTx_Sum()                {}
+func (*Tx_AswapReturnMsg) isTx_Sum()                 {}
+func (*Tx_GovCreateProposalMsg) isTx_Sum()           {}
+func (*Tx_GovDeleteProposalMsg) isTx_Sum()           {}
+func (*Tx_GovVoteMsg) isTx_Sum()                     {}
+func (*Tx_GovUpdateElectorateMsg) isTx_Sum()         {}
+func (*Tx_GovUpdateElectionRuleMsg) isTx_Sum()       {}
+func (*Tx_MsgfeeSetMsgFeeMsg) isTx_Sum()             {}
 
 func (m *Tx) GetSum() isTx_Sum {
 	if m != nil {
@@ -583,181 +452,6 @@ func (m *Tx) GetMsgfeeSetMsgFeeMsg() *msgfee.SetMsgFeeMsg {
 	return nil
 }
 
-func (m *Tx) GetDatamigrationExecuteMigrationMsg() *datamigration.ExecuteMigrationMsg {
-	if x, ok := m.GetSum().(*Tx_DatamigrationExecuteMigrationMsg); ok {
-		return x.DatamigrationExecuteMigrationMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountUpdateConfigurationMsg() *account.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*Tx_AccountUpdateConfigurationMsg); ok {
-		return x.AccountUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountRegisterDomainMsg() *account.RegisterDomainMsg {
-	if x, ok := m.GetSum().(*Tx_AccountRegisterDomainMsg); ok {
-		return x.AccountRegisterDomainMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountReplaceAccountMsgFeesMsg() *account.ReplaceAccountMsgFeesMsg {
-	if x, ok := m.GetSum().(*Tx_AccountReplaceAccountMsgFeesMsg); ok {
-		return x.AccountReplaceAccountMsgFeesMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountTransferDomainMsg() *account.TransferDomainMsg {
-	if x, ok := m.GetSum().(*Tx_AccountTransferDomainMsg); ok {
-		return x.AccountTransferDomainMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountRenewDomainMsg() *account.RenewDomainMsg {
-	if x, ok := m.GetSum().(*Tx_AccountRenewDomainMsg); ok {
-		return x.AccountRenewDomainMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountDeleteDomainMsg() *account.DeleteDomainMsg {
-	if x, ok := m.GetSum().(*Tx_AccountDeleteDomainMsg); ok {
-		return x.AccountDeleteDomainMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountRegisterAccountMsg() *account.RegisterAccountMsg {
-	if x, ok := m.GetSum().(*Tx_AccountRegisterAccountMsg); ok {
-		return x.AccountRegisterAccountMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountTransferAccountMsg() *account.TransferAccountMsg {
-	if x, ok := m.GetSum().(*Tx_AccountTransferAccountMsg); ok {
-		return x.AccountTransferAccountMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountReplaceAccountTargetsMsg() *account.ReplaceAccountTargetsMsg {
-	if x, ok := m.GetSum().(*Tx_AccountReplaceAccountTargetsMsg); ok {
-		return x.AccountReplaceAccountTargetsMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountDeleteAccountMsg() *account.DeleteAccountMsg {
-	if x, ok := m.GetSum().(*Tx_AccountDeleteAccountMsg); ok {
-		return x.AccountDeleteAccountMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountFlushDomainMsg() *account.FlushDomainMsg {
-	if x, ok := m.GetSum().(*Tx_AccountFlushDomainMsg); ok {
-		return x.AccountFlushDomainMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountRenewAccountMsg() *account.RenewAccountMsg {
-	if x, ok := m.GetSum().(*Tx_AccountRenewAccountMsg); ok {
-		return x.AccountRenewAccountMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountAddAccountCertificateMsg() *account.AddAccountCertificateMsg {
-	if x, ok := m.GetSum().(*Tx_AccountAddAccountCertificateMsg); ok {
-		return x.AccountAddAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetAccountDeleteAccountCertificateMsg() *account.DeleteAccountCertificateMsg {
-	if x, ok := m.GetSum().(*Tx_AccountDeleteAccountCertificateMsg); ok {
-		return x.AccountDeleteAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetPreregistrationRegisterMsg() *preregistration.RegisterMsg {
-	if x, ok := m.GetSum().(*Tx_PreregistrationRegisterMsg); ok {
-		return x.PreregistrationRegisterMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetCashUpdateConfigurationMsg() *cash.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*Tx_CashUpdateConfigurationMsg); ok {
-		return x.CashUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetTxfeeUpdateConfigurationMsg() *txfee.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*Tx_TxfeeUpdateConfigurationMsg); ok {
-		return x.TxfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetTermdepositCreateDepositContractMsg() *termdeposit.CreateDepositContractMsg {
-	if x, ok := m.GetSum().(*Tx_TermdepositCreateDepositContractMsg); ok {
-		return x.TermdepositCreateDepositContractMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetTermdepositDepositMsg() *termdeposit.DepositMsg {
-	if x, ok := m.GetSum().(*Tx_TermdepositDepositMsg); ok {
-		return x.TermdepositDepositMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetTermdepositReleaseDepositMsg() *termdeposit.ReleaseDepositMsg {
-	if x, ok := m.GetSum().(*Tx_TermdepositReleaseDepositMsg); ok {
-		return x.TermdepositReleaseDepositMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetTermdepositUpdateConfigurationMsg() *termdeposit.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*Tx_TermdepositUpdateConfigurationMsg); ok {
-		return x.TermdepositUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetQualityscoreUpdateConfigurationMsg() *qualityscore.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*Tx_QualityscoreUpdateConfigurationMsg); ok {
-		return x.QualityscoreUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetPreregistrationUpdateConfigurationMsg() *preregistration.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*Tx_PreregistrationUpdateConfigurationMsg); ok {
-		return x.PreregistrationUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *Tx) GetMsgfeeUpdateConfigurationMsg() *msgfee.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*Tx_MsgfeeUpdateConfigurationMsg); ok {
-		return x.MsgfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*Tx) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
 	return _Tx_OneofMarshaler, _Tx_OneofUnmarshaler, _Tx_OneofSizer, []interface{}{
@@ -788,31 +482,6 @@ func (*Tx) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, fun
 		(*Tx_GovUpdateElectorateMsg)(nil),
 		(*Tx_GovUpdateElectionRuleMsg)(nil),
 		(*Tx_MsgfeeSetMsgFeeMsg)(nil),
-		(*Tx_DatamigrationExecuteMigrationMsg)(nil),
-		(*Tx_AccountUpdateConfigurationMsg)(nil),
-		(*Tx_AccountRegisterDomainMsg)(nil),
-		(*Tx_AccountReplaceAccountMsgFeesMsg)(nil),
-		(*Tx_AccountTransferDomainMsg)(nil),
-		(*Tx_AccountRenewDomainMsg)(nil),
-		(*Tx_AccountDeleteDomainMsg)(nil),
-		(*Tx_AccountRegisterAccountMsg)(nil),
-		(*Tx_AccountTransferAccountMsg)(nil),
-		(*Tx_AccountReplaceAccountTargetsMsg)(nil),
-		(*Tx_AccountDeleteAccountMsg)(nil),
-		(*Tx_AccountFlushDomainMsg)(nil),
-		(*Tx_AccountRenewAccountMsg)(nil),
-		(*Tx_AccountAddAccountCertificateMsg)(nil),
-		(*Tx_AccountDeleteAccountCertificateMsg)(nil),
-		(*Tx_PreregistrationRegisterMsg)(nil),
-		(*Tx_CashUpdateConfigurationMsg)(nil),
-		(*Tx_TxfeeUpdateConfigurationMsg)(nil),
-		(*Tx_TermdepositCreateDepositContractMsg)(nil),
-		(*Tx_TermdepositDepositMsg)(nil),
-		(*Tx_TermdepositReleaseDepositMsg)(nil),
-		(*Tx_TermdepositUpdateConfigurationMsg)(nil),
-		(*Tx_QualityscoreUpdateConfigurationMsg)(nil),
-		(*Tx_PreregistrationUpdateConfigurationMsg)(nil),
-		(*Tx_MsgfeeUpdateConfigurationMsg)(nil),
 	}
 }
 
@@ -953,131 +622,6 @@ func _Tx_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 	case *Tx_MsgfeeSetMsgFeeMsg:
 		_ = b.EncodeVarint(80<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.MsgfeeSetMsgFeeMsg); err != nil {
-			return err
-		}
-	case *Tx_DatamigrationExecuteMigrationMsg:
-		_ = b.EncodeVarint(81<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.DatamigrationExecuteMigrationMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountUpdateConfigurationMsg:
-		_ = b.EncodeVarint(82<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountRegisterDomainMsg:
-		_ = b.EncodeVarint(83<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterDomainMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountReplaceAccountMsgFeesMsg:
-		_ = b.EncodeVarint(84<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountMsgFeesMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountTransferDomainMsg:
-		_ = b.EncodeVarint(85<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferDomainMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountRenewDomainMsg:
-		_ = b.EncodeVarint(86<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewDomainMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountDeleteDomainMsg:
-		_ = b.EncodeVarint(87<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteDomainMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountRegisterAccountMsg:
-		_ = b.EncodeVarint(88<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterAccountMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountTransferAccountMsg:
-		_ = b.EncodeVarint(89<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferAccountMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountReplaceAccountTargetsMsg:
-		_ = b.EncodeVarint(90<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountTargetsMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountDeleteAccountMsg:
-		_ = b.EncodeVarint(91<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountFlushDomainMsg:
-		_ = b.EncodeVarint(92<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountFlushDomainMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountRenewAccountMsg:
-		_ = b.EncodeVarint(93<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewAccountMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountAddAccountCertificateMsg:
-		_ = b.EncodeVarint(94<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountAddAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *Tx_AccountDeleteAccountCertificateMsg:
-		_ = b.EncodeVarint(95<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *Tx_PreregistrationRegisterMsg:
-		_ = b.EncodeVarint(96<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PreregistrationRegisterMsg); err != nil {
-			return err
-		}
-	case *Tx_CashUpdateConfigurationMsg:
-		_ = b.EncodeVarint(97<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CashUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *Tx_TxfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(98<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TxfeeUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *Tx_TermdepositCreateDepositContractMsg:
-		_ = b.EncodeVarint(99<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositCreateDepositContractMsg); err != nil {
-			return err
-		}
-	case *Tx_TermdepositDepositMsg:
-		_ = b.EncodeVarint(100<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositDepositMsg); err != nil {
-			return err
-		}
-	case *Tx_TermdepositReleaseDepositMsg:
-		_ = b.EncodeVarint(101<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositReleaseDepositMsg); err != nil {
-			return err
-		}
-	case *Tx_TermdepositUpdateConfigurationMsg:
-		_ = b.EncodeVarint(102<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *Tx_QualityscoreUpdateConfigurationMsg:
-		_ = b.EncodeVarint(103<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.QualityscoreUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *Tx_PreregistrationUpdateConfigurationMsg:
-		_ = b.EncodeVarint(104<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PreregistrationUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *Tx_MsgfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(105<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.MsgfeeUpdateConfigurationMsg); err != nil {
 			return err
 		}
 	case nil:
@@ -1306,206 +850,6 @@ func _Tx_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bo
 		err := b.DecodeMessage(msg)
 		m.Sum = &Tx_MsgfeeSetMsgFeeMsg{msg}
 		return true, err
-	case 81: // sum.datamigration_execute_migration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(datamigration.ExecuteMigrationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_DatamigrationExecuteMigrationMsg{msg}
-		return true, err
-	case 82: // sum.account_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountUpdateConfigurationMsg{msg}
-		return true, err
-	case 83: // sum.account_register_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountRegisterDomainMsg{msg}
-		return true, err
-	case 84: // sum.account_replace_account_msg_fees_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountMsgFeesMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountReplaceAccountMsgFeesMsg{msg}
-		return true, err
-	case 85: // sum.account_transfer_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountTransferDomainMsg{msg}
-		return true, err
-	case 86: // sum.account_renew_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountRenewDomainMsg{msg}
-		return true, err
-	case 87: // sum.account_delete_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountDeleteDomainMsg{msg}
-		return true, err
-	case 88: // sum.account_register_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountRegisterAccountMsg{msg}
-		return true, err
-	case 89: // sum.account_transfer_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountTransferAccountMsg{msg}
-		return true, err
-	case 90: // sum.account_replace_account_targets_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountTargetsMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountReplaceAccountTargetsMsg{msg}
-		return true, err
-	case 91: // sum.account_delete_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountDeleteAccountMsg{msg}
-		return true, err
-	case 92: // sum.account_flush_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.FlushDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountFlushDomainMsg{msg}
-		return true, err
-	case 93: // sum.account_renew_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountRenewAccountMsg{msg}
-		return true, err
-	case 94: // sum.account_add_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.AddAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountAddAccountCertificateMsg{msg}
-		return true, err
-	case 95: // sum.account_delete_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_AccountDeleteAccountCertificateMsg{msg}
-		return true, err
-	case 96: // sum.preregistration_register_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(preregistration.RegisterMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_PreregistrationRegisterMsg{msg}
-		return true, err
-	case 97: // sum.cash_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(cash.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_CashUpdateConfigurationMsg{msg}
-		return true, err
-	case 98: // sum.txfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(txfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_TxfeeUpdateConfigurationMsg{msg}
-		return true, err
-	case 99: // sum.termdeposit_create_deposit_contract_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.CreateDepositContractMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_TermdepositCreateDepositContractMsg{msg}
-		return true, err
-	case 100: // sum.termdeposit_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.DepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_TermdepositDepositMsg{msg}
-		return true, err
-	case 101: // sum.termdeposit_release_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.ReleaseDepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_TermdepositReleaseDepositMsg{msg}
-		return true, err
-	case 102: // sum.termdeposit_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_TermdepositUpdateConfigurationMsg{msg}
-		return true, err
-	case 103: // sum.qualityscore_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(qualityscore.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_QualityscoreUpdateConfigurationMsg{msg}
-		return true, err
-	case 104: // sum.preregistration_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(preregistration.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_PreregistrationUpdateConfigurationMsg{msg}
-		return true, err
-	case 105: // sum.msgfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(msgfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &Tx_MsgfeeUpdateConfigurationMsg{msg}
-		return true, err
 	default:
 		return false, nil
 	}
@@ -1650,131 +994,6 @@ func _Tx_OneofSizer(msg proto.Message) (n int) {
 		n += 2 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
-	case *Tx_DatamigrationExecuteMigrationMsg:
-		s := proto.Size(x.DatamigrationExecuteMigrationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountUpdateConfigurationMsg:
-		s := proto.Size(x.AccountUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountRegisterDomainMsg:
-		s := proto.Size(x.AccountRegisterDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountReplaceAccountMsgFeesMsg:
-		s := proto.Size(x.AccountReplaceAccountMsgFeesMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountTransferDomainMsg:
-		s := proto.Size(x.AccountTransferDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountRenewDomainMsg:
-		s := proto.Size(x.AccountRenewDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountDeleteDomainMsg:
-		s := proto.Size(x.AccountDeleteDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountRegisterAccountMsg:
-		s := proto.Size(x.AccountRegisterAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountTransferAccountMsg:
-		s := proto.Size(x.AccountTransferAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountReplaceAccountTargetsMsg:
-		s := proto.Size(x.AccountReplaceAccountTargetsMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountDeleteAccountMsg:
-		s := proto.Size(x.AccountDeleteAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountFlushDomainMsg:
-		s := proto.Size(x.AccountFlushDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountRenewAccountMsg:
-		s := proto.Size(x.AccountRenewAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountAddAccountCertificateMsg:
-		s := proto.Size(x.AccountAddAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_AccountDeleteAccountCertificateMsg:
-		s := proto.Size(x.AccountDeleteAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_PreregistrationRegisterMsg:
-		s := proto.Size(x.PreregistrationRegisterMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_CashUpdateConfigurationMsg:
-		s := proto.Size(x.CashUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_TxfeeUpdateConfigurationMsg:
-		s := proto.Size(x.TxfeeUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_TermdepositCreateDepositContractMsg:
-		s := proto.Size(x.TermdepositCreateDepositContractMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_TermdepositDepositMsg:
-		s := proto.Size(x.TermdepositDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_TermdepositReleaseDepositMsg:
-		s := proto.Size(x.TermdepositReleaseDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_TermdepositUpdateConfigurationMsg:
-		s := proto.Size(x.TermdepositUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_QualityscoreUpdateConfigurationMsg:
-		s := proto.Size(x.QualityscoreUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_PreregistrationUpdateConfigurationMsg:
-		s := proto.Size(x.PreregistrationUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Tx_MsgfeeUpdateConfigurationMsg:
-		s := proto.Size(x.MsgfeeUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
 	case nil:
 	default:
 		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
@@ -1846,30 +1065,6 @@ type ExecuteBatchMsg_Union struct {
 	//	*ExecuteBatchMsg_Union_DistributionMsg
 	//	*ExecuteBatchMsg_Union_DistributionResetMsg
 	//	*ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg
-	//	*ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg
-	//	*ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg
-	//	*ExecuteBatchMsg_Union_AccountRegisterDomainMsg
-	//	*ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg
-	//	*ExecuteBatchMsg_Union_AccountTransferDomainMsg
-	//	*ExecuteBatchMsg_Union_AccountRenewDomainMsg
-	//	*ExecuteBatchMsg_Union_AccountDeleteDomainMsg
-	//	*ExecuteBatchMsg_Union_AccountRegisterAccountMsg
-	//	*ExecuteBatchMsg_Union_AccountTransferAccountMsg
-	//	*ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg
-	//	*ExecuteBatchMsg_Union_AccountDeleteAccountMsg
-	//	*ExecuteBatchMsg_Union_AccountFlushDomainMsg
-	//	*ExecuteBatchMsg_Union_AccountRenewAccountMsg
-	//	*ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg
-	//	*ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg
-	//	*ExecuteBatchMsg_Union_CashUpdateConfigurationMsg
-	//	*ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg
-	//	*ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg
-	//	*ExecuteBatchMsg_Union_TermdepositDepositMsg
-	//	*ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg
-	//	*ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg
-	//	*ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg
-	//	*ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg
-	//	*ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg
 	Sum isExecuteBatchMsg_Union_Sum `protobuf_oneof:"sum"`
 }
 
@@ -1963,120 +1158,24 @@ type ExecuteBatchMsg_Union_DistributionResetMsg struct {
 type ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg struct {
 	MsgfeeSetMsgFeeMsg *msgfee.SetMsgFeeMsg `protobuf:"bytes,80,opt,name=msgfee_set_msg_fee_msg,json=msgfeeSetMsgFeeMsg,proto3,oneof"`
 }
-type ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg struct {
-	DatamigrationExecuteMigrationMsg *datamigration.ExecuteMigrationMsg `protobuf:"bytes,81,opt,name=datamigration_execute_migration_msg,json=datamigrationExecuteMigrationMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg struct {
-	AccountUpdateConfigurationMsg *account.UpdateConfigurationMsg `protobuf:"bytes,82,opt,name=account_update_configuration_msg,json=accountUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountRegisterDomainMsg struct {
-	AccountRegisterDomainMsg *account.RegisterDomainMsg `protobuf:"bytes,83,opt,name=account_register_domain_msg,json=accountRegisterDomainMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg struct {
-	AccountReplaceAccountMsgFeesMsg *account.ReplaceAccountMsgFeesMsg `protobuf:"bytes,84,opt,name=account_replace_account_msg_fees_msg,json=accountReplaceAccountMsgFeesMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountTransferDomainMsg struct {
-	AccountTransferDomainMsg *account.TransferDomainMsg `protobuf:"bytes,85,opt,name=account_transfer_domain_msg,json=accountTransferDomainMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountRenewDomainMsg struct {
-	AccountRenewDomainMsg *account.RenewDomainMsg `protobuf:"bytes,86,opt,name=account_renew_domain_msg,json=accountRenewDomainMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountDeleteDomainMsg struct {
-	AccountDeleteDomainMsg *account.DeleteDomainMsg `protobuf:"bytes,87,opt,name=account_delete_domain_msg,json=accountDeleteDomainMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountRegisterAccountMsg struct {
-	AccountRegisterAccountMsg *account.RegisterAccountMsg `protobuf:"bytes,88,opt,name=account_register_account_msg,json=accountRegisterAccountMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountTransferAccountMsg struct {
-	AccountTransferAccountMsg *account.TransferAccountMsg `protobuf:"bytes,89,opt,name=account_transfer_account_msg,json=accountTransferAccountMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg struct {
-	AccountReplaceAccountTargetsMsg *account.ReplaceAccountTargetsMsg `protobuf:"bytes,90,opt,name=account_replace_account_targets_msg,json=accountReplaceAccountTargetsMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountDeleteAccountMsg struct {
-	AccountDeleteAccountMsg *account.DeleteAccountMsg `protobuf:"bytes,91,opt,name=account_delete_account_msg,json=accountDeleteAccountMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountFlushDomainMsg struct {
-	AccountFlushDomainMsg *account.FlushDomainMsg `protobuf:"bytes,92,opt,name=account_flush_domain_msg,json=accountFlushDomainMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountRenewAccountMsg struct {
-	AccountRenewAccountMsg *account.RenewAccountMsg `protobuf:"bytes,93,opt,name=account_renew_account_msg,json=accountRenewAccountMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg struct {
-	AccountAddAccountCertificateMsg *account.AddAccountCertificateMsg `protobuf:"bytes,94,opt,name=account_add_account_certificate_msg,json=accountAddAccountCertificateMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg struct {
-	AccountDeleteAccountCertificateMsg *account.DeleteAccountCertificateMsg `protobuf:"bytes,95,opt,name=account_delete_account_certificate_msg,json=accountDeleteAccountCertificateMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_CashUpdateConfigurationMsg struct {
-	CashUpdateConfigurationMsg *cash.UpdateConfigurationMsg `protobuf:"bytes,97,opt,name=cash_update_configuration_msg,json=cashUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg struct {
-	TxfeeUpdateConfigurationMsg *txfee.UpdateConfigurationMsg `protobuf:"bytes,98,opt,name=txfee_update_configuration_msg,json=txfeeUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg struct {
-	TermdepositCreateDepositContractMsg *termdeposit.CreateDepositContractMsg `protobuf:"bytes,99,opt,name=termdeposit_create_deposit_contract_msg,json=termdepositCreateDepositContractMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_TermdepositDepositMsg struct {
-	TermdepositDepositMsg *termdeposit.DepositMsg `protobuf:"bytes,100,opt,name=termdeposit_deposit_msg,json=termdepositDepositMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg struct {
-	TermdepositReleaseDepositMsg *termdeposit.ReleaseDepositMsg `protobuf:"bytes,101,opt,name=termdeposit_release_deposit_msg,json=termdepositReleaseDepositMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg struct {
-	TermdepositUpdateConfigurationMsg *termdeposit.UpdateConfigurationMsg `protobuf:"bytes,102,opt,name=termdeposit_update_configuration_msg,json=termdepositUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg struct {
-	QualityscoreUpdateConfigurationMsg *qualityscore.UpdateConfigurationMsg `protobuf:"bytes,103,opt,name=qualityscore_update_configuration_msg,json=qualityscoreUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg struct {
-	PreregistrationUpdateConfigurationMsg *preregistration.UpdateConfigurationMsg `protobuf:"bytes,104,opt,name=preregistration_update_configuration_msg,json=preregistrationUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg struct {
-	MsgfeeUpdateConfigurationMsg *msgfee.UpdateConfigurationMsg `protobuf:"bytes,105,opt,name=msgfee_update_configuration_msg,json=msgfeeUpdateConfigurationMsg,proto3,oneof"`
-}
 
-func (*ExecuteBatchMsg_Union_CashSendMsg) isExecuteBatchMsg_Union_Sum()                           {}
-func (*ExecuteBatchMsg_Union_EscrowCreateMsg) isExecuteBatchMsg_Union_Sum()                       {}
-func (*ExecuteBatchMsg_Union_EscrowReleaseMsg) isExecuteBatchMsg_Union_Sum()                      {}
-func (*ExecuteBatchMsg_Union_EscrowReturnMsg) isExecuteBatchMsg_Union_Sum()                       {}
-func (*ExecuteBatchMsg_Union_EscrowUpdatePartiesMsg) isExecuteBatchMsg_Union_Sum()                {}
-func (*ExecuteBatchMsg_Union_MultisigCreateMsg) isExecuteBatchMsg_Union_Sum()                     {}
-func (*ExecuteBatchMsg_Union_MultisigUpdateMsg) isExecuteBatchMsg_Union_Sum()                     {}
-func (*ExecuteBatchMsg_Union_ValidatorsApplyDiffMsg) isExecuteBatchMsg_Union_Sum()                {}
-func (*ExecuteBatchMsg_Union_CurrencyCreateMsg) isExecuteBatchMsg_Union_Sum()                     {}
-func (*ExecuteBatchMsg_Union_UsernameRegisterTokenMsg) isExecuteBatchMsg_Union_Sum()              {}
-func (*ExecuteBatchMsg_Union_UsernameTransferTokenMsg) isExecuteBatchMsg_Union_Sum()              {}
-func (*ExecuteBatchMsg_Union_UsernameChangeTokenTargetsMsg) isExecuteBatchMsg_Union_Sum()         {}
-func (*ExecuteBatchMsg_Union_UsernameUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum()        {}
-func (*ExecuteBatchMsg_Union_DistributionCreateMsg) isExecuteBatchMsg_Union_Sum()                 {}
-func (*ExecuteBatchMsg_Union_DistributionMsg) isExecuteBatchMsg_Union_Sum()                       {}
-func (*ExecuteBatchMsg_Union_DistributionResetMsg) isExecuteBatchMsg_Union_Sum()                  {}
-func (*ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg) isExecuteBatchMsg_Union_Sum()                    {}
-func (*ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg) isExecuteBatchMsg_Union_Sum()      {}
-func (*ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum()         {}
-func (*ExecuteBatchMsg_Union_AccountRegisterDomainMsg) isExecuteBatchMsg_Union_Sum()              {}
-func (*ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg) isExecuteBatchMsg_Union_Sum()       {}
-func (*ExecuteBatchMsg_Union_AccountTransferDomainMsg) isExecuteBatchMsg_Union_Sum()              {}
-func (*ExecuteBatchMsg_Union_AccountRenewDomainMsg) isExecuteBatchMsg_Union_Sum()                 {}
-func (*ExecuteBatchMsg_Union_AccountDeleteDomainMsg) isExecuteBatchMsg_Union_Sum()                {}
-func (*ExecuteBatchMsg_Union_AccountRegisterAccountMsg) isExecuteBatchMsg_Union_Sum()             {}
-func (*ExecuteBatchMsg_Union_AccountTransferAccountMsg) isExecuteBatchMsg_Union_Sum()             {}
-func (*ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg) isExecuteBatchMsg_Union_Sum()       {}
-func (*ExecuteBatchMsg_Union_AccountDeleteAccountMsg) isExecuteBatchMsg_Union_Sum()               {}
-func (*ExecuteBatchMsg_Union_AccountFlushDomainMsg) isExecuteBatchMsg_Union_Sum()                 {}
-func (*ExecuteBatchMsg_Union_AccountRenewAccountMsg) isExecuteBatchMsg_Union_Sum()                {}
-func (*ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg) isExecuteBatchMsg_Union_Sum()       {}
-func (*ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg) isExecuteBatchMsg_Union_Sum()    {}
-func (*ExecuteBatchMsg_Union_CashUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum()            {}
-func (*ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum()           {}
-func (*ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg) isExecuteBatchMsg_Union_Sum()   {}
-func (*ExecuteBatchMsg_Union_TermdepositDepositMsg) isExecuteBatchMsg_Union_Sum()                 {}
-func (*ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg) isExecuteBatchMsg_Union_Sum()          {}
-func (*ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum()     {}
-func (*ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum()    {}
-func (*ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum() {}
-func (*ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum()          {}
+func (*ExecuteBatchMsg_Union_CashSendMsg) isExecuteBatchMsg_Union_Sum()                    {}
+func (*ExecuteBatchMsg_Union_EscrowCreateMsg) isExecuteBatchMsg_Union_Sum()                {}
+func (*ExecuteBatchMsg_Union_EscrowReleaseMsg) isExecuteBatchMsg_Union_Sum()               {}
+func (*ExecuteBatchMsg_Union_EscrowReturnMsg) isExecuteBatchMsg_Union_Sum()                {}
+func (*ExecuteBatchMsg_Union_EscrowUpdatePartiesMsg) isExecuteBatchMsg_Union_Sum()         {}
+func (*ExecuteBatchMsg_Union_MultisigCreateMsg) isExecuteBatchMsg_Union_Sum()              {}
+func (*ExecuteBatchMsg_Union_MultisigUpdateMsg) isExecuteBatchMsg_Union_Sum()              {}
+func (*ExecuteBatchMsg_Union_ValidatorsApplyDiffMsg) isExecuteBatchMsg_Union_Sum()         {}
+func (*ExecuteBatchMsg_Union_CurrencyCreateMsg) isExecuteBatchMsg_Union_Sum()              {}
+func (*ExecuteBatchMsg_Union_UsernameRegisterTokenMsg) isExecuteBatchMsg_Union_Sum()       {}
+func (*ExecuteBatchMsg_Union_UsernameTransferTokenMsg) isExecuteBatchMsg_Union_Sum()       {}
+func (*ExecuteBatchMsg_Union_UsernameChangeTokenTargetsMsg) isExecuteBatchMsg_Union_Sum()  {}
+func (*ExecuteBatchMsg_Union_UsernameUpdateConfigurationMsg) isExecuteBatchMsg_Union_Sum() {}
+func (*ExecuteBatchMsg_Union_DistributionCreateMsg) isExecuteBatchMsg_Union_Sum()          {}
+func (*ExecuteBatchMsg_Union_DistributionMsg) isExecuteBatchMsg_Union_Sum()                {}
+func (*ExecuteBatchMsg_Union_DistributionResetMsg) isExecuteBatchMsg_Union_Sum()           {}
+func (*ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg) isExecuteBatchMsg_Union_Sum()             {}
 
 func (m *ExecuteBatchMsg_Union) GetSum() isExecuteBatchMsg_Union_Sum {
 	if m != nil {
@@ -2204,174 +1303,6 @@ func (m *ExecuteBatchMsg_Union) GetMsgfeeSetMsgFeeMsg() *msgfee.SetMsgFeeMsg {
 	return nil
 }
 
-func (m *ExecuteBatchMsg_Union) GetDatamigrationExecuteMigrationMsg() *datamigration.ExecuteMigrationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg); ok {
-		return x.DatamigrationExecuteMigrationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountUpdateConfigurationMsg() *account.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg); ok {
-		return x.AccountUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountRegisterDomainMsg() *account.RegisterDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountRegisterDomainMsg); ok {
-		return x.AccountRegisterDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountReplaceAccountMsgFeesMsg() *account.ReplaceAccountMsgFeesMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg); ok {
-		return x.AccountReplaceAccountMsgFeesMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountTransferDomainMsg() *account.TransferDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountTransferDomainMsg); ok {
-		return x.AccountTransferDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountRenewDomainMsg() *account.RenewDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountRenewDomainMsg); ok {
-		return x.AccountRenewDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountDeleteDomainMsg() *account.DeleteDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountDeleteDomainMsg); ok {
-		return x.AccountDeleteDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountRegisterAccountMsg() *account.RegisterAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountRegisterAccountMsg); ok {
-		return x.AccountRegisterAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountTransferAccountMsg() *account.TransferAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountTransferAccountMsg); ok {
-		return x.AccountTransferAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountReplaceAccountTargetsMsg() *account.ReplaceAccountTargetsMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg); ok {
-		return x.AccountReplaceAccountTargetsMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountDeleteAccountMsg() *account.DeleteAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountDeleteAccountMsg); ok {
-		return x.AccountDeleteAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountFlushDomainMsg() *account.FlushDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountFlushDomainMsg); ok {
-		return x.AccountFlushDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountRenewAccountMsg() *account.RenewAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountRenewAccountMsg); ok {
-		return x.AccountRenewAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountAddAccountCertificateMsg() *account.AddAccountCertificateMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg); ok {
-		return x.AccountAddAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetAccountDeleteAccountCertificateMsg() *account.DeleteAccountCertificateMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg); ok {
-		return x.AccountDeleteAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetCashUpdateConfigurationMsg() *cash.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_CashUpdateConfigurationMsg); ok {
-		return x.CashUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetTxfeeUpdateConfigurationMsg() *txfee.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg); ok {
-		return x.TxfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetTermdepositCreateDepositContractMsg() *termdeposit.CreateDepositContractMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg); ok {
-		return x.TermdepositCreateDepositContractMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetTermdepositDepositMsg() *termdeposit.DepositMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_TermdepositDepositMsg); ok {
-		return x.TermdepositDepositMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetTermdepositReleaseDepositMsg() *termdeposit.ReleaseDepositMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg); ok {
-		return x.TermdepositReleaseDepositMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetTermdepositUpdateConfigurationMsg() *termdeposit.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg); ok {
-		return x.TermdepositUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetQualityscoreUpdateConfigurationMsg() *qualityscore.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg); ok {
-		return x.QualityscoreUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetPreregistrationUpdateConfigurationMsg() *preregistration.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg); ok {
-		return x.PreregistrationUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteBatchMsg_Union) GetMsgfeeUpdateConfigurationMsg() *msgfee.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg); ok {
-		return x.MsgfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*ExecuteBatchMsg_Union) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
 	return _ExecuteBatchMsg_Union_OneofMarshaler, _ExecuteBatchMsg_Union_OneofUnmarshaler, _ExecuteBatchMsg_Union_OneofSizer, []interface{}{
@@ -2392,30 +1323,6 @@ func (*ExecuteBatchMsg_Union) XXX_OneofFuncs() (func(msg proto.Message, b *proto
 		(*ExecuteBatchMsg_Union_DistributionMsg)(nil),
 		(*ExecuteBatchMsg_Union_DistributionResetMsg)(nil),
 		(*ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg)(nil),
-		(*ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountRegisterDomainMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountTransferDomainMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountRenewDomainMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountDeleteDomainMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountRegisterAccountMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountTransferAccountMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountDeleteAccountMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountFlushDomainMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountRenewAccountMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg)(nil),
-		(*ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg)(nil),
-		(*ExecuteBatchMsg_Union_CashUpdateConfigurationMsg)(nil),
-		(*ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg)(nil),
-		(*ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg)(nil),
-		(*ExecuteBatchMsg_Union_TermdepositDepositMsg)(nil),
-		(*ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg)(nil),
-		(*ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg)(nil),
-		(*ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg)(nil),
-		(*ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg)(nil),
-		(*ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg)(nil),
 	}
 }
 
@@ -2506,126 +1413,6 @@ func _ExecuteBatchMsg_Union_OneofMarshaler(msg proto.Message, b *proto.Buffer) e
 	case *ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg:
 		_ = b.EncodeVarint(80<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.MsgfeeSetMsgFeeMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg:
-		_ = b.EncodeVarint(81<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.DatamigrationExecuteMigrationMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg:
-		_ = b.EncodeVarint(82<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountRegisterDomainMsg:
-		_ = b.EncodeVarint(83<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg:
-		_ = b.EncodeVarint(84<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountMsgFeesMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountTransferDomainMsg:
-		_ = b.EncodeVarint(85<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountRenewDomainMsg:
-		_ = b.EncodeVarint(86<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountDeleteDomainMsg:
-		_ = b.EncodeVarint(87<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountRegisterAccountMsg:
-		_ = b.EncodeVarint(88<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountTransferAccountMsg:
-		_ = b.EncodeVarint(89<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg:
-		_ = b.EncodeVarint(90<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountTargetsMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountDeleteAccountMsg:
-		_ = b.EncodeVarint(91<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountFlushDomainMsg:
-		_ = b.EncodeVarint(92<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountFlushDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountRenewAccountMsg:
-		_ = b.EncodeVarint(93<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg:
-		_ = b.EncodeVarint(94<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountAddAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg:
-		_ = b.EncodeVarint(95<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_CashUpdateConfigurationMsg:
-		_ = b.EncodeVarint(97<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CashUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(98<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TxfeeUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg:
-		_ = b.EncodeVarint(99<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositCreateDepositContractMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_TermdepositDepositMsg:
-		_ = b.EncodeVarint(100<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositDepositMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg:
-		_ = b.EncodeVarint(101<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositReleaseDepositMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg:
-		_ = b.EncodeVarint(102<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg:
-		_ = b.EncodeVarint(103<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.QualityscoreUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg:
-		_ = b.EncodeVarint(104<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PreregistrationUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(105<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.MsgfeeUpdateConfigurationMsg); err != nil {
 			return err
 		}
 	case nil:
@@ -2774,198 +1561,6 @@ func _ExecuteBatchMsg_Union_OneofUnmarshaler(msg proto.Message, tag, wire int, b
 		err := b.DecodeMessage(msg)
 		m.Sum = &ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg{msg}
 		return true, err
-	case 81: // sum.datamigration_execute_migration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(datamigration.ExecuteMigrationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg{msg}
-		return true, err
-	case 82: // sum.account_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg{msg}
-		return true, err
-	case 83: // sum.account_register_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountRegisterDomainMsg{msg}
-		return true, err
-	case 84: // sum.account_replace_account_msg_fees_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountMsgFeesMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg{msg}
-		return true, err
-	case 85: // sum.account_transfer_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountTransferDomainMsg{msg}
-		return true, err
-	case 86: // sum.account_renew_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountRenewDomainMsg{msg}
-		return true, err
-	case 87: // sum.account_delete_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountDeleteDomainMsg{msg}
-		return true, err
-	case 88: // sum.account_register_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountRegisterAccountMsg{msg}
-		return true, err
-	case 89: // sum.account_transfer_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountTransferAccountMsg{msg}
-		return true, err
-	case 90: // sum.account_replace_account_targets_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountTargetsMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg{msg}
-		return true, err
-	case 91: // sum.account_delete_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountDeleteAccountMsg{msg}
-		return true, err
-	case 92: // sum.account_flush_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.FlushDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountFlushDomainMsg{msg}
-		return true, err
-	case 93: // sum.account_renew_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountRenewAccountMsg{msg}
-		return true, err
-	case 94: // sum.account_add_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.AddAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg{msg}
-		return true, err
-	case 95: // sum.account_delete_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg{msg}
-		return true, err
-	case 97: // sum.cash_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(cash.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_CashUpdateConfigurationMsg{msg}
-		return true, err
-	case 98: // sum.txfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(txfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg{msg}
-		return true, err
-	case 99: // sum.termdeposit_create_deposit_contract_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.CreateDepositContractMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg{msg}
-		return true, err
-	case 100: // sum.termdeposit_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.DepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_TermdepositDepositMsg{msg}
-		return true, err
-	case 101: // sum.termdeposit_release_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.ReleaseDepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg{msg}
-		return true, err
-	case 102: // sum.termdeposit_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg{msg}
-		return true, err
-	case 103: // sum.qualityscore_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(qualityscore.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg{msg}
-		return true, err
-	case 104: // sum.preregistration_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(preregistration.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg{msg}
-		return true, err
-	case 105: // sum.msgfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(msgfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg{msg}
-		return true, err
 	default:
 		return false, nil
 	}
@@ -3060,126 +1655,6 @@ func _ExecuteBatchMsg_Union_OneofSizer(msg proto.Message) (n int) {
 		n += 2 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
-	case *ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg:
-		s := proto.Size(x.DatamigrationExecuteMigrationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg:
-		s := proto.Size(x.AccountUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountRegisterDomainMsg:
-		s := proto.Size(x.AccountRegisterDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg:
-		s := proto.Size(x.AccountReplaceAccountMsgFeesMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountTransferDomainMsg:
-		s := proto.Size(x.AccountTransferDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountRenewDomainMsg:
-		s := proto.Size(x.AccountRenewDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountDeleteDomainMsg:
-		s := proto.Size(x.AccountDeleteDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountRegisterAccountMsg:
-		s := proto.Size(x.AccountRegisterAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountTransferAccountMsg:
-		s := proto.Size(x.AccountTransferAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg:
-		s := proto.Size(x.AccountReplaceAccountTargetsMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountDeleteAccountMsg:
-		s := proto.Size(x.AccountDeleteAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountFlushDomainMsg:
-		s := proto.Size(x.AccountFlushDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountRenewAccountMsg:
-		s := proto.Size(x.AccountRenewAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg:
-		s := proto.Size(x.AccountAddAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg:
-		s := proto.Size(x.AccountDeleteAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_CashUpdateConfigurationMsg:
-		s := proto.Size(x.CashUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg:
-		s := proto.Size(x.TxfeeUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg:
-		s := proto.Size(x.TermdepositCreateDepositContractMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_TermdepositDepositMsg:
-		s := proto.Size(x.TermdepositDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg:
-		s := proto.Size(x.TermdepositReleaseDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg:
-		s := proto.Size(x.TermdepositUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg:
-		s := proto.Size(x.QualityscoreUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg:
-		s := proto.Size(x.PreregistrationUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg:
-		s := proto.Size(x.MsgfeeUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
 	case nil:
 	default:
 		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
@@ -3210,30 +1685,6 @@ type ProposalOptions struct {
 	//	*ProposalOptions_GovUpdateElectionRuleMsg
 	//	*ProposalOptions_GovCreateTextResolutionMsg
 	//	*ProposalOptions_MsgfeeSetMsgFeeMsg
-	//	*ProposalOptions_DatamigrationExecuteMigrationMsg
-	//	*ProposalOptions_AccountUpdateConfigurationMsg
-	//	*ProposalOptions_AccountRegisterDomainMsg
-	//	*ProposalOptions_AccountReplaceAccountMsgFeesMsg
-	//	*ProposalOptions_AccountTransferDomainMsg
-	//	*ProposalOptions_AccountRenewDomainMsg
-	//	*ProposalOptions_AccountDeleteDomainMsg
-	//	*ProposalOptions_AccountRegisterAccountMsg
-	//	*ProposalOptions_AccountTransferAccountMsg
-	//	*ProposalOptions_AccountReplaceAccountTargetsMsg
-	//	*ProposalOptions_AccountDeleteAccountMsg
-	//	*ProposalOptions_AccountFlushDomainMsg
-	//	*ProposalOptions_AccountRenewAccountMsg
-	//	*ProposalOptions_AccountAddAccountCertificateMsg
-	//	*ProposalOptions_AccountDeleteAccountCertificateMsg
-	//	*ProposalOptions_CashUpdateConfigurationMsg
-	//	*ProposalOptions_TxfeeUpdateConfigurationMsg
-	//	*ProposalOptions_TermdepositCreateDepositContractMsg
-	//	*ProposalOptions_TermdepositDepositMsg
-	//	*ProposalOptions_TermdepositReleaseDepositMsg
-	//	*ProposalOptions_TermdepositUpdateConfigurationMsg
-	//	*ProposalOptions_QualityscoreUpdateConfigurationMsg
-	//	*ProposalOptions_PreregistrationUpdateConfigurationMsg
-	//	*ProposalOptions_MsgfeeUpdateConfigurationMsg
 	Option isProposalOptions_Option `protobuf_oneof:"option"`
 }
 
@@ -3333,122 +1784,26 @@ type ProposalOptions_GovCreateTextResolutionMsg struct {
 type ProposalOptions_MsgfeeSetMsgFeeMsg struct {
 	MsgfeeSetMsgFeeMsg *msgfee.SetMsgFeeMsg `protobuf:"bytes,80,opt,name=msgfee_set_msg_fee_msg,json=msgfeeSetMsgFeeMsg,proto3,oneof"`
 }
-type ProposalOptions_DatamigrationExecuteMigrationMsg struct {
-	DatamigrationExecuteMigrationMsg *datamigration.ExecuteMigrationMsg `protobuf:"bytes,81,opt,name=datamigration_execute_migration_msg,json=datamigrationExecuteMigrationMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountUpdateConfigurationMsg struct {
-	AccountUpdateConfigurationMsg *account.UpdateConfigurationMsg `protobuf:"bytes,82,opt,name=account_update_configuration_msg,json=accountUpdateConfigurationMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountRegisterDomainMsg struct {
-	AccountRegisterDomainMsg *account.RegisterDomainMsg `protobuf:"bytes,83,opt,name=account_register_domain_msg,json=accountRegisterDomainMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountReplaceAccountMsgFeesMsg struct {
-	AccountReplaceAccountMsgFeesMsg *account.ReplaceAccountMsgFeesMsg `protobuf:"bytes,84,opt,name=account_replace_account_msg_fees_msg,json=accountReplaceAccountMsgFeesMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountTransferDomainMsg struct {
-	AccountTransferDomainMsg *account.TransferDomainMsg `protobuf:"bytes,85,opt,name=account_transfer_domain_msg,json=accountTransferDomainMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountRenewDomainMsg struct {
-	AccountRenewDomainMsg *account.RenewDomainMsg `protobuf:"bytes,86,opt,name=account_renew_domain_msg,json=accountRenewDomainMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountDeleteDomainMsg struct {
-	AccountDeleteDomainMsg *account.DeleteDomainMsg `protobuf:"bytes,87,opt,name=account_delete_domain_msg,json=accountDeleteDomainMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountRegisterAccountMsg struct {
-	AccountRegisterAccountMsg *account.RegisterAccountMsg `protobuf:"bytes,88,opt,name=account_register_account_msg,json=accountRegisterAccountMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountTransferAccountMsg struct {
-	AccountTransferAccountMsg *account.TransferAccountMsg `protobuf:"bytes,89,opt,name=account_transfer_account_msg,json=accountTransferAccountMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountReplaceAccountTargetsMsg struct {
-	AccountReplaceAccountTargetsMsg *account.ReplaceAccountTargetsMsg `protobuf:"bytes,90,opt,name=account_replace_account_targets_msg,json=accountReplaceAccountTargetsMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountDeleteAccountMsg struct {
-	AccountDeleteAccountMsg *account.DeleteAccountMsg `protobuf:"bytes,91,opt,name=account_delete_account_msg,json=accountDeleteAccountMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountFlushDomainMsg struct {
-	AccountFlushDomainMsg *account.FlushDomainMsg `protobuf:"bytes,92,opt,name=account_flush_domain_msg,json=accountFlushDomainMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountRenewAccountMsg struct {
-	AccountRenewAccountMsg *account.RenewAccountMsg `protobuf:"bytes,93,opt,name=account_renew_account_msg,json=accountRenewAccountMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountAddAccountCertificateMsg struct {
-	AccountAddAccountCertificateMsg *account.AddAccountCertificateMsg `protobuf:"bytes,94,opt,name=account_add_account_certificate_msg,json=accountAddAccountCertificateMsg,proto3,oneof"`
-}
-type ProposalOptions_AccountDeleteAccountCertificateMsg struct {
-	AccountDeleteAccountCertificateMsg *account.DeleteAccountCertificateMsg `protobuf:"bytes,95,opt,name=account_delete_account_certificate_msg,json=accountDeleteAccountCertificateMsg,proto3,oneof"`
-}
-type ProposalOptions_CashUpdateConfigurationMsg struct {
-	CashUpdateConfigurationMsg *cash.UpdateConfigurationMsg `protobuf:"bytes,97,opt,name=cash_update_configuration_msg,json=cashUpdateConfigurationMsg,proto3,oneof"`
-}
-type ProposalOptions_TxfeeUpdateConfigurationMsg struct {
-	TxfeeUpdateConfigurationMsg *txfee.UpdateConfigurationMsg `protobuf:"bytes,98,opt,name=txfee_update_configuration_msg,json=txfeeUpdateConfigurationMsg,proto3,oneof"`
-}
-type ProposalOptions_TermdepositCreateDepositContractMsg struct {
-	TermdepositCreateDepositContractMsg *termdeposit.CreateDepositContractMsg `protobuf:"bytes,99,opt,name=termdeposit_create_deposit_contract_msg,json=termdepositCreateDepositContractMsg,proto3,oneof"`
-}
-type ProposalOptions_TermdepositDepositMsg struct {
-	TermdepositDepositMsg *termdeposit.DepositMsg `protobuf:"bytes,100,opt,name=termdeposit_deposit_msg,json=termdepositDepositMsg,proto3,oneof"`
-}
-type ProposalOptions_TermdepositReleaseDepositMsg struct {
-	TermdepositReleaseDepositMsg *termdeposit.ReleaseDepositMsg `protobuf:"bytes,101,opt,name=termdeposit_release_deposit_msg,json=termdepositReleaseDepositMsg,proto3,oneof"`
-}
-type ProposalOptions_TermdepositUpdateConfigurationMsg struct {
-	TermdepositUpdateConfigurationMsg *termdeposit.UpdateConfigurationMsg `protobuf:"bytes,102,opt,name=termdeposit_update_configuration_msg,json=termdepositUpdateConfigurationMsg,proto3,oneof"`
-}
-type ProposalOptions_QualityscoreUpdateConfigurationMsg struct {
-	QualityscoreUpdateConfigurationMsg *qualityscore.UpdateConfigurationMsg `protobuf:"bytes,103,opt,name=qualityscore_update_configuration_msg,json=qualityscoreUpdateConfigurationMsg,proto3,oneof"`
-}
-type ProposalOptions_PreregistrationUpdateConfigurationMsg struct {
-	PreregistrationUpdateConfigurationMsg *preregistration.UpdateConfigurationMsg `protobuf:"bytes,104,opt,name=preregistration_update_configuration_msg,json=preregistrationUpdateConfigurationMsg,proto3,oneof"`
-}
-type ProposalOptions_MsgfeeUpdateConfigurationMsg struct {
-	MsgfeeUpdateConfigurationMsg *msgfee.UpdateConfigurationMsg `protobuf:"bytes,105,opt,name=msgfee_update_configuration_msg,json=msgfeeUpdateConfigurationMsg,proto3,oneof"`
-}
 
-func (*ProposalOptions_CashSendMsg) isProposalOptions_Option()                           {}
-func (*ProposalOptions_EscrowReleaseMsg) isProposalOptions_Option()                      {}
-func (*ProposalOptions_UpdateEscrowPartiesMsg) isProposalOptions_Option()                {}
-func (*ProposalOptions_MultisigUpdateMsg) isProposalOptions_Option()                     {}
-func (*ProposalOptions_ValidatorsApplyDiffMsg) isProposalOptions_Option()                {}
-func (*ProposalOptions_CurrencyCreateMsg) isProposalOptions_Option()                     {}
-func (*ProposalOptions_ExecuteProposalBatchMsg) isProposalOptions_Option()               {}
-func (*ProposalOptions_UsernameRegisterTokenMsg) isProposalOptions_Option()              {}
-func (*ProposalOptions_UsernameTransferTokenMsg) isProposalOptions_Option()              {}
-func (*ProposalOptions_UsernameChangeTokenTargetsMsg) isProposalOptions_Option()         {}
-func (*ProposalOptions_UsernameUpdateConfigurationMsg) isProposalOptions_Option()        {}
-func (*ProposalOptions_DistributionCreateMsg) isProposalOptions_Option()                 {}
-func (*ProposalOptions_DistributionMsg) isProposalOptions_Option()                       {}
-func (*ProposalOptions_DistributionResetMsg) isProposalOptions_Option()                  {}
-func (*ProposalOptions_MigrationUpgradeSchemaMsg) isProposalOptions_Option()             {}
-func (*ProposalOptions_GovUpdateElectorateMsg) isProposalOptions_Option()                {}
-func (*ProposalOptions_GovUpdateElectionRuleMsg) isProposalOptions_Option()              {}
-func (*ProposalOptions_GovCreateTextResolutionMsg) isProposalOptions_Option()            {}
-func (*ProposalOptions_MsgfeeSetMsgFeeMsg) isProposalOptions_Option()                    {}
-func (*ProposalOptions_DatamigrationExecuteMigrationMsg) isProposalOptions_Option()      {}
-func (*ProposalOptions_AccountUpdateConfigurationMsg) isProposalOptions_Option()         {}
-func (*ProposalOptions_AccountRegisterDomainMsg) isProposalOptions_Option()              {}
-func (*ProposalOptions_AccountReplaceAccountMsgFeesMsg) isProposalOptions_Option()       {}
-func (*ProposalOptions_AccountTransferDomainMsg) isProposalOptions_Option()              {}
-func (*ProposalOptions_AccountRenewDomainMsg) isProposalOptions_Option()                 {}
-func (*ProposalOptions_AccountDeleteDomainMsg) isProposalOptions_Option()                {}
-func (*ProposalOptions_AccountRegisterAccountMsg) isProposalOptions_Option()             {}
-func (*ProposalOptions_AccountTransferAccountMsg) isProposalOptions_Option()             {}
-func (*ProposalOptions_AccountReplaceAccountTargetsMsg) isProposalOptions_Option()       {}
-func (*ProposalOptions_AccountDeleteAccountMsg) isProposalOptions_Option()               {}
-func (*ProposalOptions_AccountFlushDomainMsg) isProposalOptions_Option()                 {}
-func (*ProposalOptions_AccountRenewAccountMsg) isProposalOptions_Option()                {}
-func (*ProposalOptions_AccountAddAccountCertificateMsg) isProposalOptions_Option()       {}
-func (*ProposalOptions_AccountDeleteAccountCertificateMsg) isProposalOptions_Option()    {}
-func (*ProposalOptions_CashUpdateConfigurationMsg) isProposalOptions_Option()            {}
-func (*ProposalOptions_TxfeeUpdateConfigurationMsg) isProposalOptions_Option()           {}
-func (*ProposalOptions_TermdepositCreateDepositContractMsg) isProposalOptions_Option()   {}
-func (*ProposalOptions_TermdepositDepositMsg) isProposalOptions_Option()                 {}
-func (*ProposalOptions_TermdepositReleaseDepositMsg) isProposalOptions_Option()          {}
-func (*ProposalOptions_TermdepositUpdateConfigurationMsg) isProposalOptions_Option()     {}
-func (*ProposalOptions_QualityscoreUpdateConfigurationMsg) isProposalOptions_Option()    {}
-func (*ProposalOptions_PreregistrationUpdateConfigurationMsg) isProposalOptions_Option() {}
-func (*ProposalOptions_MsgfeeUpdateConfigurationMsg) isProposalOptions_Option()          {}
+func (*ProposalOptions_CashSendMsg) isProposalOptions_Option()                    {}
+func (*ProposalOptions_EscrowReleaseMsg) isProposalOptions_Option()               {}
+func (*ProposalOptions_UpdateEscrowPartiesMsg) isProposalOptions_Option()         {}
+func (*ProposalOptions_MultisigUpdateMsg) isProposalOptions_Option()              {}
+func (*ProposalOptions_ValidatorsApplyDiffMsg) isProposalOptions_Option()         {}
+func (*ProposalOptions_CurrencyCreateMsg) isProposalOptions_Option()              {}
+func (*ProposalOptions_ExecuteProposalBatchMsg) isProposalOptions_Option()        {}
+func (*ProposalOptions_UsernameRegisterTokenMsg) isProposalOptions_Option()       {}
+func (*ProposalOptions_UsernameTransferTokenMsg) isProposalOptions_Option()       {}
+func (*ProposalOptions_UsernameChangeTokenTargetsMsg) isProposalOptions_Option()  {}
+func (*ProposalOptions_UsernameUpdateConfigurationMsg) isProposalOptions_Option() {}
+func (*ProposalOptions_DistributionCreateMsg) isProposalOptions_Option()          {}
+func (*ProposalOptions_DistributionMsg) isProposalOptions_Option()                {}
+func (*ProposalOptions_DistributionResetMsg) isProposalOptions_Option()           {}
+func (*ProposalOptions_MigrationUpgradeSchemaMsg) isProposalOptions_Option()      {}
+func (*ProposalOptions_GovUpdateElectorateMsg) isProposalOptions_Option()         {}
+func (*ProposalOptions_GovUpdateElectionRuleMsg) isProposalOptions_Option()       {}
+func (*ProposalOptions_GovCreateTextResolutionMsg) isProposalOptions_Option()     {}
+func (*ProposalOptions_MsgfeeSetMsgFeeMsg) isProposalOptions_Option()             {}
 
 func (m *ProposalOptions) GetOption() isProposalOptions_Option {
 	if m != nil {
@@ -3590,174 +1945,6 @@ func (m *ProposalOptions) GetMsgfeeSetMsgFeeMsg() *msgfee.SetMsgFeeMsg {
 	return nil
 }
 
-func (m *ProposalOptions) GetDatamigrationExecuteMigrationMsg() *datamigration.ExecuteMigrationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_DatamigrationExecuteMigrationMsg); ok {
-		return x.DatamigrationExecuteMigrationMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountUpdateConfigurationMsg() *account.UpdateConfigurationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountUpdateConfigurationMsg); ok {
-		return x.AccountUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountRegisterDomainMsg() *account.RegisterDomainMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountRegisterDomainMsg); ok {
-		return x.AccountRegisterDomainMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountReplaceAccountMsgFeesMsg() *account.ReplaceAccountMsgFeesMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountReplaceAccountMsgFeesMsg); ok {
-		return x.AccountReplaceAccountMsgFeesMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountTransferDomainMsg() *account.TransferDomainMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountTransferDomainMsg); ok {
-		return x.AccountTransferDomainMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountRenewDomainMsg() *account.RenewDomainMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountRenewDomainMsg); ok {
-		return x.AccountRenewDomainMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountDeleteDomainMsg() *account.DeleteDomainMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountDeleteDomainMsg); ok {
-		return x.AccountDeleteDomainMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountRegisterAccountMsg() *account.RegisterAccountMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountRegisterAccountMsg); ok {
-		return x.AccountRegisterAccountMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountTransferAccountMsg() *account.TransferAccountMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountTransferAccountMsg); ok {
-		return x.AccountTransferAccountMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountReplaceAccountTargetsMsg() *account.ReplaceAccountTargetsMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountReplaceAccountTargetsMsg); ok {
-		return x.AccountReplaceAccountTargetsMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountDeleteAccountMsg() *account.DeleteAccountMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountDeleteAccountMsg); ok {
-		return x.AccountDeleteAccountMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountFlushDomainMsg() *account.FlushDomainMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountFlushDomainMsg); ok {
-		return x.AccountFlushDomainMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountRenewAccountMsg() *account.RenewAccountMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountRenewAccountMsg); ok {
-		return x.AccountRenewAccountMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountAddAccountCertificateMsg() *account.AddAccountCertificateMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountAddAccountCertificateMsg); ok {
-		return x.AccountAddAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetAccountDeleteAccountCertificateMsg() *account.DeleteAccountCertificateMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_AccountDeleteAccountCertificateMsg); ok {
-		return x.AccountDeleteAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetCashUpdateConfigurationMsg() *cash.UpdateConfigurationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_CashUpdateConfigurationMsg); ok {
-		return x.CashUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetTxfeeUpdateConfigurationMsg() *txfee.UpdateConfigurationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_TxfeeUpdateConfigurationMsg); ok {
-		return x.TxfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetTermdepositCreateDepositContractMsg() *termdeposit.CreateDepositContractMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_TermdepositCreateDepositContractMsg); ok {
-		return x.TermdepositCreateDepositContractMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetTermdepositDepositMsg() *termdeposit.DepositMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_TermdepositDepositMsg); ok {
-		return x.TermdepositDepositMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetTermdepositReleaseDepositMsg() *termdeposit.ReleaseDepositMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_TermdepositReleaseDepositMsg); ok {
-		return x.TermdepositReleaseDepositMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetTermdepositUpdateConfigurationMsg() *termdeposit.UpdateConfigurationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_TermdepositUpdateConfigurationMsg); ok {
-		return x.TermdepositUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetQualityscoreUpdateConfigurationMsg() *qualityscore.UpdateConfigurationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_QualityscoreUpdateConfigurationMsg); ok {
-		return x.QualityscoreUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetPreregistrationUpdateConfigurationMsg() *preregistration.UpdateConfigurationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_PreregistrationUpdateConfigurationMsg); ok {
-		return x.PreregistrationUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ProposalOptions) GetMsgfeeUpdateConfigurationMsg() *msgfee.UpdateConfigurationMsg {
-	if x, ok := m.GetOption().(*ProposalOptions_MsgfeeUpdateConfigurationMsg); ok {
-		return x.MsgfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*ProposalOptions) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
 	return _ProposalOptions_OneofMarshaler, _ProposalOptions_OneofUnmarshaler, _ProposalOptions_OneofSizer, []interface{}{
@@ -3780,30 +1967,6 @@ func (*ProposalOptions) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffe
 		(*ProposalOptions_GovUpdateElectionRuleMsg)(nil),
 		(*ProposalOptions_GovCreateTextResolutionMsg)(nil),
 		(*ProposalOptions_MsgfeeSetMsgFeeMsg)(nil),
-		(*ProposalOptions_DatamigrationExecuteMigrationMsg)(nil),
-		(*ProposalOptions_AccountUpdateConfigurationMsg)(nil),
-		(*ProposalOptions_AccountRegisterDomainMsg)(nil),
-		(*ProposalOptions_AccountReplaceAccountMsgFeesMsg)(nil),
-		(*ProposalOptions_AccountTransferDomainMsg)(nil),
-		(*ProposalOptions_AccountRenewDomainMsg)(nil),
-		(*ProposalOptions_AccountDeleteDomainMsg)(nil),
-		(*ProposalOptions_AccountRegisterAccountMsg)(nil),
-		(*ProposalOptions_AccountTransferAccountMsg)(nil),
-		(*ProposalOptions_AccountReplaceAccountTargetsMsg)(nil),
-		(*ProposalOptions_AccountDeleteAccountMsg)(nil),
-		(*ProposalOptions_AccountFlushDomainMsg)(nil),
-		(*ProposalOptions_AccountRenewAccountMsg)(nil),
-		(*ProposalOptions_AccountAddAccountCertificateMsg)(nil),
-		(*ProposalOptions_AccountDeleteAccountCertificateMsg)(nil),
-		(*ProposalOptions_CashUpdateConfigurationMsg)(nil),
-		(*ProposalOptions_TxfeeUpdateConfigurationMsg)(nil),
-		(*ProposalOptions_TermdepositCreateDepositContractMsg)(nil),
-		(*ProposalOptions_TermdepositDepositMsg)(nil),
-		(*ProposalOptions_TermdepositReleaseDepositMsg)(nil),
-		(*ProposalOptions_TermdepositUpdateConfigurationMsg)(nil),
-		(*ProposalOptions_QualityscoreUpdateConfigurationMsg)(nil),
-		(*ProposalOptions_PreregistrationUpdateConfigurationMsg)(nil),
-		(*ProposalOptions_MsgfeeUpdateConfigurationMsg)(nil),
 	}
 }
 
@@ -3904,126 +2067,6 @@ func _ProposalOptions_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 	case *ProposalOptions_MsgfeeSetMsgFeeMsg:
 		_ = b.EncodeVarint(80<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.MsgfeeSetMsgFeeMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_DatamigrationExecuteMigrationMsg:
-		_ = b.EncodeVarint(81<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.DatamigrationExecuteMigrationMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountUpdateConfigurationMsg:
-		_ = b.EncodeVarint(82<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountRegisterDomainMsg:
-		_ = b.EncodeVarint(83<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterDomainMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountReplaceAccountMsgFeesMsg:
-		_ = b.EncodeVarint(84<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountMsgFeesMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountTransferDomainMsg:
-		_ = b.EncodeVarint(85<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferDomainMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountRenewDomainMsg:
-		_ = b.EncodeVarint(86<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewDomainMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountDeleteDomainMsg:
-		_ = b.EncodeVarint(87<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteDomainMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountRegisterAccountMsg:
-		_ = b.EncodeVarint(88<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterAccountMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountTransferAccountMsg:
-		_ = b.EncodeVarint(89<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferAccountMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountReplaceAccountTargetsMsg:
-		_ = b.EncodeVarint(90<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountTargetsMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountDeleteAccountMsg:
-		_ = b.EncodeVarint(91<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountFlushDomainMsg:
-		_ = b.EncodeVarint(92<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountFlushDomainMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountRenewAccountMsg:
-		_ = b.EncodeVarint(93<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewAccountMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountAddAccountCertificateMsg:
-		_ = b.EncodeVarint(94<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountAddAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_AccountDeleteAccountCertificateMsg:
-		_ = b.EncodeVarint(95<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_CashUpdateConfigurationMsg:
-		_ = b.EncodeVarint(97<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CashUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_TxfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(98<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TxfeeUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_TermdepositCreateDepositContractMsg:
-		_ = b.EncodeVarint(99<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositCreateDepositContractMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_TermdepositDepositMsg:
-		_ = b.EncodeVarint(100<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositDepositMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_TermdepositReleaseDepositMsg:
-		_ = b.EncodeVarint(101<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositReleaseDepositMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_TermdepositUpdateConfigurationMsg:
-		_ = b.EncodeVarint(102<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_QualityscoreUpdateConfigurationMsg:
-		_ = b.EncodeVarint(103<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.QualityscoreUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_PreregistrationUpdateConfigurationMsg:
-		_ = b.EncodeVarint(104<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PreregistrationUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ProposalOptions_MsgfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(105<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.MsgfeeUpdateConfigurationMsg); err != nil {
 			return err
 		}
 	case nil:
@@ -4188,198 +2231,6 @@ func _ProposalOptions_OneofUnmarshaler(msg proto.Message, tag, wire int, b *prot
 		err := b.DecodeMessage(msg)
 		m.Option = &ProposalOptions_MsgfeeSetMsgFeeMsg{msg}
 		return true, err
-	case 81: // option.datamigration_execute_migration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(datamigration.ExecuteMigrationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_DatamigrationExecuteMigrationMsg{msg}
-		return true, err
-	case 82: // option.account_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountUpdateConfigurationMsg{msg}
-		return true, err
-	case 83: // option.account_register_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountRegisterDomainMsg{msg}
-		return true, err
-	case 84: // option.account_replace_account_msg_fees_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountMsgFeesMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountReplaceAccountMsgFeesMsg{msg}
-		return true, err
-	case 85: // option.account_transfer_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountTransferDomainMsg{msg}
-		return true, err
-	case 86: // option.account_renew_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountRenewDomainMsg{msg}
-		return true, err
-	case 87: // option.account_delete_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountDeleteDomainMsg{msg}
-		return true, err
-	case 88: // option.account_register_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountRegisterAccountMsg{msg}
-		return true, err
-	case 89: // option.account_transfer_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountTransferAccountMsg{msg}
-		return true, err
-	case 90: // option.account_replace_account_targets_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountTargetsMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountReplaceAccountTargetsMsg{msg}
-		return true, err
-	case 91: // option.account_delete_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountDeleteAccountMsg{msg}
-		return true, err
-	case 92: // option.account_flush_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.FlushDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountFlushDomainMsg{msg}
-		return true, err
-	case 93: // option.account_renew_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountRenewAccountMsg{msg}
-		return true, err
-	case 94: // option.account_add_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.AddAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountAddAccountCertificateMsg{msg}
-		return true, err
-	case 95: // option.account_delete_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_AccountDeleteAccountCertificateMsg{msg}
-		return true, err
-	case 97: // option.cash_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(cash.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_CashUpdateConfigurationMsg{msg}
-		return true, err
-	case 98: // option.txfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(txfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_TxfeeUpdateConfigurationMsg{msg}
-		return true, err
-	case 99: // option.termdeposit_create_deposit_contract_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.CreateDepositContractMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_TermdepositCreateDepositContractMsg{msg}
-		return true, err
-	case 100: // option.termdeposit_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.DepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_TermdepositDepositMsg{msg}
-		return true, err
-	case 101: // option.termdeposit_release_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.ReleaseDepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_TermdepositReleaseDepositMsg{msg}
-		return true, err
-	case 102: // option.termdeposit_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_TermdepositUpdateConfigurationMsg{msg}
-		return true, err
-	case 103: // option.qualityscore_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(qualityscore.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_QualityscoreUpdateConfigurationMsg{msg}
-		return true, err
-	case 104: // option.preregistration_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(preregistration.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_PreregistrationUpdateConfigurationMsg{msg}
-		return true, err
-	case 105: // option.msgfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(msgfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Option = &ProposalOptions_MsgfeeUpdateConfigurationMsg{msg}
-		return true, err
 	default:
 		return false, nil
 	}
@@ -4484,126 +2335,6 @@ func _ProposalOptions_OneofSizer(msg proto.Message) (n int) {
 		n += 2 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
-	case *ProposalOptions_DatamigrationExecuteMigrationMsg:
-		s := proto.Size(x.DatamigrationExecuteMigrationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountUpdateConfigurationMsg:
-		s := proto.Size(x.AccountUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountRegisterDomainMsg:
-		s := proto.Size(x.AccountRegisterDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountReplaceAccountMsgFeesMsg:
-		s := proto.Size(x.AccountReplaceAccountMsgFeesMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountTransferDomainMsg:
-		s := proto.Size(x.AccountTransferDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountRenewDomainMsg:
-		s := proto.Size(x.AccountRenewDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountDeleteDomainMsg:
-		s := proto.Size(x.AccountDeleteDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountRegisterAccountMsg:
-		s := proto.Size(x.AccountRegisterAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountTransferAccountMsg:
-		s := proto.Size(x.AccountTransferAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountReplaceAccountTargetsMsg:
-		s := proto.Size(x.AccountReplaceAccountTargetsMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountDeleteAccountMsg:
-		s := proto.Size(x.AccountDeleteAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountFlushDomainMsg:
-		s := proto.Size(x.AccountFlushDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountRenewAccountMsg:
-		s := proto.Size(x.AccountRenewAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountAddAccountCertificateMsg:
-		s := proto.Size(x.AccountAddAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_AccountDeleteAccountCertificateMsg:
-		s := proto.Size(x.AccountDeleteAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_CashUpdateConfigurationMsg:
-		s := proto.Size(x.CashUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_TxfeeUpdateConfigurationMsg:
-		s := proto.Size(x.TxfeeUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_TermdepositCreateDepositContractMsg:
-		s := proto.Size(x.TermdepositCreateDepositContractMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_TermdepositDepositMsg:
-		s := proto.Size(x.TermdepositDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_TermdepositReleaseDepositMsg:
-		s := proto.Size(x.TermdepositReleaseDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_TermdepositUpdateConfigurationMsg:
-		s := proto.Size(x.TermdepositUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_QualityscoreUpdateConfigurationMsg:
-		s := proto.Size(x.QualityscoreUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_PreregistrationUpdateConfigurationMsg:
-		s := proto.Size(x.PreregistrationUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ProposalOptions_MsgfeeUpdateConfigurationMsg:
-		s := proto.Size(x.MsgfeeUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
 	case nil:
 	default:
 		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
@@ -4673,30 +2404,6 @@ type ExecuteProposalBatchMsg_Union struct {
 	//	*ExecuteProposalBatchMsg_Union_GovUpdateElectionRuleMsg
 	//	*ExecuteProposalBatchMsg_Union_GovCreateTextResolutionMsg
 	//	*ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg
-	//	*ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg
-	//	*ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg
-	//	*ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg
-	//	*ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg
-	//	*ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg
-	//	*ExecuteProposalBatchMsg_Union_TermdepositDepositMsg
-	//	*ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg
-	//	*ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg
-	//	*ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg
-	//	*ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg
-	//	*ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg
 	Sum isExecuteProposalBatchMsg_Union_Sum `protobuf_oneof:"sum"`
 }
 
@@ -4787,78 +2494,6 @@ type ExecuteProposalBatchMsg_Union_GovCreateTextResolutionMsg struct {
 type ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg struct {
 	MsgfeeSetMsgFeeMsg *msgfee.SetMsgFeeMsg `protobuf:"bytes,80,opt,name=msgfee_set_msg_fee_msg,json=msgfeeSetMsgFeeMsg,proto3,oneof"`
 }
-type ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg struct {
-	DatamigrationExecuteMigrationMsg *datamigration.ExecuteMigrationMsg `protobuf:"bytes,81,opt,name=datamigration_execute_migration_msg,json=datamigrationExecuteMigrationMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg struct {
-	AccountUpdateConfigurationMsg *account.UpdateConfigurationMsg `protobuf:"bytes,82,opt,name=account_update_configuration_msg,json=accountUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg struct {
-	AccountRegisterDomainMsg *account.RegisterDomainMsg `protobuf:"bytes,83,opt,name=account_register_domain_msg,json=accountRegisterDomainMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg struct {
-	AccountReplaceAccountMsgFeesMsg *account.ReplaceAccountMsgFeesMsg `protobuf:"bytes,84,opt,name=account_replace_account_msg_fees_msg,json=accountReplaceAccountMsgFeesMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg struct {
-	AccountTransferDomainMsg *account.TransferDomainMsg `protobuf:"bytes,85,opt,name=account_transfer_domain_msg,json=accountTransferDomainMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg struct {
-	AccountRenewDomainMsg *account.RenewDomainMsg `protobuf:"bytes,86,opt,name=account_renew_domain_msg,json=accountRenewDomainMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg struct {
-	AccountDeleteDomainMsg *account.DeleteDomainMsg `protobuf:"bytes,87,opt,name=account_delete_domain_msg,json=accountDeleteDomainMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg struct {
-	AccountRegisterAccountMsg *account.RegisterAccountMsg `protobuf:"bytes,88,opt,name=account_register_account_msg,json=accountRegisterAccountMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg struct {
-	AccountTransferAccountMsg *account.TransferAccountMsg `protobuf:"bytes,89,opt,name=account_transfer_account_msg,json=accountTransferAccountMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg struct {
-	AccountReplaceAccountTargetsMsg *account.ReplaceAccountTargetsMsg `protobuf:"bytes,90,opt,name=account_replace_account_targets_msg,json=accountReplaceAccountTargetsMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg struct {
-	AccountDeleteAccountMsg *account.DeleteAccountMsg `protobuf:"bytes,91,opt,name=account_delete_account_msg,json=accountDeleteAccountMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg struct {
-	AccountFlushDomainMsg *account.FlushDomainMsg `protobuf:"bytes,92,opt,name=account_flush_domain_msg,json=accountFlushDomainMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg struct {
-	AccountRenewAccountMsg *account.RenewAccountMsg `protobuf:"bytes,93,opt,name=account_renew_account_msg,json=accountRenewAccountMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg struct {
-	AccountAddAccountCertificateMsg *account.AddAccountCertificateMsg `protobuf:"bytes,94,opt,name=account_add_account_certificate_msg,json=accountAddAccountCertificateMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg struct {
-	AccountDeleteAccountCertificateMsg *account.DeleteAccountCertificateMsg `protobuf:"bytes,95,opt,name=account_delete_account_certificate_msg,json=accountDeleteAccountCertificateMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg struct {
-	CashUpdateConfigurationMsg *cash.UpdateConfigurationMsg `protobuf:"bytes,97,opt,name=cash_update_configuration_msg,json=cashUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg struct {
-	TxfeeUpdateConfigurationMsg *txfee.UpdateConfigurationMsg `protobuf:"bytes,98,opt,name=txfee_update_configuration_msg,json=txfeeUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg struct {
-	TermdepositCreateDepositContractMsg *termdeposit.CreateDepositContractMsg `protobuf:"bytes,99,opt,name=termdeposit_create_deposit_contract_msg,json=termdepositCreateDepositContractMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_TermdepositDepositMsg struct {
-	TermdepositDepositMsg *termdeposit.DepositMsg `protobuf:"bytes,100,opt,name=termdeposit_deposit_msg,json=termdepositDepositMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg struct {
-	TermdepositReleaseDepositMsg *termdeposit.ReleaseDepositMsg `protobuf:"bytes,101,opt,name=termdeposit_release_deposit_msg,json=termdepositReleaseDepositMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg struct {
-	TermdepositUpdateConfigurationMsg *termdeposit.UpdateConfigurationMsg `protobuf:"bytes,102,opt,name=termdeposit_update_configuration_msg,json=termdepositUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg struct {
-	QualityscoreUpdateConfigurationMsg *qualityscore.UpdateConfigurationMsg `protobuf:"bytes,103,opt,name=qualityscore_update_configuration_msg,json=qualityscoreUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg struct {
-	PreregistrationUpdateConfigurationMsg *preregistration.UpdateConfigurationMsg `protobuf:"bytes,104,opt,name=preregistration_update_configuration_msg,json=preregistrationUpdateConfigurationMsg,proto3,oneof"`
-}
-type ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg struct {
-	MsgfeeUpdateConfigurationMsg *msgfee.UpdateConfigurationMsg `protobuf:"bytes,105,opt,name=msgfee_update_configuration_msg,json=msgfeeUpdateConfigurationMsg,proto3,oneof"`
-}
 
 func (*ExecuteProposalBatchMsg_Union_SendMsg) isExecuteProposalBatchMsg_Union_Sum()                  {}
 func (*ExecuteProposalBatchMsg_Union_EscrowReleaseMsg) isExecuteProposalBatchMsg_Union_Sum()         {}
@@ -4879,46 +2514,6 @@ func (*ExecuteProposalBatchMsg_Union_GovUpdateElectionRuleMsg) isExecuteProposal
 func (*ExecuteProposalBatchMsg_Union_GovCreateTextResolutionMsg) isExecuteProposalBatchMsg_Union_Sum() {
 }
 func (*ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg) isExecuteProposalBatchMsg_Union_Sum() {}
-func (*ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg) isExecuteProposalBatchMsg_Union_Sum() {}
-func (*ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg) isExecuteProposalBatchMsg_Union_Sum() {}
-func (*ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg) isExecuteProposalBatchMsg_Union_Sum()    {}
-func (*ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg) isExecuteProposalBatchMsg_Union_Sum()   {}
-func (*ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg) isExecuteProposalBatchMsg_Union_Sum() {}
-func (*ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg) isExecuteProposalBatchMsg_Union_Sum()   {}
-func (*ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg) isExecuteProposalBatchMsg_Union_Sum()  {}
-func (*ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_TermdepositDepositMsg) isExecuteProposalBatchMsg_Union_Sum() {}
-func (*ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
-func (*ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg) isExecuteProposalBatchMsg_Union_Sum() {
-}
 
 func (m *ExecuteProposalBatchMsg_Union) GetSum() isExecuteProposalBatchMsg_Union_Sum {
 	if m != nil {
@@ -5039,174 +2634,6 @@ func (m *ExecuteProposalBatchMsg_Union) GetMsgfeeSetMsgFeeMsg() *msgfee.SetMsgFe
 	return nil
 }
 
-func (m *ExecuteProposalBatchMsg_Union) GetDatamigrationExecuteMigrationMsg() *datamigration.ExecuteMigrationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg); ok {
-		return x.DatamigrationExecuteMigrationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountUpdateConfigurationMsg() *account.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg); ok {
-		return x.AccountUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountRegisterDomainMsg() *account.RegisterDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg); ok {
-		return x.AccountRegisterDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountReplaceAccountMsgFeesMsg() *account.ReplaceAccountMsgFeesMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg); ok {
-		return x.AccountReplaceAccountMsgFeesMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountTransferDomainMsg() *account.TransferDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg); ok {
-		return x.AccountTransferDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountRenewDomainMsg() *account.RenewDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg); ok {
-		return x.AccountRenewDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountDeleteDomainMsg() *account.DeleteDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg); ok {
-		return x.AccountDeleteDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountRegisterAccountMsg() *account.RegisterAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg); ok {
-		return x.AccountRegisterAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountTransferAccountMsg() *account.TransferAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg); ok {
-		return x.AccountTransferAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountReplaceAccountTargetsMsg() *account.ReplaceAccountTargetsMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg); ok {
-		return x.AccountReplaceAccountTargetsMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountDeleteAccountMsg() *account.DeleteAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg); ok {
-		return x.AccountDeleteAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountFlushDomainMsg() *account.FlushDomainMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg); ok {
-		return x.AccountFlushDomainMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountRenewAccountMsg() *account.RenewAccountMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg); ok {
-		return x.AccountRenewAccountMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountAddAccountCertificateMsg() *account.AddAccountCertificateMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg); ok {
-		return x.AccountAddAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetAccountDeleteAccountCertificateMsg() *account.DeleteAccountCertificateMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg); ok {
-		return x.AccountDeleteAccountCertificateMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetCashUpdateConfigurationMsg() *cash.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg); ok {
-		return x.CashUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetTxfeeUpdateConfigurationMsg() *txfee.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg); ok {
-		return x.TxfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetTermdepositCreateDepositContractMsg() *termdeposit.CreateDepositContractMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg); ok {
-		return x.TermdepositCreateDepositContractMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetTermdepositDepositMsg() *termdeposit.DepositMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_TermdepositDepositMsg); ok {
-		return x.TermdepositDepositMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetTermdepositReleaseDepositMsg() *termdeposit.ReleaseDepositMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg); ok {
-		return x.TermdepositReleaseDepositMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetTermdepositUpdateConfigurationMsg() *termdeposit.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg); ok {
-		return x.TermdepositUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetQualityscoreUpdateConfigurationMsg() *qualityscore.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg); ok {
-		return x.QualityscoreUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetPreregistrationUpdateConfigurationMsg() *preregistration.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg); ok {
-		return x.PreregistrationUpdateConfigurationMsg
-	}
-	return nil
-}
-
-func (m *ExecuteProposalBatchMsg_Union) GetMsgfeeUpdateConfigurationMsg() *msgfee.UpdateConfigurationMsg {
-	if x, ok := m.GetSum().(*ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg); ok {
-		return x.MsgfeeUpdateConfigurationMsg
-	}
-	return nil
-}
-
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*ExecuteProposalBatchMsg_Union) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
 	return _ExecuteProposalBatchMsg_Union_OneofMarshaler, _ExecuteProposalBatchMsg_Union_OneofUnmarshaler, _ExecuteProposalBatchMsg_Union_OneofSizer, []interface{}{
@@ -5226,30 +2653,6 @@ func (*ExecuteProposalBatchMsg_Union) XXX_OneofFuncs() (func(msg proto.Message, 
 		(*ExecuteProposalBatchMsg_Union_GovUpdateElectionRuleMsg)(nil),
 		(*ExecuteProposalBatchMsg_Union_GovCreateTextResolutionMsg)(nil),
 		(*ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_TermdepositDepositMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg)(nil),
-		(*ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg)(nil),
 	}
 }
 
@@ -5335,126 +2738,6 @@ func _ExecuteProposalBatchMsg_Union_OneofMarshaler(msg proto.Message, b *proto.B
 	case *ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg:
 		_ = b.EncodeVarint(80<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.MsgfeeSetMsgFeeMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg:
-		_ = b.EncodeVarint(81<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.DatamigrationExecuteMigrationMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg:
-		_ = b.EncodeVarint(82<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg:
-		_ = b.EncodeVarint(83<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg:
-		_ = b.EncodeVarint(84<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountMsgFeesMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg:
-		_ = b.EncodeVarint(85<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg:
-		_ = b.EncodeVarint(86<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg:
-		_ = b.EncodeVarint(87<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg:
-		_ = b.EncodeVarint(88<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRegisterAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg:
-		_ = b.EncodeVarint(89<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountTransferAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg:
-		_ = b.EncodeVarint(90<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountReplaceAccountTargetsMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg:
-		_ = b.EncodeVarint(91<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg:
-		_ = b.EncodeVarint(92<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountFlushDomainMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg:
-		_ = b.EncodeVarint(93<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountRenewAccountMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg:
-		_ = b.EncodeVarint(94<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountAddAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg:
-		_ = b.EncodeVarint(95<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.AccountDeleteAccountCertificateMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg:
-		_ = b.EncodeVarint(97<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.CashUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(98<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TxfeeUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg:
-		_ = b.EncodeVarint(99<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositCreateDepositContractMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_TermdepositDepositMsg:
-		_ = b.EncodeVarint(100<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositDepositMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg:
-		_ = b.EncodeVarint(101<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositReleaseDepositMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg:
-		_ = b.EncodeVarint(102<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.TermdepositUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg:
-		_ = b.EncodeVarint(103<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.QualityscoreUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg:
-		_ = b.EncodeVarint(104<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.PreregistrationUpdateConfigurationMsg); err != nil {
-			return err
-		}
-	case *ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg:
-		_ = b.EncodeVarint(105<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.MsgfeeUpdateConfigurationMsg); err != nil {
 			return err
 		}
 	case nil:
@@ -5595,198 +2878,6 @@ func _ExecuteProposalBatchMsg_Union_OneofUnmarshaler(msg proto.Message, tag, wir
 		err := b.DecodeMessage(msg)
 		m.Sum = &ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg{msg}
 		return true, err
-	case 81: // sum.datamigration_execute_migration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(datamigration.ExecuteMigrationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg{msg}
-		return true, err
-	case 82: // sum.account_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg{msg}
-		return true, err
-	case 83: // sum.account_register_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg{msg}
-		return true, err
-	case 84: // sum.account_replace_account_msg_fees_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountMsgFeesMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg{msg}
-		return true, err
-	case 85: // sum.account_transfer_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg{msg}
-		return true, err
-	case 86: // sum.account_renew_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg{msg}
-		return true, err
-	case 87: // sum.account_delete_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg{msg}
-		return true, err
-	case 88: // sum.account_register_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RegisterAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg{msg}
-		return true, err
-	case 89: // sum.account_transfer_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.TransferAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg{msg}
-		return true, err
-	case 90: // sum.account_replace_account_targets_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.ReplaceAccountTargetsMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg{msg}
-		return true, err
-	case 91: // sum.account_delete_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg{msg}
-		return true, err
-	case 92: // sum.account_flush_domain_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.FlushDomainMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg{msg}
-		return true, err
-	case 93: // sum.account_renew_account_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.RenewAccountMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg{msg}
-		return true, err
-	case 94: // sum.account_add_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.AddAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg{msg}
-		return true, err
-	case 95: // sum.account_delete_account_certificate_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(account.DeleteAccountCertificateMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg{msg}
-		return true, err
-	case 97: // sum.cash_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(cash.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg{msg}
-		return true, err
-	case 98: // sum.txfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(txfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg{msg}
-		return true, err
-	case 99: // sum.termdeposit_create_deposit_contract_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.CreateDepositContractMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg{msg}
-		return true, err
-	case 100: // sum.termdeposit_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.DepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositDepositMsg{msg}
-		return true, err
-	case 101: // sum.termdeposit_release_deposit_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.ReleaseDepositMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg{msg}
-		return true, err
-	case 102: // sum.termdeposit_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(termdeposit.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg{msg}
-		return true, err
-	case 103: // sum.qualityscore_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(qualityscore.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg{msg}
-		return true, err
-	case 104: // sum.preregistration_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(preregistration.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg{msg}
-		return true, err
-	case 105: // sum.msgfee_update_configuration_msg
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(msgfee.UpdateConfigurationMsg)
-		err := b.DecodeMessage(msg)
-		m.Sum = &ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg{msg}
-		return true, err
 	default:
 		return false, nil
 	}
@@ -5873,126 +2964,6 @@ func _ExecuteProposalBatchMsg_Union_OneofSizer(msg proto.Message) (n int) {
 		n += s
 	case *ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg:
 		s := proto.Size(x.MsgfeeSetMsgFeeMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg:
-		s := proto.Size(x.DatamigrationExecuteMigrationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg:
-		s := proto.Size(x.AccountUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg:
-		s := proto.Size(x.AccountRegisterDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg:
-		s := proto.Size(x.AccountReplaceAccountMsgFeesMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg:
-		s := proto.Size(x.AccountTransferDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg:
-		s := proto.Size(x.AccountRenewDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg:
-		s := proto.Size(x.AccountDeleteDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg:
-		s := proto.Size(x.AccountRegisterAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg:
-		s := proto.Size(x.AccountTransferAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg:
-		s := proto.Size(x.AccountReplaceAccountTargetsMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg:
-		s := proto.Size(x.AccountDeleteAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg:
-		s := proto.Size(x.AccountFlushDomainMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg:
-		s := proto.Size(x.AccountRenewAccountMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg:
-		s := proto.Size(x.AccountAddAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg:
-		s := proto.Size(x.AccountDeleteAccountCertificateMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg:
-		s := proto.Size(x.CashUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg:
-		s := proto.Size(x.TxfeeUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg:
-		s := proto.Size(x.TermdepositCreateDepositContractMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_TermdepositDepositMsg:
-		s := proto.Size(x.TermdepositDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg:
-		s := proto.Size(x.TermdepositReleaseDepositMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg:
-		s := proto.Size(x.TermdepositUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg:
-		s := proto.Size(x.QualityscoreUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg:
-		s := proto.Size(x.PreregistrationUpdateConfigurationMsg)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg:
-		s := proto.Size(x.MsgfeeUpdateConfigurationMsg)
 		n += 2 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
@@ -6282,137 +3253,93 @@ func init() {
 func init() { proto.RegisterFile("cmd/bnsd/app/codec.proto", fileDescriptor_a8efb1d2ea3c411d) }
 
 var fileDescriptor_a8efb1d2ea3c411d = []byte{
-	// 2079 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x5c, 0xdb, 0x72, 0x1c, 0x47,
-	0x19, 0x96, 0x22, 0x27, 0xa8, 0xda, 0x47, 0xb5, 0x6d, 0x69, 0xb5, 0x92, 0x56, 0xb2, 0x64, 0x3b,
-	0x2e, 0xaa, 0x98, 0xa5, 0x6c, 0xce, 0x24, 0x18, 0x6b, 0x25, 0xe3, 0x04, 0x7c, 0xc8, 0x4a, 0x0a,
-	0x01, 0x3b, 0xd9, 0xb4, 0x66, 0x7a, 0x47, 0x83, 0x77, 0xa7, 0x37, 0x73, 0x58, 0xad, 0xa8, 0xe2,
-	0x86, 0xe2, 0x01, 0x78, 0x05, 0x9e, 0x03, 0x1e, 0x20, 0x97, 0xb9, 0xe4, 0xca, 0x45, 0xd9, 0xaf,
-	0xc0, 0x15, 0x57, 0x54, 0x9f, 0x66, 0xfe, 0xee, 0x9d, 0xb1, 0x81, 0x50, 0x65, 0x48, 0xfa, 0xca,
-	0x3b, 0xfd, 0x7d, 0xf3, 0x7d, 0x7d, 0xfc, 0xa7, 0xff, 0x9e, 0xb1, 0x50, 0xc3, 0x1f, 0x06, 0xed,
-	0xc3, 0x38, 0x0d, 0xda, 0x64, 0x34, 0x6a, 0xfb, 0x2c, 0xa0, 0xbe, 0x37, 0x4a, 0x58, 0xc6, 0xf0,
-	0x29, 0x5e, 0xda, 0x6c, 0x15, 0xf8, 0xa4, 0x4d, 0x7c, 0x9f, 0xe5, 0x71, 0x06, 0x59, 0xcd, 0xeb,
-	0x00, 0x1f, 0x25, 0x34, 0xa1, 0x61, 0x94, 0x66, 0x09, 0xc9, 0x22, 0x16, 0x1b, 0xbc, 0x2d, 0xc0,
-	0xfb, 0x2c, 0x27, 0x83, 0x28, 0x3b, 0x49, 0x7d, 0x96, 0x50, 0x83, 0xb4, 0x09, 0x48, 0x19, 0x4d,
-	0x86, 0x01, 0x1d, 0xb1, 0x34, 0x32, 0x0d, 0xd7, 0x01, 0x27, 0x4f, 0x69, 0x12, 0x93, 0xa1, 0x29,
-	0xb2, 0x1c, 0x90, 0x8c, 0x0c, 0xa3, 0xb0, 0xa2, 0x12, 0x97, 0x42, 0x16, 0x32, 0xf1, 0xb3, 0xcd,
-	0x7f, 0xa9, 0xd2, 0xcb, 0xd5, 0xe4, 0x8b, 0x93, 0x36, 0x49, 0x8f, 0x89, 0xd1, 0x29, 0x4d, 0x3c,
-	0x69, 0xfb, 0x24, 0x3d, 0x32, 0xca, 0x16, 0x27, 0x6d, 0x3f, 0x4f, 0x12, 0x1a, 0xfb, 0x27, 0x46,
-	0x79, 0x73, 0xd2, 0x0e, 0x78, 0x67, 0x44, 0x87, 0xf9, 0x74, 0x4d, 0x26, 0x6d, 0x9a, 0xfa, 0x09,
-	0x3b, 0x36, 0x4a, 0x17, 0x26, 0xed, 0x90, 0x8d, 0x6d, 0xe2, 0x30, 0x0d, 0xfb, 0x94, 0xda, 0x96,
-	0xc3, 0x7c, 0x90, 0x45, 0x69, 0x14, 0xda, 0xd5, 0x4b, 0xa3, 0x30, 0xb5, 0xdb, 0x91, 0x4d, 0x6c,
-	0x81, 0xc6, 0xa4, 0x3d, 0x26, 0x83, 0x28, 0x20, 0x19, 0x4b, 0x0c, 0xfa, 0xe6, 0xb3, 0x6b, 0xe8,
-	0x8d, 0xfd, 0x09, 0xbe, 0x82, 0x4e, 0xf5, 0x29, 0x4d, 0x1b, 0xb3, 0x1b, 0xb3, 0x37, 0x4e, 0xdf,
-	0x3c, 0xeb, 0xf1, 0x56, 0x7b, 0x77, 0x29, 0x7d, 0x2f, 0xee, 0xb3, 0xae, 0x80, 0xf0, 0x4d, 0x84,
-	0xd2, 0x28, 0x8c, 0x49, 0x96, 0x27, 0x34, 0x6d, 0xbc, 0xb1, 0x31, 0x77, 0xe3, 0xf4, 0x4d, 0xec,
-	0x71, 0x7f, 0x6f, 0x2f, 0x0b, 0xf6, 0x34, 0xd4, 0x05, 0x2c, 0xdc, 0x44, 0xf3, 0xba, 0xe2, 0x8d,
-	0x53, 0x1b, 0x73, 0x37, 0xce, 0x74, 0x8b, 0x6b, 0x7c, 0x0b, 0x9d, 0xe5, 0x2e, 0xbd, 0x94, 0xc6,
-	0x41, 0x6f, 0x98, 0x86, 0x8d, 0x5b, 0xd0, 0x7b, 0x8f, 0xc6, 0xc1, 0xfd, 0x34, 0xbc, 0x37, 0xd3,
-	0x3d, 0xcd, 0xaf, 0xd5, 0x25, 0xbe, 0x8d, 0x16, 0x64, 0x47, 0xf6, 0xfc, 0x84, 0x92, 0x8c, 0x8a,
-	0x1b, 0xbf, 0x23, 0x6e, 0x5c, 0xf0, 0x24, 0xe2, 0x75, 0x04, 0x22, 0x6f, 0x3e, 0x2f, 0xcb, 0x8a,
-	0x22, 0xbc, 0x8d, 0xb0, 0x12, 0x48, 0xe8, 0x80, 0x92, 0x54, 0x2a, 0x7c, 0x57, 0x28, 0x60, 0xad,
-	0xd0, 0x95, 0x90, 0x94, 0xb8, 0x20, 0x0b, 0xcb, 0x32, 0x50, 0x89, 0x84, 0x66, 0x79, 0x12, 0x0b,
-	0x89, 0xef, 0x99, 0x95, 0xe8, 0x0a, 0xc4, 0xa8, 0x44, 0x51, 0x84, 0x0f, 0xd0, 0xb2, 0x12, 0xc8,
-	0x47, 0x01, 0x6f, 0xc5, 0x88, 0x24, 0x59, 0x44, 0x53, 0x21, 0xf4, 0x7d, 0x21, 0xd4, 0xd0, 0x42,
-	0x07, 0x82, 0xf1, 0x48, 0x12, 0xa4, 0xde, 0xa2, 0x84, 0x6c, 0x04, 0xef, 0xa2, 0x8b, 0xba, 0x77,
-	0x61, 0xf7, 0xfc, 0x40, 0x08, 0x5e, 0xf4, 0x34, 0x66, 0x74, 0xd0, 0x82, 0x2e, 0x2d, 0xbb, 0x08,
-	0xca, 0xa8, 0xfa, 0x71, 0x99, 0x1f, 0xda, 0x32, 0xd2, 0xdf, 0x92, 0x29, 0x0a, 0x79, 0x23, 0xcb,
-	0x39, 0xd7, 0x23, 0xa3, 0xd1, 0xe0, 0xa4, 0x17, 0x44, 0xfd, 0xbe, 0x10, 0xfb, 0x91, 0x6a, 0x64,
-	0xc9, 0xf0, 0xee, 0x70, 0xc6, 0x4e, 0xd4, 0xef, 0xab, 0x46, 0x96, 0x10, 0x44, 0x78, 0xed, 0xf4,
-	0xf2, 0x83, 0x8d, 0xfc, 0xb1, 0xaa, 0x9d, 0xc6, 0xcc, 0x46, 0xea, 0xd2, 0xb2, 0x91, 0x1d, 0xb4,
-	0x40, 0x27, 0xd4, 0xcf, 0x33, 0xda, 0x3b, 0x24, 0x99, 0x7f, 0x24, 0x44, 0xde, 0x11, 0x22, 0x97,
-	0x3d, 0x1e, 0x6f, 0xbc, 0x5d, 0x09, 0x6f, 0x73, 0x54, 0x8f, 0xa3, 0x59, 0x84, 0x1f, 0xa3, 0x15,
-	0x1d, 0x93, 0x7a, 0x32, 0x14, 0xd2, 0xa4, 0x97, 0xb1, 0xa7, 0x54, 0x4e, 0x89, 0x77, 0x85, 0x5c,
-	0xd3, 0xd3, 0x1c, 0xaf, 0xab, 0x38, 0xfb, 0x9c, 0x22, 0x35, 0x1b, 0x1a, 0xb4, 0x31, 0x43, 0x3c,
-	0x4b, 0x48, 0x9c, 0xf6, 0x0d, 0xf1, 0x9f, 0xd8, 0xe2, 0xfb, 0x8a, 0x53, 0x25, 0x6e, 0x63, 0xf8,
-	0x29, 0xba, 0x52, 0x88, 0xfb, 0x47, 0x24, 0x0e, 0xa9, 0x92, 0xce, 0x48, 0x12, 0xd2, 0x4c, 0xce,
-	0xc4, 0xdb, 0xc2, 0x62, 0xbd, 0xb4, 0xe8, 0x08, 0xa6, 0x10, 0xd9, 0x97, 0x3c, 0xe9, 0xb3, 0xa6,
-	0x19, 0x95, 0x04, 0x3c, 0x04, 0x66, 0x6a, 0x42, 0xf9, 0x2c, 0xee, 0x47, 0x61, 0x2e, 0xe3, 0xb0,
-	0x30, 0xfb, 0xa9, 0x30, 0xdb, 0x28, 0xcd, 0xe4, 0x4c, 0xea, 0x40, 0xa2, 0x74, 0x6b, 0x69, 0x4a,
-	0x35, 0x03, 0x7f, 0x80, 0x96, 0x60, 0x20, 0x86, 0xb3, 0x64, 0x5b, 0x98, 0x2c, 0x79, 0x10, 0x37,
-	0x66, 0xca, 0x65, 0x88, 0x94, 0xb3, 0xe5, 0x1e, 0xba, 0x60, 0x48, 0x72, 0xad, 0x8e, 0xd0, 0x5a,
-	0x31, 0xb5, 0x76, 0xf4, 0x85, 0x8e, 0x3f, 0x10, 0xe5, 0x4a, 0x0f, 0xd0, 0xa2, 0xa1, 0x94, 0xd0,
-	0x94, 0x66, 0x42, 0x6f, 0x47, 0xe8, 0x2d, 0x9a, 0x7a, 0x5d, 0x0e, 0x4b, 0xa9, 0x4b, 0x10, 0xd0,
-	0xe5, 0xf8, 0x13, 0xb4, 0x5a, 0x3c, 0xcf, 0x7a, 0xf9, 0x28, 0x4c, 0x48, 0x40, 0x7b, 0xa9, 0x7f,
-	0x44, 0x87, 0x44, 0xa8, 0xee, 0xaa, 0x5a, 0x16, 0x24, 0xef, 0x40, 0x92, 0xf6, 0x04, 0x47, 0x4a,
-	0x2f, 0x17, 0xa8, 0x0d, 0xe2, 0x77, 0xd0, 0x05, 0xf1, 0x58, 0x84, 0xbd, 0x78, 0x57, 0x68, 0x5e,
-	0xf0, 0x04, 0x60, 0x74, 0xdf, 0x39, 0x51, 0x54, 0xf6, 0xdb, 0x6d, 0xb4, 0x20, 0xef, 0x86, 0xc1,
-	0xf6, 0x67, 0x2a, 0x52, 0xca, 0xdb, 0x8d, 0x58, 0x7b, 0x5e, 0x94, 0x81, 0x50, 0x5b, 0xd8, 0x83,
-	0x48, 0x7b, 0xcf, 0xb0, 0x87, 0x81, 0xf6, 0x9c, 0xba, 0x5d, 0xc7, 0xd9, 0x87, 0x68, 0x29, 0x64,
-	0x63, 0x5d, 0xf5, 0x51, 0xc2, 0x46, 0x2c, 0x25, 0x03, 0x21, 0xf2, 0x9e, 0xea, 0xed, 0x90, 0x8d,
-	0x55, 0x0b, 0x1e, 0x29, 0x58, 0xf5, 0x76, 0xc8, 0xc6, 0x53, 0xe5, 0x5a, 0x30, 0xa0, 0x03, 0x6a,
-	0x0b, 0xbe, 0x0f, 0x04, 0x77, 0x04, 0x3e, 0x2d, 0x38, 0x55, 0x8e, 0xbf, 0x8d, 0xce, 0x70, 0xc1,
-	0x31, 0x53, 0x5d, 0xfb, 0x73, 0xa1, 0x72, 0x46, 0xa8, 0x7c, 0xc8, 0x74, 0xb7, 0xa2, 0x90, 0x8d,
-	0xd5, 0x15, 0x0f, 0xab, 0xfc, 0x0e, 0xb5, 0x8e, 0xe8, 0x80, 0xfa, 0x19, 0x4b, 0xf4, 0xc8, 0xdc,
-	0x57, 0x61, 0x95, 0xdf, 0x2e, 0x57, 0xc7, 0x6e, 0x41, 0x50, 0x61, 0x35, 0x64, 0xe3, 0x0a, 0x04,
-	0x3f, 0x41, 0xab, 0xb6, 0xac, 0x98, 0x9e, 0xf9, 0x40, 0x2a, 0x3f, 0x50, 0xe1, 0xc6, 0x52, 0xe6,
-	0x53, 0x31, 0x1f, 0x28, 0xed, 0x86, 0xa9, 0x5d, 0x62, 0xf8, 0x7d, 0xb4, 0x28, 0xb7, 0x35, 0x3d,
-	0x35, 0xdb, 0x7b, 0xfc, 0x37, 0xd7, 0x7d, 0x24, 0x74, 0x2f, 0x79, 0x12, 0xf6, 0xf6, 0xc4, 0xac,
-	0xbe, 0x4b, 0x95, 0x22, 0x96, 0xc5, 0xb0, 0x14, 0xa7, 0x68, 0xcb, 0xd8, 0xf2, 0xf5, 0x74, 0x1c,
-	0x2f, 0x4b, 0xb8, 0xf0, 0x07, 0x42, 0x78, 0xd3, 0x33, 0xb8, 0x3a, 0xa8, 0xdf, 0xd7, 0x05, 0xd2,
-	0x66, 0xc3, 0x20, 0x55, 0x70, 0xf0, 0x6f, 0xd0, 0x86, 0xda, 0x0e, 0xd7, 0x47, 0xb0, 0xae, 0x0a,
-	0x97, 0x8a, 0x58, 0x1f, 0xc0, 0xd6, 0x14, 0xa3, 0x26, 0x7e, 0x3d, 0x46, 0x2b, 0xda, 0xab, 0x78,
-	0xa8, 0x04, 0x6c, 0x48, 0x22, 0x69, 0xb3, 0xa7, 0x46, 0x42, 0xdb, 0xe8, 0x07, 0xc7, 0x8e, 0xa0,
-	0xa8, 0x91, 0x50, 0xe0, 0x14, 0x86, 0x13, 0x74, 0xb5, 0x14, 0x1f, 0x0d, 0x88, 0x4f, 0x7b, 0xfa,
-	0x5a, 0x0d, 0x8b, 0x8c, 0xfd, 0xfb, 0xc2, 0xe5, 0x0a, 0x70, 0x11, 0xe4, 0x3b, 0xf2, 0x52, 0x8e,
-	0x86, 0x8a, 0xfe, 0xeb, 0x85, 0x59, 0x35, 0x05, 0x36, 0xa8, 0x78, 0x90, 0x81, 0x06, 0x1d, 0x58,
-	0x0d, 0xd2, 0x0f, 0xab, 0xaa, 0x06, 0x4d, 0x61, 0xb8, 0x8b, 0x1a, 0x65, 0x83, 0x62, 0x7a, 0x0c,
-	0x95, 0x3f, 0x54, 0xe1, 0xbe, 0x6c, 0x44, 0x4c, 0x8f, 0xa1, 0xec, 0xe5, 0xa2, 0xea, 0x10, 0xe0,
-	0x6b, 0x4c, 0x6b, 0xaa, 0xa5, 0x0e, 0x44, 0x7f, 0xa9, 0xd6, 0x98, 0x16, 0x95, 0x8b, 0x1a, 0xaa,
-	0x2e, 0x2a, 0xc8, 0x42, 0x78, 0xac, 0x9e, 0x1a, 0x58, 0xd0, 0xf9, 0x8d, 0x8f, 0x54, 0xac, 0xb6,
-	0x47, 0xb6, 0xec, 0x51, 0x1e, 0xab, 0xad, 0xa1, 0x2d, 0x41, 0xa8, 0x5f, 0xf4, 0x33, 0xd4, 0xff,
-	0x95, 0xa5, 0xaf, 0x3b, 0xb3, 0x52, 0x7f, 0x1a, 0xc4, 0x9f, 0xa1, 0xad, 0xba, 0xb9, 0x03, 0xb7,
-	0x0d, 0xbf, 0x7e, 0xe9, 0xd4, 0x31, 0x36, 0x0e, 0xd5, 0x53, 0x07, 0x6c, 0x1d, 0x3e, 0x42, 0x4d,
-	0x6b, 0x24, 0x60, 0x83, 0x1e, 0x0b, 0xa7, 0x65, 0x6b, 0x28, 0x8c, 0xe6, 0x2c, 0x19, 0x63, 0x01,
-	0x1a, 0x03, 0xe6, 0x4d, 0x7f, 0x90, 0xa7, 0x47, 0x70, 0x88, 0x9f, 0x58, 0xf3, 0xe6, 0x2e, 0x27,
-	0x54, 0xcd, 0x1b, 0x13, 0x80, 0xf3, 0x46, 0xce, 0x45, 0x58, 0xd9, 0x8f, 0xad, 0x79, 0x23, 0xe6,
-	0x9c, 0x51, 0xd7, 0x45, 0x38, 0x1b, 0xab, 0xfb, 0x9d, 0x04, 0x41, 0x21, 0xea, 0xd3, 0x24, 0x8b,
-	0xfa, 0x91, 0xaf, 0x83, 0xff, 0x27, 0x56, 0xbf, 0xdf, 0x09, 0x02, 0x25, 0xd2, 0x29, 0x99, 0x66,
-	0xbf, 0xd7, 0x51, 0xf0, 0x6f, 0xd1, 0xf5, 0x9a, 0x7e, 0xb7, 0x5d, 0x7b, 0xc2, 0xf5, 0x6a, 0xf5,
-	0x18, 0x4c, 0x19, 0x6f, 0x56, 0x0d, 0x87, 0xe5, 0xfd, 0x29, 0x5a, 0xb5, 0x8e, 0x16, 0xca, 0xe5,
-	0xc2, 0x1d, 0x3f, 0x15, 0x8e, 0xab, 0x9e, 0x45, 0x2a, 0x96, 0x8b, 0x74, 0x6a, 0x5a, 0x30, 0x40,
-	0x31, 0x41, 0x6b, 0x22, 0xf5, 0xac, 0x0d, 0xe5, 0x44, 0x59, 0x88, 0x54, 0xb4, 0x36, 0x8e, 0x37,
-	0x39, 0x5c, 0x13, 0xc4, 0x03, 0xd4, 0x12, 0x69, 0x78, 0xbd, 0xc7, 0xa1, 0xf0, 0x58, 0xf3, 0x04,
-	0xad, 0xde, 0x64, 0x45, 0xe0, 0x35, 0x2e, 0xbf, 0x43, 0x6f, 0x83, 0x83, 0x13, 0xbd, 0xd1, 0x29,
-	0x2e, 0x59, 0x9c, 0x25, 0xc4, 0x97, 0xd3, 0xcf, 0x17, 0x76, 0xd7, 0x3c, 0xc0, 0x57, 0x1b, 0x9f,
-	0x1d, 0x79, 0xd5, 0x51, 0x6c, 0x69, 0xbb, 0x05, 0x78, 0x75, 0x34, 0xbe, 0xd3, 0x86, 0xf6, 0xfa,
-	0x5f, 0x6e, 0x17, 0xa8, 0x25, 0x04, 0xed, 0x94, 0x82, 0x5a, 0x42, 0x00, 0x29, 0x01, 0x1c, 0xa2,
-	0x75, 0x28, 0xa9, 0xf7, 0x8d, 0x50, 0x9a, 0x0a, 0xe9, 0x96, 0x21, 0xad, 0xb6, 0x8c, 0x86, 0xc3,
-	0x2a, 0x20, 0x4c, 0xe1, 0x78, 0x8c, 0xae, 0x42, 0xa3, 0xda, 0x61, 0xea, 0x0b, 0xb7, 0x2d, 0xc3,
-	0xad, 0x76, 0xb0, 0xae, 0x00, 0x56, 0xcd, 0x90, 0x9d, 0xa0, 0x6b, 0xf0, 0x40, 0xac, 0xde, 0x38,
-	0x54, 0x0b, 0x0b, 0xb2, 0xeb, 0x9d, 0x37, 0x21, 0xad, 0xc6, 0xfa, 0xf7, 0xb3, 0xe8, 0x86, 0xbd,
-	0xb2, 0x6a, 0xed, 0x8f, 0x84, 0xfd, 0xdb, 0x53, 0xab, 0xac, 0xb6, 0x06, 0xd7, 0x2c, 0x66, 0x4d,
-	0x25, 0x42, 0xb4, 0xae, 0xb6, 0x82, 0xb5, 0xd6, 0x91, 0x1a, 0x60, 0xb5, 0x27, 0xac, 0x75, 0x5c,
-	0x95, 0x84, 0x6a, 0x7c, 0xfb, 0x4d, 0x34, 0x97, 0xe6, 0xc3, 0xcd, 0xbf, 0xb7, 0xd0, 0x79, 0x2b,
-	0x95, 0xc7, 0xef, 0xa2, 0xf9, 0x21, 0x4d, 0x53, 0x12, 0x8a, 0x13, 0xaf, 0x39, 0xf1, 0x50, 0xac,
-	0xca, 0xf9, 0xbd, 0x83, 0x38, 0x62, 0xf1, 0xf6, 0xa9, 0xcf, 0x9f, 0xad, 0xcf, 0x74, 0x8b, 0x5b,
-	0x9a, 0x7f, 0x6a, 0xa1, 0x37, 0x05, 0xe2, 0xce, 0xb0, 0xdc, 0x19, 0xd6, 0x6b, 0x3c, 0xc3, 0x72,
-	0xc7, 0x4f, 0xee, 0xf8, 0xe9, 0x35, 0x1f, 0x3f, 0xb9, 0xc4, 0xde, 0x25, 0xf6, 0x2e, 0xb1, 0x77,
-	0x89, 0xbd, 0x4b, 0xec, 0x5d, 0x62, 0xff, 0xca, 0xc4, 0xde, 0xa5, 0xdd, 0x2e, 0xed, 0x76, 0x69,
-	0xf7, 0xd7, 0x23, 0xed, 0xfe, 0xcb, 0x06, 0x3a, 0xaf, 0x5f, 0x74, 0x3d, 0x1c, 0x71, 0x30, 0xfd,
-	0xcf, 0xb2, 0xe5, 0xff, 0x46, 0xb2, 0x7b, 0x80, 0x96, 0xf5, 0x8b, 0x2d, 0x29, 0xf5, 0x6f, 0xe6,
-	0xaa, 0xf2, 0xe6, 0x5d, 0x41, 0xa8, 0xc9, 0x55, 0xbf, 0xb2, 0x49, 0xe6, 0x13, 0xd4, 0xd4, 0xfb,
-	0xf0, 0xe2, 0x7d, 0xa7, 0xfd, 0xc5, 0xc4, 0x9a, 0x71, 0x7a, 0xa2, 0x87, 0x1d, 0x7c, 0x39, 0xb1,
-	0x44, 0xab, 0x21, 0x97, 0xc2, 0xba, 0x14, 0xf6, 0xab, 0xfe, 0x05, 0xc5, 0xff, 0xe5, 0x0b, 0xfb,
-	0x43, 0xd4, 0x02, 0x5f, 0x4e, 0x64, 0x74, 0xc2, 0xf7, 0x04, 0x29, 0x1b, 0x94, 0x83, 0xf7, 0x50,
-	0xed, 0xd5, 0xca, 0x0f, 0x28, 0xf6, 0xe9, 0x24, 0xeb, 0x16, 0x24, 0xb5, 0x57, 0x2b, 0x3e, 0xa3,
-	0x98, 0x42, 0xdd, 0xd9, 0x81, 0x3b, 0x3b, 0x70, 0x67, 0x07, 0xee, 0xec, 0xc0, 0x9d, 0x1d, 0xb8,
-	0xb3, 0x03, 0x77, 0x76, 0xe0, 0xce, 0x0e, 0xdc, 0xd9, 0xc1, 0xd7, 0xfe, 0xec, 0x60, 0x1e, 0xbd,
-	0xc5, 0xc4, 0x59, 0xc1, 0xe6, 0x1f, 0xd6, 0xd1, 0x52, 0x4d, 0x3a, 0x89, 0x77, 0xa7, 0xde, 0xde,
-	0x6f, 0xbd, 0x34, 0xff, 0x7c, 0xe5, 0x5b, 0xfc, 0x6f, 0xa2, 0xf9, 0x57, 0x1d, 0x49, 0x7c, 0x23,
-	0x75, 0xc7, 0x11, 0x5f, 0xee, 0x38, 0xc2, 0x65, 0xfa, 0x2e, 0xd3, 0x7f, 0xcd, 0x99, 0xbe, 0xcb,
-	0xc4, 0x5d, 0x26, 0xee, 0x32, 0x71, 0x97, 0x89, 0xbb, 0x4c, 0xdc, 0x65, 0xe2, 0x2e, 0x13, 0x77,
-	0x99, 0xb8, 0xcb, 0xc4, 0x5d, 0x26, 0xee, 0x32, 0xf1, 0x97, 0xbd, 0xc5, 0xff, 0xf3, 0x1c, 0x9a,
-	0xef, 0x24, 0x2c, 0xde, 0x27, 0xe9, 0x53, 0xfc, 0x00, 0x9d, 0x23, 0x79, 0x76, 0x44, 0xe3, 0x8c,
-	0xc7, 0x02, 0x96, 0xc8, 0xec, 0xfb, 0xcc, 0xf6, 0xf5, 0x7f, 0x3c, 0x5b, 0xdf, 0x0c, 0xa3, 0xec,
-	0x28, 0x3f, 0xf4, 0x7c, 0x36, 0x6c, 0x47, 0x6c, 0xfc, 0x2d, 0x16, 0xd3, 0xf6, 0x31, 0x25, 0x63,
-	0xea, 0x75, 0x58, 0x1c, 0x44, 0x62, 0x43, 0x6b, 0xdd, 0xfd, 0xbf, 0xf1, 0x19, 0xfb, 0xc7, 0x68,
-	0xc5, 0xc8, 0x31, 0x8a, 0x0b, 0xfa, 0xaf, 0x27, 0x2e, 0xcb, 0x10, 0x35, 0xc0, 0x2f, 0xff, 0x1f,
-	0xa0, 0x6f, 0xa1, 0xb3, 0x7c, 0xfb, 0x9f, 0x91, 0xc1, 0xe0, 0x44, 0xdc, 0xfc, 0x0b, 0x75, 0x40,
-	0xc1, 0x77, 0xfb, 0xfb, 0xbc, 0x54, 0x7d, 0x33, 0x11, 0xb2, 0xb1, 0xbe, 0x54, 0xa3, 0xb7, 0xdd,
-	0xf8, 0xfc, 0x79, 0x6b, 0xf6, 0x8b, 0xe7, 0xad, 0xd9, 0xbf, 0x3d, 0x6f, 0xcd, 0xfe, 0xf1, 0x45,
-	0x6b, 0xe6, 0x8b, 0x17, 0xad, 0x99, 0xbf, 0xbe, 0x68, 0xcd, 0x1c, 0xbe, 0x25, 0xfe, 0xf8, 0xc7,
-	0xad, 0x7f, 0x06, 0x00, 0x00, 0xff, 0xff, 0x1b, 0x84, 0x8a, 0x61, 0x0f, 0x46, 0x00, 0x00,
+	// 1363 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x99, 0xcf, 0x6f, 0x1b, 0x45,
+	0x14, 0xc7, 0x93, 0x26, 0x2d, 0xd1, 0x24, 0x6d, 0xe2, 0x69, 0x9a, 0x38, 0x6e, 0xeb, 0xa4, 0x41,
+	0x42, 0x15, 0x12, 0xbb, 0xa8, 0xe1, 0x37, 0x2d, 0x05, 0x3b, 0x29, 0x6d, 0xa1, 0x3f, 0x70, 0x1c,
+	0x2e, 0x14, 0xac, 0xc9, 0xee, 0x78, 0xb3, 0xaa, 0xbd, 0x63, 0xed, 0xcc, 0xba, 0xee, 0x7f, 0xc1,
+	0x5f, 0xc2, 0x91, 0x0b, 0x12, 0xe7, 0x1e, 0x7b, 0x44, 0x42, 0xaa, 0x50, 0xfb, 0x3f, 0x70, 0xe0,
+	0x84, 0xe6, 0xcd, 0xcc, 0xee, 0xcc, 0x26, 0xa5, 0x40, 0x0b, 0x81, 0xca, 0x37, 0xef, 0xfb, 0xbe,
+	0xf9, 0xbc, 0xd9, 0xf1, 0xf3, 0x77, 0x66, 0x12, 0x54, 0x0d, 0xfa, 0xa1, 0xbf, 0x9b, 0xf0, 0xd0,
+	0x27, 0x83, 0x81, 0x1f, 0xb0, 0x90, 0x06, 0xde, 0x20, 0x65, 0x82, 0xe1, 0x69, 0x19, 0xad, 0xad,
+	0xe6, 0xfa, 0xc8, 0xcf, 0x38, 0x4d, 0x13, 0xd2, 0xa7, 0x76, 0x5a, 0x6d, 0x31, 0x62, 0x11, 0x83,
+	0x8f, 0xbe, 0xfc, 0xa4, 0xa3, 0xa7, 0xfa, 0x71, 0x94, 0x12, 0x11, 0xb3, 0xc4, 0x49, 0x3e, 0x39,
+	0xf2, 0x09, 0xbf, 0x47, 0x9c, 0x42, 0x35, 0x3c, 0xf2, 0x03, 0xc2, 0xf7, 0x9c, 0xd8, 0xd2, 0xc8,
+	0x0f, 0xb2, 0x34, 0xa5, 0x49, 0x70, 0xdf, 0x89, 0xd7, 0x46, 0x7e, 0x18, 0x73, 0x91, 0xc6, 0xbb,
+	0xd9, 0x3e, 0xf8, 0xe2, 0xc8, 0xa7, 0x3c, 0x48, 0xd9, 0x3d, 0x27, 0x5a, 0x19, 0xf9, 0x11, 0x1b,
+	0x96, 0x13, 0xfb, 0x3c, 0xea, 0x52, 0x5a, 0x2e, 0xd9, 0xcf, 0x7a, 0x22, 0xe6, 0x71, 0x54, 0x9e,
+	0x1e, 0x8f, 0x23, 0xee, 0xc4, 0xaa, 0x23, 0x7f, 0x48, 0x7a, 0x71, 0x48, 0x04, 0x4b, 0x1d, 0x65,
+	0xfd, 0xfb, 0x0a, 0x3a, 0xd2, 0x1e, 0xe1, 0x73, 0x68, 0xba, 0x4b, 0x29, 0xaf, 0x4e, 0xae, 0x4d,
+	0x9e, 0x9f, 0xbd, 0x70, 0xdc, 0x93, 0x2f, 0xe8, 0x5d, 0xa1, 0xf4, 0x5a, 0xd2, 0x65, 0x2d, 0x90,
+	0xf0, 0x05, 0x84, 0x78, 0x1c, 0x25, 0x44, 0x64, 0x29, 0xe5, 0xd5, 0x23, 0x6b, 0x53, 0xe7, 0x67,
+	0x2f, 0x60, 0x4f, 0x96, 0xf2, 0xb6, 0x45, 0xb8, 0x6d, 0xa4, 0x96, 0x95, 0x85, 0x6b, 0x68, 0xc6,
+	0xcc, 0xb1, 0x3a, 0xbd, 0x36, 0x75, 0x7e, 0xae, 0x95, 0x3f, 0xe3, 0x0d, 0x74, 0x5c, 0x56, 0xe9,
+	0x70, 0x9a, 0x84, 0x9d, 0x3e, 0x8f, 0xaa, 0x1b, 0x76, 0xed, 0x6d, 0x9a, 0x84, 0x37, 0x78, 0x74,
+	0x75, 0xa2, 0x35, 0x2b, 0x9f, 0xf5, 0x23, 0xbe, 0x8c, 0x2a, 0x6a, 0xcd, 0x3a, 0x41, 0x4a, 0x89,
+	0xa0, 0x30, 0xf0, 0x2d, 0x18, 0x58, 0xf1, 0x94, 0xe2, 0x35, 0x41, 0x51, 0x83, 0xe7, 0x55, 0x2c,
+	0x0f, 0xe1, 0x06, 0xc2, 0x1a, 0x90, 0xd2, 0x1e, 0x25, 0x5c, 0x11, 0xde, 0x06, 0x02, 0x36, 0x84,
+	0x96, 0x92, 0x14, 0x62, 0x41, 0x05, 0x8b, 0x98, 0x35, 0x89, 0x94, 0x8a, 0x2c, 0x4d, 0x00, 0xf1,
+	0x8e, 0x3b, 0x89, 0x16, 0x28, 0xce, 0x24, 0xf2, 0x10, 0xde, 0x41, 0x2b, 0x1a, 0x90, 0x0d, 0x42,
+	0xf9, 0x16, 0x03, 0x92, 0x8a, 0x98, 0x72, 0x00, 0xbd, 0x0b, 0xa0, 0xaa, 0x01, 0xed, 0x40, 0xc6,
+	0x6d, 0x95, 0xa0, 0x78, 0x4b, 0x4a, 0x2a, 0x2b, 0x78, 0x0b, 0x9d, 0x34, 0xab, 0x6b, 0x2f, 0xcf,
+	0x7b, 0x00, 0x3c, 0xe9, 0x19, 0xcd, 0x59, 0xa0, 0x8a, 0x89, 0x16, 0x4b, 0x64, 0x63, 0xf4, 0xfc,
+	0x24, 0xe6, 0xfd, 0x32, 0x46, 0xd5, 0x2f, 0x61, 0xf2, 0xa0, 0x7c, 0xc9, 0xa2, 0xe7, 0x3a, 0x64,
+	0x30, 0xe8, 0xdd, 0xef, 0x84, 0x71, 0xb7, 0x0b, 0xb0, 0x0f, 0xf4, 0x4b, 0x16, 0x19, 0xde, 0x27,
+	0x32, 0x63, 0x33, 0xee, 0x76, 0xf5, 0x4b, 0x16, 0x92, 0xad, 0xc8, 0xd9, 0x99, 0x5f, 0x9a, 0xfd,
+	0x92, 0x1f, 0xea, 0xd9, 0x19, 0xcd, 0x7d, 0x49, 0x13, 0x2d, 0x5e, 0xb2, 0x89, 0x2a, 0x74, 0x44,
+	0x83, 0x4c, 0xd0, 0xce, 0x2e, 0x11, 0xc1, 0x1e, 0x40, 0x2e, 0x02, 0xe4, 0x94, 0x27, 0xfd, 0xc3,
+	0xdb, 0x52, 0x72, 0x43, 0xaa, 0xe6, 0x7b, 0x74, 0x43, 0xf8, 0x2b, 0x74, 0xda, 0x78, 0x4c, 0x27,
+	0xa5, 0x51, 0xcc, 0x05, 0x4d, 0x3b, 0x82, 0xdd, 0xa5, 0xaa, 0x25, 0x2e, 0x01, 0xae, 0xe6, 0x99,
+	0x1c, 0xaf, 0xa5, 0x73, 0xda, 0x32, 0x45, 0x31, 0xab, 0x46, 0x2c, 0x6b, 0x0e, 0x5c, 0xa4, 0x24,
+	0xe1, 0x5d, 0x07, 0xfe, 0x51, 0x19, 0xde, 0xd6, 0x39, 0x07, 0xc1, 0xcb, 0x1a, 0xbe, 0x8b, 0xce,
+	0xe5, 0xf0, 0x60, 0x8f, 0x24, 0x11, 0xd5, 0x68, 0x41, 0xd2, 0x88, 0x0a, 0xd5, 0x89, 0x97, 0xa1,
+	0xc4, 0x6a, 0x51, 0xa2, 0x09, 0x99, 0x00, 0x69, 0xab, 0x3c, 0x55, 0xe7, 0xac, 0xc9, 0x38, 0x30,
+	0x01, 0xf7, 0xad, 0x62, 0xba, 0xa1, 0x02, 0x96, 0x74, 0xe3, 0x28, 0x53, 0x96, 0x0b, 0xc5, 0x3e,
+	0x86, 0x62, 0x6b, 0x45, 0x31, 0xd5, 0x49, 0x4d, 0x3b, 0x51, 0x55, 0xab, 0x9b, 0x94, 0x83, 0x33,
+	0xf0, 0x17, 0x68, 0xd9, 0xf6, 0x5c, 0xbb, 0x4b, 0x1a, 0x50, 0x64, 0xd9, 0xb3, 0x75, 0xa7, 0x53,
+	0x4e, 0xd9, 0x4a, 0xd1, 0x2d, 0x57, 0xd1, 0x82, 0x83, 0x94, 0xac, 0x26, 0xb0, 0x4e, 0xbb, 0xac,
+	0x4d, 0xf3, 0x60, 0xfc, 0xc7, 0x56, 0x25, 0xe9, 0x26, 0x5a, 0x72, 0x48, 0x29, 0xe5, 0x54, 0x00,
+	0x6f, 0x13, 0x78, 0x4b, 0x2e, 0xaf, 0x25, 0x65, 0x85, 0x5a, 0xb4, 0x05, 0x13, 0xc7, 0xdf, 0xa0,
+	0x33, 0xf9, 0xd6, 0xd5, 0xc9, 0x06, 0x51, 0x4a, 0x42, 0xda, 0xe1, 0xc1, 0x1e, 0xed, 0x13, 0xa0,
+	0x6e, 0xe9, 0x59, 0xe6, 0x49, 0xde, 0x8e, 0x4a, 0xda, 0x86, 0x1c, 0x85, 0x5e, 0xc9, 0xd5, 0xb2,
+	0x88, 0x2f, 0xa2, 0x05, 0xd8, 0x01, 0xed, 0x55, 0xbc, 0x02, 0xcc, 0x05, 0x0f, 0x04, 0x67, 0xf9,
+	0x4e, 0x40, 0xa8, 0x58, 0xb7, 0xcb, 0xa8, 0xa2, 0x46, 0xdb, 0x66, 0xfb, 0xa9, 0x76, 0x4a, 0x35,
+	0xdc, 0xf1, 0xda, 0x79, 0x88, 0x59, 0x56, 0x9b, 0x97, 0xb7, 0x9c, 0xf6, 0xaa, 0x53, 0xde, 0x36,
+	0xda, 0x13, 0x7a, 0xb8, 0xf1, 0xd9, 0x5b, 0x68, 0x39, 0x62, 0x43, 0x33, 0xf5, 0x41, 0xca, 0x06,
+	0x8c, 0x93, 0x1e, 0x40, 0xae, 0xe9, 0xd5, 0x8e, 0xd8, 0x50, 0xbf, 0xc1, 0x6d, 0x2d, 0xeb, 0xd5,
+	0x8e, 0xd8, 0x70, 0x5f, 0xdc, 0x00, 0x43, 0xda, 0xa3, 0x65, 0xe0, 0x75, 0x0b, 0xb8, 0x09, 0xfa,
+	0x7e, 0xe0, 0xbe, 0x38, 0x7e, 0x13, 0xcd, 0x49, 0xe0, 0x90, 0xe9, 0xa5, 0xfd, 0x0c, 0x28, 0x73,
+	0x40, 0xf9, 0x92, 0x99, 0x65, 0x45, 0x11, 0x1b, 0xea, 0x27, 0x69, 0xab, 0x72, 0x84, 0xfe, 0x1d,
+	0xd1, 0x1e, 0x0d, 0x04, 0x4b, 0xcd, 0x37, 0x73, 0x43, 0xdb, 0xaa, 0x1c, 0xae, 0x7e, 0x1d, 0x5b,
+	0x79, 0x82, 0xb6, 0xd5, 0x88, 0x0d, 0x0f, 0x50, 0xf0, 0x1d, 0x74, 0xa6, 0x8c, 0x85, 0xf6, 0xcc,
+	0x7a, 0x8a, 0x7c, 0x53, 0xdb, 0x4d, 0x89, 0x2c, 0x5b, 0x31, 0xeb, 0x69, 0x76, 0xd5, 0x65, 0x17,
+	0x1a, 0xbe, 0x8e, 0x96, 0xd4, 0x09, 0xa6, 0xa3, 0xbb, 0xbd, 0x23, 0x3f, 0x4b, 0xee, 0x6d, 0xe0,
+	0x2e, 0x7a, 0x4a, 0xf6, 0xb6, 0xa1, 0xab, 0xaf, 0x50, 0x4d, 0xc4, 0x2a, 0x6c, 0x47, 0x1b, 0x47,
+	0xd1, 0x14, 0xcf, 0xfa, 0xeb, 0xdf, 0xcd, 0xa2, 0xf9, 0x92, 0x45, 0xe3, 0x4b, 0x68, 0xa6, 0x4f,
+	0x39, 0x27, 0x11, 0x9c, 0x64, 0xa6, 0xa0, 0xf1, 0x0f, 0xf2, 0x72, 0x6f, 0x27, 0x89, 0x59, 0xd2,
+	0x98, 0x7e, 0xf0, 0x68, 0x75, 0xa2, 0x95, 0x0f, 0xa9, 0xfd, 0x8c, 0xd0, 0x51, 0x50, 0xc6, 0x67,
+	0x93, 0xf1, 0xd9, 0xe4, 0x10, 0xcf, 0x26, 0xe3, 0x63, 0xc5, 0xf8, 0x58, 0x71, 0xc8, 0xc7, 0x8a,
+	0x7f, 0xc0, 0xb0, 0x7f, 0x9d, 0x43, 0xf3, 0x66, 0xeb, 0xbb, 0x35, 0x90, 0xd5, 0xf8, 0xdf, 0xf3,
+	0xd9, 0x17, 0x61, 0x93, 0x3b, 0x68, 0xc5, 0x6c, 0x75, 0x0a, 0xf5, 0x17, 0x5d, 0x4e, 0x0d, 0xde,
+	0x82, 0x84, 0xa7, 0xb8, 0xdc, 0x4b, 0x6b, 0x4f, 0x77, 0x50, 0xcd, 0x5c, 0x9d, 0xf2, 0x13, 0x50,
+	0xf9, 0x0e, 0x75, 0xd6, 0xd9, 0x77, 0xcd, 0xd7, 0x6e, 0xdd, 0xa5, 0x96, 0xe9, 0xc1, 0xd2, 0xd8,
+	0xfc, 0xc6, 0xe6, 0xf7, 0xb2, 0xdf, 0xa9, 0xfe, 0x97, 0x47, 0xf8, 0x5d, 0x54, 0xb7, 0xee, 0x52,
+	0x82, 0x8e, 0x84, 0x5c, 0x67, 0xd6, 0x2b, 0xbe, 0xbc, 0x5b, 0xc0, 0x3f, 0x63, 0x5d, 0xa9, 0xda,
+	0x74, 0x24, 0x5a, 0x79, 0x92, 0xaa, 0x50, 0xcb, 0x2f, 0x56, 0xfb, 0xd4, 0x17, 0xba, 0xeb, 0xcc,
+	0xa0, 0x63, 0x0c, 0x76, 0x99, 0xf5, 0x1f, 0x67, 0xd1, 0xf2, 0x53, 0x8c, 0x08, 0x6f, 0xed, 0xbb,
+	0x31, 0xbc, 0xfa, 0x87, 0xce, 0xf5, 0xcc, 0x9b, 0xc3, 0xeb, 0x68, 0xe6, 0x59, 0x9b, 0xd9, 0x2b,
+	0x7c, 0xbc, 0x91, 0x3d, 0xdf, 0x46, 0x36, 0xde, 0x23, 0xc6, 0x7b, 0xc4, 0x21, 0xef, 0x11, 0x63,
+	0x0f, 0xff, 0x17, 0x3c, 0x5c, 0xdf, 0x1c, 0x7e, 0x98, 0x42, 0x33, 0xcd, 0x94, 0x25, 0x6d, 0xc2,
+	0xef, 0xe2, 0x9b, 0xe8, 0x04, 0xc9, 0xc4, 0x1e, 0x4d, 0x44, 0x1c, 0x80, 0x33, 0x80, 0x6f, 0xcf,
+	0x35, 0x5e, 0xfb, 0xed, 0xd1, 0xea, 0x7a, 0x14, 0x8b, 0xbd, 0x6c, 0xd7, 0x0b, 0x58, 0xdf, 0x8f,
+	0xd9, 0xf0, 0x0d, 0x96, 0x50, 0xff, 0x1e, 0x25, 0x43, 0xea, 0x35, 0x59, 0x12, 0xc6, 0xb0, 0x14,
+	0xa5, 0xd1, 0xff, 0x8d, 0x3f, 0xba, 0x7c, 0x8d, 0x4e, 0x3b, 0xdd, 0x99, 0x3f, 0xd0, 0x3f, 0xdf,
+	0xf2, 0x2b, 0xb6, 0xea, 0x88, 0xcf, 0xff, 0x67, 0xd8, 0x0d, 0x74, 0x5c, 0x36, 0x8e, 0x20, 0xbd,
+	0xde, 0x7d, 0x18, 0xfc, 0xb9, 0xde, 0xda, 0x64, 0x9f, 0xb4, 0x65, 0x54, 0xdf, 0xd3, 0x22, 0x36,
+	0x34, 0x8f, 0xfa, 0xdb, 0x6b, 0x54, 0x1f, 0x3c, 0xae, 0x4f, 0x3e, 0x7c, 0x5c, 0x9f, 0xfc, 0xe5,
+	0x71, 0x7d, 0xf2, 0xdb, 0x27, 0xf5, 0x89, 0x87, 0x4f, 0xea, 0x13, 0x3f, 0x3d, 0xa9, 0x4f, 0xec,
+	0x1e, 0x83, 0x7f, 0x41, 0x6e, 0xfc, 0x1e, 0x00, 0x00, 0xff, 0xff, 0xb3, 0x59, 0xe1, 0x0d, 0xd4,
+	0x1d, 0x00, 0x00,
 }
 
 func (m *Tx) Marshal() (dAtA []byte, err error) {
@@ -6902,406 +3829,6 @@ func (m *Tx_MsgfeeSetMsgFeeMsg) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-func (m *Tx_DatamigrationExecuteMigrationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.DatamigrationExecuteMigrationMsg.Size()))
-		n30, err := m.DatamigrationExecuteMigrationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n30
-	}
-	return i, nil
-}
-func (m *Tx_AccountUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountUpdateConfigurationMsg.Size()))
-		n31, err := m.AccountUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n31
-	}
-	return i, nil
-}
-func (m *Tx_AccountRegisterDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterDomainMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterDomainMsg.Size()))
-		n32, err := m.AccountRegisterDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n32
-	}
-	return i, nil
-}
-func (m *Tx_AccountReplaceAccountMsgFeesMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountMsgFeesMsg.Size()))
-		n33, err := m.AccountReplaceAccountMsgFeesMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n33
-	}
-	return i, nil
-}
-func (m *Tx_AccountTransferDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferDomainMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferDomainMsg.Size()))
-		n34, err := m.AccountTransferDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n34
-	}
-	return i, nil
-}
-func (m *Tx_AccountRenewDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewDomainMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewDomainMsg.Size()))
-		n35, err := m.AccountRenewDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n35
-	}
-	return i, nil
-}
-func (m *Tx_AccountDeleteDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteDomainMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteDomainMsg.Size()))
-		n36, err := m.AccountDeleteDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n36
-	}
-	return i, nil
-}
-func (m *Tx_AccountRegisterAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterAccountMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterAccountMsg.Size()))
-		n37, err := m.AccountRegisterAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n37
-	}
-	return i, nil
-}
-func (m *Tx_AccountTransferAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferAccountMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferAccountMsg.Size()))
-		n38, err := m.AccountTransferAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n38
-	}
-	return i, nil
-}
-func (m *Tx_AccountReplaceAccountTargetsMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		dAtA[i] = 0xd2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountTargetsMsg.Size()))
-		n39, err := m.AccountReplaceAccountTargetsMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n39
-	}
-	return i, nil
-}
-func (m *Tx_AccountDeleteAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountMsg != nil {
-		dAtA[i] = 0xda
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountMsg.Size()))
-		n40, err := m.AccountDeleteAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n40
-	}
-	return i, nil
-}
-func (m *Tx_AccountFlushDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountFlushDomainMsg != nil {
-		dAtA[i] = 0xe2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountFlushDomainMsg.Size()))
-		n41, err := m.AccountFlushDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n41
-	}
-	return i, nil
-}
-func (m *Tx_AccountRenewAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewAccountMsg != nil {
-		dAtA[i] = 0xea
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewAccountMsg.Size()))
-		n42, err := m.AccountRenewAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n42
-	}
-	return i, nil
-}
-func (m *Tx_AccountAddAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountAddAccountCertificateMsg != nil {
-		dAtA[i] = 0xf2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountAddAccountCertificateMsg.Size()))
-		n43, err := m.AccountAddAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n43
-	}
-	return i, nil
-}
-func (m *Tx_AccountDeleteAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		dAtA[i] = 0xfa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountCertificateMsg.Size()))
-		n44, err := m.AccountDeleteAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n44
-	}
-	return i, nil
-}
-func (m *Tx_PreregistrationRegisterMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.PreregistrationRegisterMsg != nil {
-		dAtA[i] = 0x82
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.PreregistrationRegisterMsg.Size()))
-		n45, err := m.PreregistrationRegisterMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n45
-	}
-	return i, nil
-}
-func (m *Tx_CashUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.CashUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.CashUpdateConfigurationMsg.Size()))
-		n46, err := m.CashUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n46
-	}
-	return i, nil
-}
-func (m *Tx_TxfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TxfeeUpdateConfigurationMsg.Size()))
-		n47, err := m.TxfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n47
-	}
-	return i, nil
-}
-func (m *Tx_TermdepositCreateDepositContractMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositCreateDepositContractMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositCreateDepositContractMsg.Size()))
-		n48, err := m.TermdepositCreateDepositContractMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n48
-	}
-	return i, nil
-}
-func (m *Tx_TermdepositDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositDepositMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositDepositMsg.Size()))
-		n49, err := m.TermdepositDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n49
-	}
-	return i, nil
-}
-func (m *Tx_TermdepositReleaseDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositReleaseDepositMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositReleaseDepositMsg.Size()))
-		n50, err := m.TermdepositReleaseDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n50
-	}
-	return i, nil
-}
-func (m *Tx_TermdepositUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositUpdateConfigurationMsg.Size()))
-		n51, err := m.TermdepositUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n51
-	}
-	return i, nil
-}
-func (m *Tx_QualityscoreUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.QualityscoreUpdateConfigurationMsg.Size()))
-		n52, err := m.QualityscoreUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n52
-	}
-	return i, nil
-}
-func (m *Tx_PreregistrationUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.PreregistrationUpdateConfigurationMsg.Size()))
-		n53, err := m.PreregistrationUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n53
-	}
-	return i, nil
-}
-func (m *Tx_MsgfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.MsgfeeUpdateConfigurationMsg.Size()))
-		n54, err := m.MsgfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n54
-	}
-	return i, nil
-}
 func (m *ExecuteBatchMsg) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -7348,11 +3875,11 @@ func (m *ExecuteBatchMsg_Union) MarshalTo(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.Sum != nil {
-		nn55, err := m.Sum.MarshalTo(dAtA[i:])
+		nn30, err := m.Sum.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn55
+		i += nn30
 	}
 	return i, nil
 }
@@ -7365,11 +3892,11 @@ func (m *ExecuteBatchMsg_Union_CashSendMsg) MarshalTo(dAtA []byte) (int, error) 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.CashSendMsg.Size()))
-		n56, err := m.CashSendMsg.MarshalTo(dAtA[i:])
+		n31, err := m.CashSendMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n56
+		i += n31
 	}
 	return i, nil
 }
@@ -7381,11 +3908,11 @@ func (m *ExecuteBatchMsg_Union_EscrowCreateMsg) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowCreateMsg.Size()))
-		n57, err := m.EscrowCreateMsg.MarshalTo(dAtA[i:])
+		n32, err := m.EscrowCreateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n57
+		i += n32
 	}
 	return i, nil
 }
@@ -7397,11 +3924,11 @@ func (m *ExecuteBatchMsg_Union_EscrowReleaseMsg) MarshalTo(dAtA []byte) (int, er
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowReleaseMsg.Size()))
-		n58, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
+		n33, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n58
+		i += n33
 	}
 	return i, nil
 }
@@ -7413,11 +3940,11 @@ func (m *ExecuteBatchMsg_Union_EscrowReturnMsg) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowReturnMsg.Size()))
-		n59, err := m.EscrowReturnMsg.MarshalTo(dAtA[i:])
+		n34, err := m.EscrowReturnMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n59
+		i += n34
 	}
 	return i, nil
 }
@@ -7429,11 +3956,11 @@ func (m *ExecuteBatchMsg_Union_EscrowUpdatePartiesMsg) MarshalTo(dAtA []byte) (i
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowUpdatePartiesMsg.Size()))
-		n60, err := m.EscrowUpdatePartiesMsg.MarshalTo(dAtA[i:])
+		n35, err := m.EscrowUpdatePartiesMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n60
+		i += n35
 	}
 	return i, nil
 }
@@ -7445,11 +3972,11 @@ func (m *ExecuteBatchMsg_Union_MultisigCreateMsg) MarshalTo(dAtA []byte) (int, e
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MultisigCreateMsg.Size()))
-		n61, err := m.MultisigCreateMsg.MarshalTo(dAtA[i:])
+		n36, err := m.MultisigCreateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n61
+		i += n36
 	}
 	return i, nil
 }
@@ -7461,11 +3988,11 @@ func (m *ExecuteBatchMsg_Union_MultisigUpdateMsg) MarshalTo(dAtA []byte) (int, e
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MultisigUpdateMsg.Size()))
-		n62, err := m.MultisigUpdateMsg.MarshalTo(dAtA[i:])
+		n37, err := m.MultisigUpdateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n62
+		i += n37
 	}
 	return i, nil
 }
@@ -7477,11 +4004,11 @@ func (m *ExecuteBatchMsg_Union_ValidatorsApplyDiffMsg) MarshalTo(dAtA []byte) (i
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.ValidatorsApplyDiffMsg.Size()))
-		n63, err := m.ValidatorsApplyDiffMsg.MarshalTo(dAtA[i:])
+		n38, err := m.ValidatorsApplyDiffMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n63
+		i += n38
 	}
 	return i, nil
 }
@@ -7493,11 +4020,11 @@ func (m *ExecuteBatchMsg_Union_CurrencyCreateMsg) MarshalTo(dAtA []byte) (int, e
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.CurrencyCreateMsg.Size()))
-		n64, err := m.CurrencyCreateMsg.MarshalTo(dAtA[i:])
+		n39, err := m.CurrencyCreateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n64
+		i += n39
 	}
 	return i, nil
 }
@@ -7509,11 +4036,11 @@ func (m *ExecuteBatchMsg_Union_UsernameRegisterTokenMsg) MarshalTo(dAtA []byte) 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameRegisterTokenMsg.Size()))
-		n65, err := m.UsernameRegisterTokenMsg.MarshalTo(dAtA[i:])
+		n40, err := m.UsernameRegisterTokenMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n65
+		i += n40
 	}
 	return i, nil
 }
@@ -7525,11 +4052,11 @@ func (m *ExecuteBatchMsg_Union_UsernameTransferTokenMsg) MarshalTo(dAtA []byte) 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameTransferTokenMsg.Size()))
-		n66, err := m.UsernameTransferTokenMsg.MarshalTo(dAtA[i:])
+		n41, err := m.UsernameTransferTokenMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n66
+		i += n41
 	}
 	return i, nil
 }
@@ -7541,11 +4068,11 @@ func (m *ExecuteBatchMsg_Union_UsernameChangeTokenTargetsMsg) MarshalTo(dAtA []b
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameChangeTokenTargetsMsg.Size()))
-		n67, err := m.UsernameChangeTokenTargetsMsg.MarshalTo(dAtA[i:])
+		n42, err := m.UsernameChangeTokenTargetsMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n67
+		i += n42
 	}
 	return i, nil
 }
@@ -7557,11 +4084,11 @@ func (m *ExecuteBatchMsg_Union_UsernameUpdateConfigurationMsg) MarshalTo(dAtA []
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameUpdateConfigurationMsg.Size()))
-		n68, err := m.UsernameUpdateConfigurationMsg.MarshalTo(dAtA[i:])
+		n43, err := m.UsernameUpdateConfigurationMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n68
+		i += n43
 	}
 	return i, nil
 }
@@ -7573,11 +4100,11 @@ func (m *ExecuteBatchMsg_Union_DistributionCreateMsg) MarshalTo(dAtA []byte) (in
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionCreateMsg.Size()))
-		n69, err := m.DistributionCreateMsg.MarshalTo(dAtA[i:])
+		n44, err := m.DistributionCreateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n69
+		i += n44
 	}
 	return i, nil
 }
@@ -7589,11 +4116,11 @@ func (m *ExecuteBatchMsg_Union_DistributionMsg) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionMsg.Size()))
-		n70, err := m.DistributionMsg.MarshalTo(dAtA[i:])
+		n45, err := m.DistributionMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n70
+		i += n45
 	}
 	return i, nil
 }
@@ -7605,11 +4132,11 @@ func (m *ExecuteBatchMsg_Union_DistributionResetMsg) MarshalTo(dAtA []byte) (int
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionResetMsg.Size()))
-		n71, err := m.DistributionResetMsg.MarshalTo(dAtA[i:])
+		n46, err := m.DistributionResetMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n71
+		i += n46
 	}
 	return i, nil
 }
@@ -7621,395 +4148,11 @@ func (m *ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg) MarshalTo(dAtA []byte) (int, 
 		dAtA[i] = 0x5
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MsgfeeSetMsgFeeMsg.Size()))
-		n72, err := m.MsgfeeSetMsgFeeMsg.MarshalTo(dAtA[i:])
+		n47, err := m.MsgfeeSetMsgFeeMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n72
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.DatamigrationExecuteMigrationMsg.Size()))
-		n73, err := m.DatamigrationExecuteMigrationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n73
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountUpdateConfigurationMsg.Size()))
-		n74, err := m.AccountUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n74
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountRegisterDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterDomainMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterDomainMsg.Size()))
-		n75, err := m.AccountRegisterDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n75
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountMsgFeesMsg.Size()))
-		n76, err := m.AccountReplaceAccountMsgFeesMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n76
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountTransferDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferDomainMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferDomainMsg.Size()))
-		n77, err := m.AccountTransferDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n77
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountRenewDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewDomainMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewDomainMsg.Size()))
-		n78, err := m.AccountRenewDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n78
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountDeleteDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteDomainMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteDomainMsg.Size()))
-		n79, err := m.AccountDeleteDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n79
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountRegisterAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterAccountMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterAccountMsg.Size()))
-		n80, err := m.AccountRegisterAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n80
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountTransferAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferAccountMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferAccountMsg.Size()))
-		n81, err := m.AccountTransferAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n81
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		dAtA[i] = 0xd2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountTargetsMsg.Size()))
-		n82, err := m.AccountReplaceAccountTargetsMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n82
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountDeleteAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountMsg != nil {
-		dAtA[i] = 0xda
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountMsg.Size()))
-		n83, err := m.AccountDeleteAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n83
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountFlushDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountFlushDomainMsg != nil {
-		dAtA[i] = 0xe2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountFlushDomainMsg.Size()))
-		n84, err := m.AccountFlushDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n84
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountRenewAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewAccountMsg != nil {
-		dAtA[i] = 0xea
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewAccountMsg.Size()))
-		n85, err := m.AccountRenewAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n85
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountAddAccountCertificateMsg != nil {
-		dAtA[i] = 0xf2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountAddAccountCertificateMsg.Size()))
-		n86, err := m.AccountAddAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n86
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		dAtA[i] = 0xfa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountCertificateMsg.Size()))
-		n87, err := m.AccountDeleteAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n87
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_CashUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.CashUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.CashUpdateConfigurationMsg.Size()))
-		n88, err := m.CashUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n88
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TxfeeUpdateConfigurationMsg.Size()))
-		n89, err := m.TxfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n89
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositCreateDepositContractMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositCreateDepositContractMsg.Size()))
-		n90, err := m.TermdepositCreateDepositContractMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n90
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_TermdepositDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositDepositMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositDepositMsg.Size()))
-		n91, err := m.TermdepositDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n91
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositReleaseDepositMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositReleaseDepositMsg.Size()))
-		n92, err := m.TermdepositReleaseDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n92
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositUpdateConfigurationMsg.Size()))
-		n93, err := m.TermdepositUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n93
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.QualityscoreUpdateConfigurationMsg.Size()))
-		n94, err := m.QualityscoreUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n94
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.PreregistrationUpdateConfigurationMsg.Size()))
-		n95, err := m.PreregistrationUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n95
-	}
-	return i, nil
-}
-func (m *ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.MsgfeeUpdateConfigurationMsg.Size()))
-		n96, err := m.MsgfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n96
+		i += n47
 	}
 	return i, nil
 }
@@ -8029,11 +4172,11 @@ func (m *ProposalOptions) MarshalTo(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.Option != nil {
-		nn97, err := m.Option.MarshalTo(dAtA[i:])
+		nn48, err := m.Option.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn97
+		i += nn48
 	}
 	return i, nil
 }
@@ -8046,11 +4189,11 @@ func (m *ProposalOptions_CashSendMsg) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.CashSendMsg.Size()))
-		n98, err := m.CashSendMsg.MarshalTo(dAtA[i:])
+		n49, err := m.CashSendMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n98
+		i += n49
 	}
 	return i, nil
 }
@@ -8062,11 +4205,11 @@ func (m *ProposalOptions_EscrowReleaseMsg) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowReleaseMsg.Size()))
-		n99, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
+		n50, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n99
+		i += n50
 	}
 	return i, nil
 }
@@ -8078,11 +4221,11 @@ func (m *ProposalOptions_UpdateEscrowPartiesMsg) MarshalTo(dAtA []byte) (int, er
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UpdateEscrowPartiesMsg.Size()))
-		n100, err := m.UpdateEscrowPartiesMsg.MarshalTo(dAtA[i:])
+		n51, err := m.UpdateEscrowPartiesMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n100
+		i += n51
 	}
 	return i, nil
 }
@@ -8094,11 +4237,11 @@ func (m *ProposalOptions_MultisigUpdateMsg) MarshalTo(dAtA []byte) (int, error) 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MultisigUpdateMsg.Size()))
-		n101, err := m.MultisigUpdateMsg.MarshalTo(dAtA[i:])
+		n52, err := m.MultisigUpdateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n101
+		i += n52
 	}
 	return i, nil
 }
@@ -8110,11 +4253,11 @@ func (m *ProposalOptions_ValidatorsApplyDiffMsg) MarshalTo(dAtA []byte) (int, er
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.ValidatorsApplyDiffMsg.Size()))
-		n102, err := m.ValidatorsApplyDiffMsg.MarshalTo(dAtA[i:])
+		n53, err := m.ValidatorsApplyDiffMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n102
+		i += n53
 	}
 	return i, nil
 }
@@ -8126,11 +4269,11 @@ func (m *ProposalOptions_CurrencyCreateMsg) MarshalTo(dAtA []byte) (int, error) 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.CurrencyCreateMsg.Size()))
-		n103, err := m.CurrencyCreateMsg.MarshalTo(dAtA[i:])
+		n54, err := m.CurrencyCreateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n103
+		i += n54
 	}
 	return i, nil
 }
@@ -8142,11 +4285,11 @@ func (m *ProposalOptions_ExecuteProposalBatchMsg) MarshalTo(dAtA []byte) (int, e
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.ExecuteProposalBatchMsg.Size()))
-		n104, err := m.ExecuteProposalBatchMsg.MarshalTo(dAtA[i:])
+		n55, err := m.ExecuteProposalBatchMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n104
+		i += n55
 	}
 	return i, nil
 }
@@ -8158,11 +4301,11 @@ func (m *ProposalOptions_UsernameRegisterTokenMsg) MarshalTo(dAtA []byte) (int, 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameRegisterTokenMsg.Size()))
-		n105, err := m.UsernameRegisterTokenMsg.MarshalTo(dAtA[i:])
+		n56, err := m.UsernameRegisterTokenMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n105
+		i += n56
 	}
 	return i, nil
 }
@@ -8174,11 +4317,11 @@ func (m *ProposalOptions_UsernameTransferTokenMsg) MarshalTo(dAtA []byte) (int, 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameTransferTokenMsg.Size()))
-		n106, err := m.UsernameTransferTokenMsg.MarshalTo(dAtA[i:])
+		n57, err := m.UsernameTransferTokenMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n106
+		i += n57
 	}
 	return i, nil
 }
@@ -8190,11 +4333,11 @@ func (m *ProposalOptions_UsernameChangeTokenTargetsMsg) MarshalTo(dAtA []byte) (
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameChangeTokenTargetsMsg.Size()))
-		n107, err := m.UsernameChangeTokenTargetsMsg.MarshalTo(dAtA[i:])
+		n58, err := m.UsernameChangeTokenTargetsMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n107
+		i += n58
 	}
 	return i, nil
 }
@@ -8206,11 +4349,11 @@ func (m *ProposalOptions_UsernameUpdateConfigurationMsg) MarshalTo(dAtA []byte) 
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameUpdateConfigurationMsg.Size()))
-		n108, err := m.UsernameUpdateConfigurationMsg.MarshalTo(dAtA[i:])
+		n59, err := m.UsernameUpdateConfigurationMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n108
+		i += n59
 	}
 	return i, nil
 }
@@ -8222,11 +4365,11 @@ func (m *ProposalOptions_DistributionCreateMsg) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionCreateMsg.Size()))
-		n109, err := m.DistributionCreateMsg.MarshalTo(dAtA[i:])
+		n60, err := m.DistributionCreateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n109
+		i += n60
 	}
 	return i, nil
 }
@@ -8238,11 +4381,11 @@ func (m *ProposalOptions_DistributionMsg) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionMsg.Size()))
-		n110, err := m.DistributionMsg.MarshalTo(dAtA[i:])
+		n61, err := m.DistributionMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n110
+		i += n61
 	}
 	return i, nil
 }
@@ -8254,11 +4397,11 @@ func (m *ProposalOptions_DistributionResetMsg) MarshalTo(dAtA []byte) (int, erro
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionResetMsg.Size()))
-		n111, err := m.DistributionResetMsg.MarshalTo(dAtA[i:])
+		n62, err := m.DistributionResetMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n111
+		i += n62
 	}
 	return i, nil
 }
@@ -8270,11 +4413,11 @@ func (m *ProposalOptions_MigrationUpgradeSchemaMsg) MarshalTo(dAtA []byte) (int,
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MigrationUpgradeSchemaMsg.Size()))
-		n112, err := m.MigrationUpgradeSchemaMsg.MarshalTo(dAtA[i:])
+		n63, err := m.MigrationUpgradeSchemaMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n112
+		i += n63
 	}
 	return i, nil
 }
@@ -8286,11 +4429,11 @@ func (m *ProposalOptions_GovUpdateElectorateMsg) MarshalTo(dAtA []byte) (int, er
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.GovUpdateElectorateMsg.Size()))
-		n113, err := m.GovUpdateElectorateMsg.MarshalTo(dAtA[i:])
+		n64, err := m.GovUpdateElectorateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n113
+		i += n64
 	}
 	return i, nil
 }
@@ -8302,11 +4445,11 @@ func (m *ProposalOptions_GovUpdateElectionRuleMsg) MarshalTo(dAtA []byte) (int, 
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.GovUpdateElectionRuleMsg.Size()))
-		n114, err := m.GovUpdateElectionRuleMsg.MarshalTo(dAtA[i:])
+		n65, err := m.GovUpdateElectionRuleMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n114
+		i += n65
 	}
 	return i, nil
 }
@@ -8318,11 +4461,11 @@ func (m *ProposalOptions_GovCreateTextResolutionMsg) MarshalTo(dAtA []byte) (int
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.GovCreateTextResolutionMsg.Size()))
-		n115, err := m.GovCreateTextResolutionMsg.MarshalTo(dAtA[i:])
+		n66, err := m.GovCreateTextResolutionMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n115
+		i += n66
 	}
 	return i, nil
 }
@@ -8334,395 +4477,11 @@ func (m *ProposalOptions_MsgfeeSetMsgFeeMsg) MarshalTo(dAtA []byte) (int, error)
 		dAtA[i] = 0x5
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MsgfeeSetMsgFeeMsg.Size()))
-		n116, err := m.MsgfeeSetMsgFeeMsg.MarshalTo(dAtA[i:])
+		n67, err := m.MsgfeeSetMsgFeeMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n116
-	}
-	return i, nil
-}
-func (m *ProposalOptions_DatamigrationExecuteMigrationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.DatamigrationExecuteMigrationMsg.Size()))
-		n117, err := m.DatamigrationExecuteMigrationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n117
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountUpdateConfigurationMsg.Size()))
-		n118, err := m.AccountUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n118
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountRegisterDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterDomainMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterDomainMsg.Size()))
-		n119, err := m.AccountRegisterDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n119
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountReplaceAccountMsgFeesMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountMsgFeesMsg.Size()))
-		n120, err := m.AccountReplaceAccountMsgFeesMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n120
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountTransferDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferDomainMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferDomainMsg.Size()))
-		n121, err := m.AccountTransferDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n121
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountRenewDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewDomainMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewDomainMsg.Size()))
-		n122, err := m.AccountRenewDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n122
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountDeleteDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteDomainMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteDomainMsg.Size()))
-		n123, err := m.AccountDeleteDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n123
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountRegisterAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterAccountMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterAccountMsg.Size()))
-		n124, err := m.AccountRegisterAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n124
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountTransferAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferAccountMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferAccountMsg.Size()))
-		n125, err := m.AccountTransferAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n125
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountReplaceAccountTargetsMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		dAtA[i] = 0xd2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountTargetsMsg.Size()))
-		n126, err := m.AccountReplaceAccountTargetsMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n126
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountDeleteAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountMsg != nil {
-		dAtA[i] = 0xda
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountMsg.Size()))
-		n127, err := m.AccountDeleteAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n127
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountFlushDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountFlushDomainMsg != nil {
-		dAtA[i] = 0xe2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountFlushDomainMsg.Size()))
-		n128, err := m.AccountFlushDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n128
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountRenewAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewAccountMsg != nil {
-		dAtA[i] = 0xea
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewAccountMsg.Size()))
-		n129, err := m.AccountRenewAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n129
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountAddAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountAddAccountCertificateMsg != nil {
-		dAtA[i] = 0xf2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountAddAccountCertificateMsg.Size()))
-		n130, err := m.AccountAddAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n130
-	}
-	return i, nil
-}
-func (m *ProposalOptions_AccountDeleteAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		dAtA[i] = 0xfa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountCertificateMsg.Size()))
-		n131, err := m.AccountDeleteAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n131
-	}
-	return i, nil
-}
-func (m *ProposalOptions_CashUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.CashUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.CashUpdateConfigurationMsg.Size()))
-		n132, err := m.CashUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n132
-	}
-	return i, nil
-}
-func (m *ProposalOptions_TxfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TxfeeUpdateConfigurationMsg.Size()))
-		n133, err := m.TxfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n133
-	}
-	return i, nil
-}
-func (m *ProposalOptions_TermdepositCreateDepositContractMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositCreateDepositContractMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositCreateDepositContractMsg.Size()))
-		n134, err := m.TermdepositCreateDepositContractMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n134
-	}
-	return i, nil
-}
-func (m *ProposalOptions_TermdepositDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositDepositMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositDepositMsg.Size()))
-		n135, err := m.TermdepositDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n135
-	}
-	return i, nil
-}
-func (m *ProposalOptions_TermdepositReleaseDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositReleaseDepositMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositReleaseDepositMsg.Size()))
-		n136, err := m.TermdepositReleaseDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n136
-	}
-	return i, nil
-}
-func (m *ProposalOptions_TermdepositUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositUpdateConfigurationMsg.Size()))
-		n137, err := m.TermdepositUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n137
-	}
-	return i, nil
-}
-func (m *ProposalOptions_QualityscoreUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.QualityscoreUpdateConfigurationMsg.Size()))
-		n138, err := m.QualityscoreUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n138
-	}
-	return i, nil
-}
-func (m *ProposalOptions_PreregistrationUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.PreregistrationUpdateConfigurationMsg.Size()))
-		n139, err := m.PreregistrationUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n139
-	}
-	return i, nil
-}
-func (m *ProposalOptions_MsgfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.MsgfeeUpdateConfigurationMsg.Size()))
-		n140, err := m.MsgfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n140
+		i += n67
 	}
 	return i, nil
 }
@@ -8772,11 +4531,11 @@ func (m *ExecuteProposalBatchMsg_Union) MarshalTo(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.Sum != nil {
-		nn141, err := m.Sum.MarshalTo(dAtA[i:])
+		nn68, err := m.Sum.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn141
+		i += nn68
 	}
 	return i, nil
 }
@@ -8789,11 +4548,11 @@ func (m *ExecuteProposalBatchMsg_Union_SendMsg) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.SendMsg.Size()))
-		n142, err := m.SendMsg.MarshalTo(dAtA[i:])
+		n69, err := m.SendMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n142
+		i += n69
 	}
 	return i, nil
 }
@@ -8805,11 +4564,11 @@ func (m *ExecuteProposalBatchMsg_Union_EscrowReleaseMsg) MarshalTo(dAtA []byte) 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowReleaseMsg.Size()))
-		n143, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
+		n70, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n143
+		i += n70
 	}
 	return i, nil
 }
@@ -8821,11 +4580,11 @@ func (m *ExecuteProposalBatchMsg_Union_UpdateEscrowPartiesMsg) MarshalTo(dAtA []
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UpdateEscrowPartiesMsg.Size()))
-		n144, err := m.UpdateEscrowPartiesMsg.MarshalTo(dAtA[i:])
+		n71, err := m.UpdateEscrowPartiesMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n144
+		i += n71
 	}
 	return i, nil
 }
@@ -8837,11 +4596,11 @@ func (m *ExecuteProposalBatchMsg_Union_MultisigUpdateMsg) MarshalTo(dAtA []byte)
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MultisigUpdateMsg.Size()))
-		n145, err := m.MultisigUpdateMsg.MarshalTo(dAtA[i:])
+		n72, err := m.MultisigUpdateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n145
+		i += n72
 	}
 	return i, nil
 }
@@ -8853,11 +4612,11 @@ func (m *ExecuteProposalBatchMsg_Union_ValidatorsApplyDiffMsg) MarshalTo(dAtA []
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.ValidatorsApplyDiffMsg.Size()))
-		n146, err := m.ValidatorsApplyDiffMsg.MarshalTo(dAtA[i:])
+		n73, err := m.ValidatorsApplyDiffMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n146
+		i += n73
 	}
 	return i, nil
 }
@@ -8869,11 +4628,11 @@ func (m *ExecuteProposalBatchMsg_Union_UsernameRegisterTokenMsg) MarshalTo(dAtA 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameRegisterTokenMsg.Size()))
-		n147, err := m.UsernameRegisterTokenMsg.MarshalTo(dAtA[i:])
+		n74, err := m.UsernameRegisterTokenMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n147
+		i += n74
 	}
 	return i, nil
 }
@@ -8885,11 +4644,11 @@ func (m *ExecuteProposalBatchMsg_Union_UsernameTransferTokenMsg) MarshalTo(dAtA 
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameTransferTokenMsg.Size()))
-		n148, err := m.UsernameTransferTokenMsg.MarshalTo(dAtA[i:])
+		n75, err := m.UsernameTransferTokenMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n148
+		i += n75
 	}
 	return i, nil
 }
@@ -8901,11 +4660,11 @@ func (m *ExecuteProposalBatchMsg_Union_UsernameChangeTokenTargetsMsg) MarshalTo(
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameChangeTokenTargetsMsg.Size()))
-		n149, err := m.UsernameChangeTokenTargetsMsg.MarshalTo(dAtA[i:])
+		n76, err := m.UsernameChangeTokenTargetsMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n149
+		i += n76
 	}
 	return i, nil
 }
@@ -8917,11 +4676,11 @@ func (m *ExecuteProposalBatchMsg_Union_UsernameUpdateConfigurationMsg) MarshalTo
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.UsernameUpdateConfigurationMsg.Size()))
-		n150, err := m.UsernameUpdateConfigurationMsg.MarshalTo(dAtA[i:])
+		n77, err := m.UsernameUpdateConfigurationMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n150
+		i += n77
 	}
 	return i, nil
 }
@@ -8933,11 +4692,11 @@ func (m *ExecuteProposalBatchMsg_Union_DistributionCreateMsg) MarshalTo(dAtA []b
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionCreateMsg.Size()))
-		n151, err := m.DistributionCreateMsg.MarshalTo(dAtA[i:])
+		n78, err := m.DistributionCreateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n151
+		i += n78
 	}
 	return i, nil
 }
@@ -8949,11 +4708,11 @@ func (m *ExecuteProposalBatchMsg_Union_DistributionMsg) MarshalTo(dAtA []byte) (
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionMsg.Size()))
-		n152, err := m.DistributionMsg.MarshalTo(dAtA[i:])
+		n79, err := m.DistributionMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n152
+		i += n79
 	}
 	return i, nil
 }
@@ -8965,11 +4724,11 @@ func (m *ExecuteProposalBatchMsg_Union_DistributionResetMsg) MarshalTo(dAtA []by
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionResetMsg.Size()))
-		n153, err := m.DistributionResetMsg.MarshalTo(dAtA[i:])
+		n80, err := m.DistributionResetMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n153
+		i += n80
 	}
 	return i, nil
 }
@@ -8981,11 +4740,11 @@ func (m *ExecuteProposalBatchMsg_Union_GovUpdateElectorateMsg) MarshalTo(dAtA []
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.GovUpdateElectorateMsg.Size()))
-		n154, err := m.GovUpdateElectorateMsg.MarshalTo(dAtA[i:])
+		n81, err := m.GovUpdateElectorateMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n154
+		i += n81
 	}
 	return i, nil
 }
@@ -8997,11 +4756,11 @@ func (m *ExecuteProposalBatchMsg_Union_GovUpdateElectionRuleMsg) MarshalTo(dAtA 
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.GovUpdateElectionRuleMsg.Size()))
-		n155, err := m.GovUpdateElectionRuleMsg.MarshalTo(dAtA[i:])
+		n82, err := m.GovUpdateElectionRuleMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n155
+		i += n82
 	}
 	return i, nil
 }
@@ -9013,11 +4772,11 @@ func (m *ExecuteProposalBatchMsg_Union_GovCreateTextResolutionMsg) MarshalTo(dAt
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.GovCreateTextResolutionMsg.Size()))
-		n156, err := m.GovCreateTextResolutionMsg.MarshalTo(dAtA[i:])
+		n83, err := m.GovCreateTextResolutionMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n156
+		i += n83
 	}
 	return i, nil
 }
@@ -9029,395 +4788,11 @@ func (m *ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg) MarshalTo(dAtA []byte
 		dAtA[i] = 0x5
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.MsgfeeSetMsgFeeMsg.Size()))
-		n157, err := m.MsgfeeSetMsgFeeMsg.MarshalTo(dAtA[i:])
+		n84, err := m.MsgfeeSetMsgFeeMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n157
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.DatamigrationExecuteMigrationMsg.Size()))
-		n158, err := m.DatamigrationExecuteMigrationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n158
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountUpdateConfigurationMsg.Size()))
-		n159, err := m.AccountUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n159
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterDomainMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterDomainMsg.Size()))
-		n160, err := m.AccountRegisterDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n160
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountMsgFeesMsg.Size()))
-		n161, err := m.AccountReplaceAccountMsgFeesMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n161
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferDomainMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferDomainMsg.Size()))
-		n162, err := m.AccountTransferDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n162
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewDomainMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewDomainMsg.Size()))
-		n163, err := m.AccountRenewDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n163
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteDomainMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteDomainMsg.Size()))
-		n164, err := m.AccountDeleteDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n164
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRegisterAccountMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRegisterAccountMsg.Size()))
-		n165, err := m.AccountRegisterAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n165
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountTransferAccountMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountTransferAccountMsg.Size()))
-		n166, err := m.AccountTransferAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n166
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		dAtA[i] = 0xd2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountReplaceAccountTargetsMsg.Size()))
-		n167, err := m.AccountReplaceAccountTargetsMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n167
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountMsg != nil {
-		dAtA[i] = 0xda
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountMsg.Size()))
-		n168, err := m.AccountDeleteAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n168
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountFlushDomainMsg != nil {
-		dAtA[i] = 0xe2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountFlushDomainMsg.Size()))
-		n169, err := m.AccountFlushDomainMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n169
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountRenewAccountMsg != nil {
-		dAtA[i] = 0xea
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountRenewAccountMsg.Size()))
-		n170, err := m.AccountRenewAccountMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n170
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountAddAccountCertificateMsg != nil {
-		dAtA[i] = 0xf2
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountAddAccountCertificateMsg.Size()))
-		n171, err := m.AccountAddAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n171
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		dAtA[i] = 0xfa
-		i++
-		dAtA[i] = 0x5
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.AccountDeleteAccountCertificateMsg.Size()))
-		n172, err := m.AccountDeleteAccountCertificateMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n172
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.CashUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.CashUpdateConfigurationMsg.Size()))
-		n173, err := m.CashUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n173
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0x92
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TxfeeUpdateConfigurationMsg.Size()))
-		n174, err := m.TxfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n174
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositCreateDepositContractMsg != nil {
-		dAtA[i] = 0x9a
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositCreateDepositContractMsg.Size()))
-		n175, err := m.TermdepositCreateDepositContractMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n175
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositDepositMsg != nil {
-		dAtA[i] = 0xa2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositDepositMsg.Size()))
-		n176, err := m.TermdepositDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n176
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositReleaseDepositMsg != nil {
-		dAtA[i] = 0xaa
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositReleaseDepositMsg.Size()))
-		n177, err := m.TermdepositReleaseDepositMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n177
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xb2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.TermdepositUpdateConfigurationMsg.Size()))
-		n178, err := m.TermdepositUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n178
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xba
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.QualityscoreUpdateConfigurationMsg.Size()))
-		n179, err := m.QualityscoreUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n179
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xc2
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.PreregistrationUpdateConfigurationMsg.Size()))
-		n180, err := m.PreregistrationUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n180
-	}
-	return i, nil
-}
-func (m *ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x6
-		i++
-		i = encodeVarintCodec(dAtA, i, uint64(m.MsgfeeUpdateConfigurationMsg.Size()))
-		n181, err := m.MsgfeeUpdateConfigurationMsg.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n181
+		i += n84
 	}
 	return i, nil
 }
@@ -9445,11 +4820,11 @@ func (m *CronTask) MarshalTo(dAtA []byte) (int, error) {
 		}
 	}
 	if m.Sum != nil {
-		nn182, err := m.Sum.MarshalTo(dAtA[i:])
+		nn85, err := m.Sum.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn182
+		i += nn85
 	}
 	return i, nil
 }
@@ -9462,11 +4837,11 @@ func (m *CronTask_EscrowReleaseMsg) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowReleaseMsg.Size()))
-		n183, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
+		n86, err := m.EscrowReleaseMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n183
+		i += n86
 	}
 	return i, nil
 }
@@ -9478,11 +4853,11 @@ func (m *CronTask_EscrowReturnMsg) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x3
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.EscrowReturnMsg.Size()))
-		n184, err := m.EscrowReturnMsg.MarshalTo(dAtA[i:])
+		n87, err := m.EscrowReturnMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n184
+		i += n87
 	}
 	return i, nil
 }
@@ -9494,11 +4869,11 @@ func (m *CronTask_DistributionDistributeMsg) MarshalTo(dAtA []byte) (int, error)
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.DistributionDistributeMsg.Size()))
-		n185, err := m.DistributionDistributeMsg.MarshalTo(dAtA[i:])
+		n88, err := m.DistributionDistributeMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n185
+		i += n88
 	}
 	return i, nil
 }
@@ -9510,11 +4885,11 @@ func (m *CronTask_AswapReleaseMsg) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.AswapReleaseMsg.Size()))
-		n186, err := m.AswapReleaseMsg.MarshalTo(dAtA[i:])
+		n89, err := m.AswapReleaseMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n186
+		i += n89
 	}
 	return i, nil
 }
@@ -9526,11 +4901,11 @@ func (m *CronTask_GovTallyMsg) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x4
 		i++
 		i = encodeVarintCodec(dAtA, i, uint64(m.GovTallyMsg.Size()))
-		n187, err := m.GovTallyMsg.MarshalTo(dAtA[i:])
+		n90, err := m.GovTallyMsg.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n187
+		i += n90
 	}
 	return i, nil
 }
@@ -9895,306 +5270,6 @@ func (m *Tx_MsgfeeSetMsgFeeMsg) Size() (n int) {
 	}
 	return n
 }
-func (m *Tx_DatamigrationExecuteMigrationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		l = m.DatamigrationExecuteMigrationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountUpdateConfigurationMsg != nil {
-		l = m.AccountUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountRegisterDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterDomainMsg != nil {
-		l = m.AccountRegisterDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountReplaceAccountMsgFeesMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		l = m.AccountReplaceAccountMsgFeesMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountTransferDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferDomainMsg != nil {
-		l = m.AccountTransferDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountRenewDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewDomainMsg != nil {
-		l = m.AccountRenewDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountDeleteDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteDomainMsg != nil {
-		l = m.AccountDeleteDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountRegisterAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterAccountMsg != nil {
-		l = m.AccountRegisterAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountTransferAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferAccountMsg != nil {
-		l = m.AccountTransferAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountReplaceAccountTargetsMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		l = m.AccountReplaceAccountTargetsMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountDeleteAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountMsg != nil {
-		l = m.AccountDeleteAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountFlushDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountFlushDomainMsg != nil {
-		l = m.AccountFlushDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountRenewAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewAccountMsg != nil {
-		l = m.AccountRenewAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountAddAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountAddAccountCertificateMsg != nil {
-		l = m.AccountAddAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_AccountDeleteAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		l = m.AccountDeleteAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_PreregistrationRegisterMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.PreregistrationRegisterMsg != nil {
-		l = m.PreregistrationRegisterMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_CashUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.CashUpdateConfigurationMsg != nil {
-		l = m.CashUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_TxfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		l = m.TxfeeUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_TermdepositCreateDepositContractMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositCreateDepositContractMsg != nil {
-		l = m.TermdepositCreateDepositContractMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_TermdepositDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositDepositMsg != nil {
-		l = m.TermdepositDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_TermdepositReleaseDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositReleaseDepositMsg != nil {
-		l = m.TermdepositReleaseDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_TermdepositUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		l = m.TermdepositUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_QualityscoreUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		l = m.QualityscoreUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_PreregistrationUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		l = m.PreregistrationUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *Tx_MsgfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		l = m.MsgfeeUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
 func (m *ExecuteBatchMsg) Size() (n int) {
 	if m == nil {
 		return 0
@@ -10422,294 +5497,6 @@ func (m *ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg) Size() (n int) {
 	_ = l
 	if m.MsgfeeSetMsgFeeMsg != nil {
 		l = m.MsgfeeSetMsgFeeMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		l = m.DatamigrationExecuteMigrationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountUpdateConfigurationMsg != nil {
-		l = m.AccountUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountRegisterDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterDomainMsg != nil {
-		l = m.AccountRegisterDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		l = m.AccountReplaceAccountMsgFeesMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountTransferDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferDomainMsg != nil {
-		l = m.AccountTransferDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountRenewDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewDomainMsg != nil {
-		l = m.AccountRenewDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountDeleteDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteDomainMsg != nil {
-		l = m.AccountDeleteDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountRegisterAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterAccountMsg != nil {
-		l = m.AccountRegisterAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountTransferAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferAccountMsg != nil {
-		l = m.AccountTransferAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		l = m.AccountReplaceAccountTargetsMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountDeleteAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountMsg != nil {
-		l = m.AccountDeleteAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountFlushDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountFlushDomainMsg != nil {
-		l = m.AccountFlushDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountRenewAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewAccountMsg != nil {
-		l = m.AccountRenewAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountAddAccountCertificateMsg != nil {
-		l = m.AccountAddAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		l = m.AccountDeleteAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_CashUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.CashUpdateConfigurationMsg != nil {
-		l = m.CashUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		l = m.TxfeeUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositCreateDepositContractMsg != nil {
-		l = m.TermdepositCreateDepositContractMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_TermdepositDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositDepositMsg != nil {
-		l = m.TermdepositDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositReleaseDepositMsg != nil {
-		l = m.TermdepositReleaseDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		l = m.TermdepositUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		l = m.QualityscoreUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		l = m.PreregistrationUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		l = m.MsgfeeUpdateConfigurationMsg.Size()
 		n += 2 + l + sovCodec(uint64(l))
 	}
 	return n
@@ -10954,294 +5741,6 @@ func (m *ProposalOptions_MsgfeeSetMsgFeeMsg) Size() (n int) {
 	}
 	return n
 }
-func (m *ProposalOptions_DatamigrationExecuteMigrationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		l = m.DatamigrationExecuteMigrationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountUpdateConfigurationMsg != nil {
-		l = m.AccountUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountRegisterDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterDomainMsg != nil {
-		l = m.AccountRegisterDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountReplaceAccountMsgFeesMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		l = m.AccountReplaceAccountMsgFeesMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountTransferDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferDomainMsg != nil {
-		l = m.AccountTransferDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountRenewDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewDomainMsg != nil {
-		l = m.AccountRenewDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountDeleteDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteDomainMsg != nil {
-		l = m.AccountDeleteDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountRegisterAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterAccountMsg != nil {
-		l = m.AccountRegisterAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountTransferAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferAccountMsg != nil {
-		l = m.AccountTransferAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountReplaceAccountTargetsMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		l = m.AccountReplaceAccountTargetsMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountDeleteAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountMsg != nil {
-		l = m.AccountDeleteAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountFlushDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountFlushDomainMsg != nil {
-		l = m.AccountFlushDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountRenewAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewAccountMsg != nil {
-		l = m.AccountRenewAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountAddAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountAddAccountCertificateMsg != nil {
-		l = m.AccountAddAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_AccountDeleteAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		l = m.AccountDeleteAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_CashUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.CashUpdateConfigurationMsg != nil {
-		l = m.CashUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_TxfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		l = m.TxfeeUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_TermdepositCreateDepositContractMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositCreateDepositContractMsg != nil {
-		l = m.TermdepositCreateDepositContractMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_TermdepositDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositDepositMsg != nil {
-		l = m.TermdepositDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_TermdepositReleaseDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositReleaseDepositMsg != nil {
-		l = m.TermdepositReleaseDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_TermdepositUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		l = m.TermdepositUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_QualityscoreUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		l = m.QualityscoreUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_PreregistrationUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		l = m.PreregistrationUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ProposalOptions_MsgfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		l = m.MsgfeeUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
 func (m *ExecuteProposalBatchMsg) Size() (n int) {
 	if m == nil {
 		return 0
@@ -11457,294 +5956,6 @@ func (m *ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg) Size() (n int) {
 	_ = l
 	if m.MsgfeeSetMsgFeeMsg != nil {
 		l = m.MsgfeeSetMsgFeeMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.DatamigrationExecuteMigrationMsg != nil {
-		l = m.DatamigrationExecuteMigrationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountUpdateConfigurationMsg != nil {
-		l = m.AccountUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterDomainMsg != nil {
-		l = m.AccountRegisterDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountMsgFeesMsg != nil {
-		l = m.AccountReplaceAccountMsgFeesMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferDomainMsg != nil {
-		l = m.AccountTransferDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewDomainMsg != nil {
-		l = m.AccountRenewDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteDomainMsg != nil {
-		l = m.AccountDeleteDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRegisterAccountMsg != nil {
-		l = m.AccountRegisterAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountTransferAccountMsg != nil {
-		l = m.AccountTransferAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountReplaceAccountTargetsMsg != nil {
-		l = m.AccountReplaceAccountTargetsMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountMsg != nil {
-		l = m.AccountDeleteAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountFlushDomainMsg != nil {
-		l = m.AccountFlushDomainMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountRenewAccountMsg != nil {
-		l = m.AccountRenewAccountMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountAddAccountCertificateMsg != nil {
-		l = m.AccountAddAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.AccountDeleteAccountCertificateMsg != nil {
-		l = m.AccountDeleteAccountCertificateMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.CashUpdateConfigurationMsg != nil {
-		l = m.CashUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TxfeeUpdateConfigurationMsg != nil {
-		l = m.TxfeeUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositCreateDepositContractMsg != nil {
-		l = m.TermdepositCreateDepositContractMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositDepositMsg != nil {
-		l = m.TermdepositDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositReleaseDepositMsg != nil {
-		l = m.TermdepositReleaseDepositMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TermdepositUpdateConfigurationMsg != nil {
-		l = m.TermdepositUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.QualityscoreUpdateConfigurationMsg != nil {
-		l = m.QualityscoreUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.PreregistrationUpdateConfigurationMsg != nil {
-		l = m.PreregistrationUpdateConfigurationMsg.Size()
-		n += 2 + l + sovCodec(uint64(l))
-	}
-	return n
-}
-func (m *ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.MsgfeeUpdateConfigurationMsg != nil {
-		l = m.MsgfeeUpdateConfigurationMsg.Size()
 		n += 2 + l + sovCodec(uint64(l))
 	}
 	return n
@@ -12917,881 +7128,6 @@ func (m *Tx) Unmarshal(dAtA []byte) error {
 			}
 			m.Sum = &Tx_MsgfeeSetMsgFeeMsg{v}
 			iNdEx = postIndex
-		case 81:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DatamigrationExecuteMigrationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &datamigration.ExecuteMigrationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_DatamigrationExecuteMigrationMsg{v}
-			iNdEx = postIndex
-		case 82:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 83:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountRegisterDomainMsg{v}
-			iNdEx = postIndex
-		case 84:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountMsgFeesMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountMsgFeesMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountReplaceAccountMsgFeesMsg{v}
-			iNdEx = postIndex
-		case 85:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountTransferDomainMsg{v}
-			iNdEx = postIndex
-		case 86:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountRenewDomainMsg{v}
-			iNdEx = postIndex
-		case 87:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountDeleteDomainMsg{v}
-			iNdEx = postIndex
-		case 88:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountRegisterAccountMsg{v}
-			iNdEx = postIndex
-		case 89:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountTransferAccountMsg{v}
-			iNdEx = postIndex
-		case 90:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountTargetsMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountTargetsMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountReplaceAccountTargetsMsg{v}
-			iNdEx = postIndex
-		case 91:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountDeleteAccountMsg{v}
-			iNdEx = postIndex
-		case 92:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountFlushDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.FlushDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountFlushDomainMsg{v}
-			iNdEx = postIndex
-		case 93:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountRenewAccountMsg{v}
-			iNdEx = postIndex
-		case 94:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountAddAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.AddAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountAddAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 95:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_AccountDeleteAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 96:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PreregistrationRegisterMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &preregistration.RegisterMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_PreregistrationRegisterMsg{v}
-			iNdEx = postIndex
-		case 97:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CashUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &cash.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_CashUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 98:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TxfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &txfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_TxfeeUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 99:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositCreateDepositContractMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.CreateDepositContractMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_TermdepositCreateDepositContractMsg{v}
-			iNdEx = postIndex
-		case 100:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.DepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_TermdepositDepositMsg{v}
-			iNdEx = postIndex
-		case 101:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositReleaseDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.ReleaseDepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_TermdepositReleaseDepositMsg{v}
-			iNdEx = postIndex
-		case 102:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_TermdepositUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 103:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field QualityscoreUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &qualityscore.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_QualityscoreUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 104:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PreregistrationUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &preregistration.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_PreregistrationUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 105:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MsgfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &msgfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &Tx_MsgfeeUpdateConfigurationMsg{v}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCodec(dAtA[iNdEx:])
@@ -14527,846 +7863,6 @@ func (m *ExecuteBatchMsg_Union) Unmarshal(dAtA []byte) error {
 			}
 			m.Sum = &ExecuteBatchMsg_Union_MsgfeeSetMsgFeeMsg{v}
 			iNdEx = postIndex
-		case 81:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DatamigrationExecuteMigrationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &datamigration.ExecuteMigrationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_DatamigrationExecuteMigrationMsg{v}
-			iNdEx = postIndex
-		case 82:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 83:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountRegisterDomainMsg{v}
-			iNdEx = postIndex
-		case 84:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountMsgFeesMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountMsgFeesMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountReplaceAccountMsgFeesMsg{v}
-			iNdEx = postIndex
-		case 85:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountTransferDomainMsg{v}
-			iNdEx = postIndex
-		case 86:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountRenewDomainMsg{v}
-			iNdEx = postIndex
-		case 87:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountDeleteDomainMsg{v}
-			iNdEx = postIndex
-		case 88:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountRegisterAccountMsg{v}
-			iNdEx = postIndex
-		case 89:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountTransferAccountMsg{v}
-			iNdEx = postIndex
-		case 90:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountTargetsMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountTargetsMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountReplaceAccountTargetsMsg{v}
-			iNdEx = postIndex
-		case 91:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountDeleteAccountMsg{v}
-			iNdEx = postIndex
-		case 92:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountFlushDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.FlushDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountFlushDomainMsg{v}
-			iNdEx = postIndex
-		case 93:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountRenewAccountMsg{v}
-			iNdEx = postIndex
-		case 94:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountAddAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.AddAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountAddAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 95:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_AccountDeleteAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 97:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CashUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &cash.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_CashUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 98:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TxfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &txfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_TxfeeUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 99:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositCreateDepositContractMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.CreateDepositContractMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_TermdepositCreateDepositContractMsg{v}
-			iNdEx = postIndex
-		case 100:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.DepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_TermdepositDepositMsg{v}
-			iNdEx = postIndex
-		case 101:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositReleaseDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.ReleaseDepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_TermdepositReleaseDepositMsg{v}
-			iNdEx = postIndex
-		case 102:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_TermdepositUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 103:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field QualityscoreUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &qualityscore.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_QualityscoreUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 104:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PreregistrationUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &preregistration.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_PreregistrationUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 105:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MsgfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &msgfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteBatchMsg_Union_MsgfeeUpdateConfigurationMsg{v}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCodec(dAtA[iNdEx:])
@@ -16085,846 +8581,6 @@ func (m *ProposalOptions) Unmarshal(dAtA []byte) error {
 			}
 			m.Option = &ProposalOptions_MsgfeeSetMsgFeeMsg{v}
 			iNdEx = postIndex
-		case 81:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DatamigrationExecuteMigrationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &datamigration.ExecuteMigrationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_DatamigrationExecuteMigrationMsg{v}
-			iNdEx = postIndex
-		case 82:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 83:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountRegisterDomainMsg{v}
-			iNdEx = postIndex
-		case 84:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountMsgFeesMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountMsgFeesMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountReplaceAccountMsgFeesMsg{v}
-			iNdEx = postIndex
-		case 85:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountTransferDomainMsg{v}
-			iNdEx = postIndex
-		case 86:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountRenewDomainMsg{v}
-			iNdEx = postIndex
-		case 87:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountDeleteDomainMsg{v}
-			iNdEx = postIndex
-		case 88:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountRegisterAccountMsg{v}
-			iNdEx = postIndex
-		case 89:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountTransferAccountMsg{v}
-			iNdEx = postIndex
-		case 90:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountTargetsMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountTargetsMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountReplaceAccountTargetsMsg{v}
-			iNdEx = postIndex
-		case 91:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountDeleteAccountMsg{v}
-			iNdEx = postIndex
-		case 92:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountFlushDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.FlushDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountFlushDomainMsg{v}
-			iNdEx = postIndex
-		case 93:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountRenewAccountMsg{v}
-			iNdEx = postIndex
-		case 94:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountAddAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.AddAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountAddAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 95:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_AccountDeleteAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 97:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CashUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &cash.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_CashUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 98:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TxfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &txfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_TxfeeUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 99:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositCreateDepositContractMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.CreateDepositContractMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_TermdepositCreateDepositContractMsg{v}
-			iNdEx = postIndex
-		case 100:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.DepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_TermdepositDepositMsg{v}
-			iNdEx = postIndex
-		case 101:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositReleaseDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.ReleaseDepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_TermdepositReleaseDepositMsg{v}
-			iNdEx = postIndex
-		case 102:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_TermdepositUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 103:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field QualityscoreUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &qualityscore.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_QualityscoreUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 104:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PreregistrationUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &preregistration.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_PreregistrationUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 105:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MsgfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &msgfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Option = &ProposalOptions_MsgfeeUpdateConfigurationMsg{v}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCodec(dAtA[iNdEx:])
@@ -17624,846 +9280,6 @@ func (m *ExecuteProposalBatchMsg_Union) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			m.Sum = &ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg{v}
-			iNdEx = postIndex
-		case 81:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DatamigrationExecuteMigrationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &datamigration.ExecuteMigrationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg{v}
-			iNdEx = postIndex
-		case 82:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 83:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg{v}
-			iNdEx = postIndex
-		case 84:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountMsgFeesMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountMsgFeesMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg{v}
-			iNdEx = postIndex
-		case 85:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg{v}
-			iNdEx = postIndex
-		case 86:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg{v}
-			iNdEx = postIndex
-		case 87:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg{v}
-			iNdEx = postIndex
-		case 88:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRegisterAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RegisterAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg{v}
-			iNdEx = postIndex
-		case 89:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountTransferAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.TransferAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg{v}
-			iNdEx = postIndex
-		case 90:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountReplaceAccountTargetsMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.ReplaceAccountTargetsMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg{v}
-			iNdEx = postIndex
-		case 91:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg{v}
-			iNdEx = postIndex
-		case 92:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountFlushDomainMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.FlushDomainMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg{v}
-			iNdEx = postIndex
-		case 93:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountRenewAccountMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.RenewAccountMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg{v}
-			iNdEx = postIndex
-		case 94:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountAddAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.AddAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 95:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AccountDeleteAccountCertificateMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &account.DeleteAccountCertificateMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg{v}
-			iNdEx = postIndex
-		case 97:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CashUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &cash.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 98:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TxfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &txfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 99:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositCreateDepositContractMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.CreateDepositContractMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg{v}
-			iNdEx = postIndex
-		case 100:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.DepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositDepositMsg{v}
-			iNdEx = postIndex
-		case 101:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositReleaseDepositMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.ReleaseDepositMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg{v}
-			iNdEx = postIndex
-		case 102:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TermdepositUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &termdeposit.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 103:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field QualityscoreUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &qualityscore.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 104:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PreregistrationUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &preregistration.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg{v}
-			iNdEx = postIndex
-		case 105:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MsgfeeUpdateConfigurationMsg", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowCodec
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthCodec
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthCodec
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &msgfee.UpdateConfigurationMsg{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Sum = &ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

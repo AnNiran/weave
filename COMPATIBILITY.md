@@ -2,8 +2,6 @@
 
 | Weave | Tendermint |
 |--------|-----------|
-|v1.0.x  | v0.31.12|
-|v0.22.x | v0.31.11|
 |v0.21.x | v0.31.9|
 |v0.20.x | v0.31.5|
 |v0.19.x | v0.31.5|
@@ -21,7 +19,6 @@
 
 | Weave | Protobuf compatible to previous version| Comments |
 |--------|--------------------|------------------|
-|v1.0.4 | :x:| See [CHANGELOG for 1.0.4](https://github.com/iov-one/weave/blob/master/CHANGELOG.md#104) |
 |v0.20.0 | :heavy_check_mark:| See [CHANGELOG for 0.20.0](https://github.com/iov-one/weave/blob/master/CHANGELOG.md#0200) |
 |v0.19.0 | :x:| See [CHANGELOG for 0.19.0](https://github.com/iov-one/weave/blob/master/CHANGELOG.md#0190) |
 |v0.18.0 | :x:| See [CHANGELOG for 0.18.0](https://github.com/iov-one/weave/blob/master/CHANGELOG.md#0180) |

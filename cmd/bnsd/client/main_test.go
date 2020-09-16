@@ -15,7 +15,6 @@ import (
 	"github.com/iov-one/weave/migration"
 	"github.com/iov-one/weave/x/cash"
 	"github.com/iov-one/weave/x/msgfee"
-	"github.com/iov-one/weave/x/txfee"
 	abci "github.com/tendermint/tendermint/abci/types"
 	cfg "github.com/tendermint/tendermint/config"
 	"github.com/tendermint/tendermint/libs/log"
@@ -107,11 +106,6 @@ func initGenesis(filename string, addr weave.Address) error {
 				ValidUsernameName:  `^[a-z0-9\-_.]{3,64}`,
 				ValidUsernameLabel: `^iov$`,
 			},
-			"txfee": txfee.Configuration{
-				Owner:     weave.Condition("txfee/admin/0000000000000001").Address(),
-				BaseFee:   coin.NewCoin(0, 20, "IOV"),
-				FreeBytes: 10240,
-			},
 		},
 		"initialize_schema": []dict{
 			{"ver": 1, "pkg": "batch"},
@@ -126,7 +120,6 @@ func initGenesis(filename string, addr weave.Address) error {
 			{"ver": 1, "pkg": "sigs"},
 			{"ver": 1, "pkg": "utils"},
 			{"ver": 1, "pkg": "validators"},
-			{"ver": 1, "pkg": "txfee"},
 		},
 	})
 	if err != nil {

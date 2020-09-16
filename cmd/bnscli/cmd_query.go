@@ -9,16 +9,13 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"sort"
 	"strconv"
 	"strings"
 
 	"github.com/iov-one/weave"
 	bnsd "github.com/iov-one/weave/cmd/bnsd/app"
 	"github.com/iov-one/weave/cmd/bnsd/client"
-	"github.com/iov-one/weave/cmd/bnsd/x/account"
-	"github.com/iov-one/weave/cmd/bnsd/x/preregistration"
-	"github.com/iov-one/weave/cmd/bnsd/x/termdeposit"
+	"github.com/iov-one/weave/cmd/bnsd/x/blueaccount"
 	"github.com/iov-one/weave/cmd/bnsd/x/username"
 	"github.com/iov-one/weave/orm"
 	"github.com/iov-one/weave/x/cash"
@@ -41,7 +38,7 @@ Execute a ABCI query and print JSON encoded result.
 			"Tendermint node address. Use proper NETWORK name. You can use BNSCLI_TM_ADDR environment variable to set it.")
 		pathFl        = fl.String("path", "", "Path to be queried. Must be one of the supported.")
 		dataFl        = fl.String("data", "", "individual query data. Format depends on the queried entity. Use 'id/version' for electoraterules, electorates")
-		prefixQueryFl = fl.String("prefix", "false", "If true, use prefix queries instead of the exact match with provided data. [true/false]")
+		prefixQueryFl = fl.Bool("prefix", false, "If true, use prefix queries instead of the exact match with provided data.")
 	)
 	fl.Parse(args)
 
@@ -51,14 +48,9 @@ Execute a ABCI query and print JSON encoded result.
 		for p := range queries {
 			paths = append(paths, p)
 		}
-		sort.Strings(paths)
 		return fmt.Errorf("available query paths:\n\t- %s", strings.Join(paths, "\n\t- "))
 	}
 
-	prefixQuery, err := strconv.ParseBool(*prefixQueryFl)
-	if err != nil {
-		return fmt.Errorf("provide valid super user input: %s", err)
-	}
 	var data []byte
 	if len(*dataFl) != 0 {
 		var err error
@@ -67,7 +59,7 @@ Execute a ABCI query and print JSON encoded result.
 		}
 	}
 	queryPath := *pathFl
-	if prefixQuery || *dataFl == "" {
+	if *prefixQueryFl || *dataFl == "" {
 		queryPath += "?" + weave.PrefixQueryMod
 	}
 
@@ -79,12 +71,9 @@ Execute a ABCI query and print JSON encoded result.
 
 	result := make([]keyval, 0, len(resp.Models))
 	for i, m := range resp.Models {
-		var obj model
-		if len(m.Value) != 0 {
-			obj = conf.newObj()
-			if err := obj.Unmarshal(m.Value); err != nil {
-				return fmt.Errorf("failed to unmarshal model %d: %s", i, err)
-			}
+		obj := conf.newObj()
+		if err := obj.Unmarshal(m.Value); err != nil {
+			return fmt.Errorf("failed to unmarshal model %d: %s", i, err)
 		}
 		key, err := conf.decKey(m.Key)
 		if err != nil {
@@ -102,7 +91,7 @@ Execute a ABCI query and print JSON encoded result.
 
 type keyval struct {
 	Key   string
-	Value model `json:",omitempty"`
+	Value model
 }
 
 // queries contains a mapping of query path to that query specifics. Each query
@@ -194,34 +183,14 @@ var queries = map[string]struct {
 		decKey: sequenceKey,
 		encID:  numericID,
 	},
-	"/accounts": {
-		newObj: func() model { return &account.Account{} },
+	"/bluedomains": {
+		newObj: func() model { return &blueaccount.Domain{} },
 		decKey: strKey,
 		encID:  strID,
 	},
-	"/domains": {
-		newObj: func() model { return &account.Domain{} },
+	"/blueaccounts": {
+		newObj: func() model { return &blueaccount.Account{} },
 		decKey: strKey,
-		encID:  strID,
-	},
-	"/depositcontracts": {
-		newObj: func() model { return &termdeposit.DepositContract{} },
-		decKey: sequenceKey,
-		encID:  numericID,
-	},
-	"/deposits": {
-		newObj: func() model { return &termdeposit.Deposit{} },
-		decKey: sequenceKey,
-		encID:  numericID,
-	},
-	"/deposits/contract": {
-		newObj: func() model { return &termdeposit.Deposit{} },
-		decKey: sequenceKey,
-		encID:  numericID,
-	},
-	"/preregistrationrecords": {
-		newObj: func() model { return &preregistration.Record{} },
-		decKey: rawKey,
 		encID:  strID,
 	},
 }

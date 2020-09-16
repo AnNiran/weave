@@ -13,6 +13,7 @@ import (
 	"github.com/iov-one/weave"
 	"github.com/iov-one/weave/coin"
 	"github.com/iov-one/weave/weavetest/assert"
+	"github.com/iov-one/weave/x/gov"
 )
 
 func TestSeqFlag(t *testing.T) {
@@ -289,10 +290,9 @@ func TestAddressFlag(t *testing.T) {
 			setup: func(fl *flag.FlagSet) *weave.Address {
 				return flAddress(fl, "x", "8d0d55645f1241a7a16d84fc9561a51d518c0d36", "")
 			},
-			args:      []string{"-x", "zzzzzzzzzzzzz"},
-			wantDie:   0,
-			wantError: true,
-			wantVal:   fromHex(t, "8d0d55645f1241a7a16d84fc9561a51d518c0d36"),
+			args:    []string{"-x", "zzzzzzzzzzzzz"},
+			wantDie: 0,
+			wantVal: fromHex(t, "8d0d55645f1241a7a16d84fc9561a51d518c0d36"),
 		},
 	}
 
@@ -344,7 +344,7 @@ func TestFractionFlag(t *testing.T) {
 		setup   func(fl *flag.FlagSet) *flagfraction
 		args    []string
 		wantDie int
-		wantVal weave.Fraction
+		wantVal *gov.Fraction
 	}{
 		"only numerator": {
 			setup: func(fl *flag.FlagSet) *flagfraction {
@@ -352,7 +352,7 @@ func TestFractionFlag(t *testing.T) {
 			},
 			args:    []string{"-x", "44"},
 			wantDie: 0,
-			wantVal: weave.Fraction{Numerator: 44, Denominator: 1},
+			wantVal: &gov.Fraction{Numerator: 44, Denominator: 1},
 		},
 		"only 0 numerator": {
 			setup: func(fl *flag.FlagSet) *flagfraction {
@@ -360,7 +360,7 @@ func TestFractionFlag(t *testing.T) {
 			},
 			args:    []string{"-x", "0"},
 			wantDie: 0,
-			wantVal: weave.Fraction{Numerator: 0, Denominator: 1},
+			wantVal: &gov.Fraction{Numerator: 0, Denominator: 0},
 		},
 		"value is nil when not set": {
 			setup: func(fl *flag.FlagSet) *flagfraction {
@@ -368,6 +368,7 @@ func TestFractionFlag(t *testing.T) {
 			},
 			args:    []string{},
 			wantDie: 0,
+			wantVal: nil,
 		},
 		"zero is value is zero": {
 			setup: func(fl *flag.FlagSet) *flagfraction {
@@ -375,7 +376,7 @@ func TestFractionFlag(t *testing.T) {
 			},
 			args:    []string{},
 			wantDie: 0,
-			wantVal: weave.Fraction{Numerator: 0, Denominator: 1},
+			wantVal: &gov.Fraction{Numerator: 0, Denominator: 0},
 		},
 		"use default value": {
 			setup: func(fl *flag.FlagSet) *flagfraction {
@@ -383,7 +384,7 @@ func TestFractionFlag(t *testing.T) {
 			},
 			args:    []string{},
 			wantDie: 0,
-			wantVal: weave.Fraction{Numerator: 2, Denominator: 3},
+			wantVal: &gov.Fraction{Numerator: 2, Denominator: 3},
 		},
 		"use argument value": {
 			setup: func(fl *flag.FlagSet) *flagfraction {
@@ -391,7 +392,7 @@ func TestFractionFlag(t *testing.T) {
 			},
 			args:    []string{"-x", "5/7"},
 			wantDie: 0,
-			wantVal: weave.Fraction{Numerator: 5, Denominator: 7},
+			wantVal: &gov.Fraction{Numerator: 5, Denominator: 7},
 		},
 		"invalid default value": {
 			setup: func(fl *flag.FlagSet) *flagfraction {
@@ -405,7 +406,7 @@ func TestFractionFlag(t *testing.T) {
 			},
 			args:    []string{"-x", "invalid"},
 			wantDie: 0,
-			wantVal: weave.Fraction{Numerator: 2, Denominator: 3},
+			wantVal: &gov.Fraction{Numerator: 2, Denominator: 3},
 		},
 	}
 

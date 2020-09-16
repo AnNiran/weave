@@ -2,7 +2,6 @@ package orm
 
 import (
 	"bytes"
-	"encoding/hex"
 	"reflect"
 	"testing"
 
@@ -166,9 +165,11 @@ func bc(i int64) []byte {
 }
 
 func TestBucketSecondaryIndex(t *testing.T) {
+	const uniq, mini = "uniq", "mini"
+
 	bucket := NewBucket("special", &Counter{}).
-		WithIndex("value", count, true).
-		WithIndex("byte", countByte, false)
+		WithIndex(uniq, count, true).
+		WithIndex(mini, countByte, false)
 
 	a, b, c := []byte("a"), []byte("b"), []byte("c")
 	oa := NewSimpleObj(a, NewCounter(5))
@@ -186,6 +187,7 @@ func TestBucketSecondaryIndex(t *testing.T) {
 	// verifies that the proper results are returned
 	type query struct {
 		index   string
+		like    Object
 		at      []byte
 		res     []Object
 		wantErr *errors.Error
@@ -201,9 +203,9 @@ func TestBucketSecondaryIndex(t *testing.T) {
 			bucket: bucket,
 			save:   []savecall{{obj: oa}},
 			queries: []query{
-				{"value", encodeSequence(5), []Object{oa}, nil},
-				{"byte", []byte{5}, []Object{oa}, nil},
-				{"foo", []byte("does not matter"), nil, ErrInvalidIndex},
+				{uniq, oa, nil, []Object{oa}, nil},
+				{mini, oa, nil, []Object{oa}, nil},
+				{"foo", oa, nil, nil, ErrInvalidIndex},
 			},
 		},
 		"add a second object and move one": {
@@ -214,11 +216,11 @@ func TestBucketSecondaryIndex(t *testing.T) {
 				{obj: oa2},
 			},
 			queries: []query{
-				{"value", encodeSequence(5), nil, nil},
-				{"value", encodeSequence(245), []Object{oa2}, nil},
-				{"value", encodeSequence(256 + 5), []Object{ob}, nil},
-				{"byte", []byte{5}, []Object{ob}, nil},
-				{"byte", []byte{245}, []Object{oa2}, nil},
+				{uniq, oa, nil, nil, nil},
+				{uniq, oa2, nil, []Object{oa2}, nil},
+				{uniq, ob, nil, []Object{ob}, nil},
+				{mini, nil, []byte{5}, []Object{ob}, nil},
+				{mini, nil, []byte{245}, []Object{oa2}, nil},
 			},
 		},
 		"prevent a conflicting save": {
@@ -237,11 +239,11 @@ func TestBucketSecondaryIndex(t *testing.T) {
 			},
 			remove: [][]byte{b},
 			queries: []query{
-				{"value", encodeSequence(5), []Object{oa}, nil},
-				{"value", encodeSequence(245), nil, nil},
-				{"value", encodeSequence(512 + 245), []Object{oc}, nil},
-				{"byte", []byte{5}, []Object{oa}, nil},
-				{"byte", []byte{245}, []Object{oc}, nil},
+				{uniq, oa, nil, []Object{oa}, nil},
+				{uniq, ob2, nil, nil, nil},
+				{uniq, oc, nil, []Object{oc}, nil},
+				{mini, nil, []byte{5}, []Object{oa}, nil},
+				{mini, nil, []byte{245}, []Object{oc}, nil},
 			},
 		},
 	}
@@ -267,7 +269,11 @@ func TestBucketSecondaryIndex(t *testing.T) {
 					res []Object
 					err error
 				)
-				res, err = tc.bucket.GetIndexed(db, q.index, q.at)
+				if q.like != nil {
+					res, err = tc.bucket.GetIndexedLike(db, q.index, q.like)
+				} else {
+					res, err = tc.bucket.GetIndexed(db, q.index, q.at)
+				}
 				if !q.wantErr.Is(err) {
 					t.Fatalf("unexpected %d query error: %s", i, err)
 				}
@@ -516,163 +522,5 @@ func assertSameOps(t testing.TB, a, b []store.Op) {
 		if !bytes.Equal(opa.Key(), opb.Key()) {
 			t.Fatalf("different key at index %d: %X vs %X", i, opa.Key(), opb.Key())
 		}
-	}
-}
-
-func TestParseQueryRange(t *testing.T) {
-	hexit := func(s string) string {
-		return hex.EncodeToString([]byte(s))
-	}
-
-	cases := map[string]struct {
-		Raw   string
-		Start string
-		End   string
-		Err   *errors.Error
-	}{
-		"nil": {
-			Raw:   "",
-			Start: "",
-			End:   "",
-		},
-		"empty": {
-			Raw:   "",
-			Start: "",
-			End:   "",
-		},
-		"only start": {
-			Raw:   hexit("4d6f2031332e204a616e2"),
-			Start: hexit("4d6f2031332e204a616e2"),
-			End:   "",
-		},
-		"only start with separator": {
-			Raw:   hexit("4d6f2031332e204a616e2") + ":",
-			Start: hexit("4d6f2031332e204a616e2"),
-			End:   "",
-		},
-		"only end": {
-			Raw:   ":" + hexit("4d6f2031332e204a616e2"),
-			Start: "",
-			End:   hexit("4d6f2031332e204a616e2"),
-		},
-		"start and end": {
-			Raw:   hexit("4d6f2031332") + ":" + hexit("e204a616e2"),
-			Start: hexit("4d6f2031332"),
-			End:   hexit("e204a616e2"),
-		},
-	}
-
-	for testName, tc := range cases {
-		t.Run(testName, func(t *testing.T) {
-			start, end, err := parseQueryRange([]byte(tc.Raw))
-			if hex.EncodeToString(start) != tc.Start {
-				t.Errorf("unexpected start: %q", start)
-			}
-			if hex.EncodeToString(end) != tc.End {
-				t.Errorf("unexpected end: %q", end)
-			}
-			if !tc.Err.Is(err) {
-				t.Errorf("unexpected error: %+v", err)
-			}
-		})
-	}
-}
-
-func TestBucketRangeQueryMod(t *testing.T) {
-	db := store.MemStore()
-
-	defer withQueryRangeLimit(3)()
-
-	b := NewBucket("mycounter", &Counter{})
-
-	keys := []string{
-		"000011",
-		"000012",
-		"000021",
-		"000022",
-		"000023",
-		"000024",
-		"000030",
-	}
-
-	for _, key := range keys {
-		o := NewSimpleObj([]byte(key), &Counter{})
-		if err := b.Save(db, o); err != nil {
-			t.Fatalf("cannot save: %+v", err)
-		}
-	}
-
-	hexit := func(s string) string {
-		return hex.EncodeToString([]byte(s))
-	}
-
-	cases := map[string]struct {
-		Data     string
-		WantErr  *errors.Error
-		WantKeys []string
-	}{
-		"empty data": {
-			Data:     "",
-			WantKeys: []string{"mycounter:000011", "mycounter:000012", "mycounter:000021"},
-		},
-		"only start": {
-			Data:     hexit("0000"),
-			WantKeys: []string{"mycounter:000011", "mycounter:000012", "mycounter:000021"},
-		},
-		"only end": {
-			Data:     ":" + hexit("000012"),
-			WantKeys: []string{"mycounter:000011", "mycounter:000012"},
-		},
-		"start and end": {
-			Data:     hexit("000022") + ":" + hexit("000023"),
-			WantKeys: []string{"mycounter:000022", "mycounter:000023"},
-		},
-		"only end value": {
-			Data:     ":" + hexit("000"),
-			WantKeys: nil,
-		},
-		"start outside of data range": {
-			Data:     hexit("9") + ":",
-			WantKeys: nil,
-		},
-		"end before start": {
-			Data:     hexit("00001") + ":" + hexit("0000"),
-			WantKeys: nil,
-		},
-		"start value is inclusive": {
-			Data:     hexit("000011") + ":" + hexit("00002"),
-			WantKeys: []string{"mycounter:000011", "mycounter:000012"},
-		},
-		"end value is exclusive": {
-			Data:     hexit("00001") + ":" + hexit("00002"),
-			WantKeys: []string{"mycounter:000011", "mycounter:000012"},
-		},
-	}
-
-	for testName, tc := range cases {
-		t.Run(testName, func(t *testing.T) {
-			result, err := b.Query(db, weave.RangeQueryMod, []byte(tc.Data))
-			if !tc.WantErr.Is(err) {
-				t.Fatalf("unexpected error: %+v", err)
-			}
-			assertModelKeys(t, tc.WantKeys, result)
-		})
-	}
-}
-
-func assertModelKeys(t testing.TB, wantKeys []string, models []weave.Model) {
-	t.Helper()
-
-	var keys []string
-	for _, m := range models {
-		keys = append(keys, string(m.Key))
-	}
-
-	if got, want := len(models), len(wantKeys); want != got {
-		t.Errorf("want %d keys, got %d", want, got)
-	}
-
-	if !reflect.DeepEqual(keys, wantKeys) {
-		t.Fatalf("got unexpected models: %q", keys)
 	}
 }

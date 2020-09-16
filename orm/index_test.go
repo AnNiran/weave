@@ -2,43 +2,30 @@ package orm
 
 import (
 	"bytes"
-	"encoding/hex"
-	stderrors "errors"
+	"errors"
 	"fmt"
-	"reflect"
 	"testing"
 
-	"github.com/iov-one/weave"
-	"github.com/iov-one/weave/errors"
 	"github.com/iov-one/weave/store"
-	"github.com/iov-one/weave/weavetest"
 	"github.com/iov-one/weave/weavetest/assert"
 )
-
-// newIndex constructs an index with single key Indexer.
-// Indexer calculates the index for an object
-// unique enforces a unique constraint on the index
-// refKey calculates the absolute dbkey for a ref
-func newIndex(name string, indexer Indexer, unique bool, refKey func([]byte) []byte) Index {
-	return NewMultiKeyIndex(name, asMultiKeyIndexer(indexer), unique, refKey)
-}
 
 // simple indexer for Counter
 func count(obj Object) ([]byte, error) {
 	if obj == nil {
-		return nil, stderrors.New("cannot take index of nil")
+		return nil, errors.New("Cannot take index of nil")
 	}
 	cntr, ok := obj.Value().(*Counter)
 	if !ok {
-		return nil, stderrors.New("can only take index of Counter")
+		return nil, errors.New("Can only take index of Counter")
 	}
 	// big-endian encoded int64
 	return encodeSequence(cntr.Count), nil
 }
 
 func TestCounterSingleKeyIndex(t *testing.T) {
-	multi := newIndex("likes", count, false, nil).(compactIndex)
-	uniq := newIndex("magic", count, true, nil).(compactIndex)
+	multi := NewIndex("likes", count, false, nil)
+	uniq := NewIndex("magic", count, true, nil)
 
 	// some keys to use
 	k1 := []byte("abc")
@@ -57,7 +44,7 @@ func TestCounterSingleKeyIndex(t *testing.T) {
 	e9 := encodeSequence(9)
 
 	cases := []struct {
-		idx        compactIndex
+		idx        Index
 		prev, next Object // for Update
 		isError    bool   // check Update result
 		// if there was no error, and these are non-nil, try
@@ -115,12 +102,12 @@ func TestCounterSingleKeyIndex(t *testing.T) {
 
 			assert.Nil(t, err)
 			if tc.getLike != nil {
-				res, err := idx.Like(db, tc.getLike)
+				res, err := idx.GetLike(db, tc.getLike)
 				assert.Nil(t, err)
 				assert.Equal(t, tc.likeRes, res)
 			}
 			if tc.getAt != nil {
-				res, err := consumeIteratorKeys(idx.Keys(db, tc.getAt))
+				res, err := idx.GetAt(db, tc.getAt)
 				assert.Nil(t, err)
 				assert.Equal(t, tc.atRes, res)
 			}
@@ -129,10 +116,10 @@ func TestCounterSingleKeyIndex(t *testing.T) {
 }
 
 func TestCounterMultiKeyIndex(t *testing.T) {
-	uniq := NewMultiKeyIndex("unique", evenOddIndexer, true, nil).(compactIndex)
+	uniq := NewMultiKeyIndex("unique", evenOddIndexer, true, nil)
 
 	specs := map[string]struct {
-		index               compactIndex
+		index               Index
 		store               Object
 		prev, next          Object
 		expError            bool
@@ -170,7 +157,7 @@ func TestCounterMultiKeyIndex(t *testing.T) {
 			expError: true,
 		},
 		"update without unique constraint": {
-			index:    NewMultiKeyIndex("multi", evenOddIndexer, false, nil).(compactIndex),
+			index:    NewMultiKeyIndex("multi", evenOddIndexer, false, nil),
 			store:    NewSimpleObj([]byte("even"), NewCounter(8)),
 			prev:     NewSimpleObj([]byte("my"), NewCounter(5)),
 			next:     NewSimpleObj([]byte("my"), NewCounter(6)),
@@ -215,7 +202,7 @@ func TestCounterMultiKeyIndex(t *testing.T) {
 			}
 			for _, k := range spec.expKeys {
 				// and index keys exists
-				pks, err := consumeIteratorKeys(idx.Keys(db, k))
+				pks, err := idx.GetAt(db, k)
 				assert.Nil(t, err)
 				// with proper pk
 				if idx.unique {
@@ -233,7 +220,7 @@ func TestCounterMultiKeyIndex(t *testing.T) {
 			}
 			// and previous index keys don't exist anymore
 			for _, k := range spec.expNotKeys {
-				pks, err := consumeIteratorKeys(idx.Keys(db, k))
+				pks, err := idx.GetAt(db, k)
 				assert.Nil(t, err)
 				assert.Nil(t, pks)
 			}
@@ -243,7 +230,7 @@ func TestCounterMultiKeyIndex(t *testing.T) {
 
 func TestGetLikeWithMultiKeyIndex(t *testing.T) {
 	db := store.MemStore()
-	idx := NewMultiKeyIndex("multi", evenOddIndexer, false, nil).(compactIndex)
+	idx := NewMultiKeyIndex("multi", evenOddIndexer, false, nil)
 
 	persistentObjects := []Object{
 		NewSimpleObj([]byte("firstOdd"), NewCounter(5)),
@@ -280,7 +267,7 @@ func TestGetLikeWithMultiKeyIndex(t *testing.T) {
 	}
 	for testName, spec := range specs {
 		t.Run(testName, func(t *testing.T) {
-			pks, err := idx.Like(db, spec.source)
+			pks, err := idx.GetLike(db, spec.source)
 			// then
 			assert.Nil(t, err)
 			assert.Equal(t, spec.expPKs, pks)
@@ -305,11 +292,11 @@ func evenOddIndexer(obj Object) ([][]byte, error) {
 // return first value (if any), or nil
 func first(obj Object) ([]byte, error) {
 	if obj == nil {
-		return nil, stderrors.New("Cannot take index of nil")
+		return nil, errors.New("Cannot take index of nil")
 	}
 	multi, ok := obj.Value().(*MultiRef)
 	if !ok {
-		return nil, stderrors.New("Can only take index of MultiRef")
+		return nil, errors.New("Can only take index of MultiRef")
 	}
 	if len(multi.Refs) == 0 {
 		return nil, nil
@@ -379,7 +366,7 @@ func TestNullableIndex(t *testing.T) {
 
 	for testName, tc := range cases {
 		t.Run(testName, func(t *testing.T) {
-			uniq := newIndex("no-null", first, true, nil)
+			uniq := NewIndex("no-null", first, true, nil)
 			db := store.MemStore()
 			for _, init := range tc.setup {
 				err := uniq.Update(db, nil, init)
@@ -443,610 +430,4 @@ func toBytes(s []string) [][]byte {
 		source[i] = []byte(v)
 	}
 	return source
-}
-
-func TestNativeIndexPacking(t *testing.T) {
-	cases := map[string][][]byte{
-		"empty":                [][]byte{},
-		"one empty element":    [][]byte{[]byte{}},
-		"three empty elements": [][]byte{[]byte{}, []byte{}, []byte{}},
-		"one non empty element": [][]byte{
-			[]byte("foo"),
-		},
-		"two non empty elements": [][]byte{
-			[]byte("a"),
-			[]byte("a very long value that is below 255 characters"),
-		},
-		"three non empty elements": [][]byte{
-			[]byte("foo"),
-			[]byte("bar"),
-			[]byte("baz"),
-		},
-		"mixture of empty and non empty": [][]byte{
-			[]byte("non empty value"),
-			[]byte{},
-			[]byte("another non empty value"),
-			[]byte{},
-			[]byte{},
-			[]byte{},
-			[]byte("not empty"),
-			[]byte{},
-		},
-	}
-
-	for testName, chunks := range cases {
-		t.Run(testName, func(t *testing.T) {
-			packed, err := packNativeIdxKey(chunks)
-			if err != nil {
-				t.Fatalf("cannot pack: %s", err)
-			}
-			unpacked, err := unpackNativeIdxKey(packed)
-			if err != nil {
-				t.Fatalf("cannot unpack: %s", err)
-			}
-			if !reflect.DeepEqual(unpacked, chunks) {
-				t.Logf("packed: %x %q", packed, packed)
-				t.Fatalf("data malformed during serialization: %q", unpacked)
-			}
-		})
-	}
-}
-
-func TestCompactIndexImplementation(t *testing.T) {
-	testIndexImplementation(t, func(fn MultiKeyIndexer) Index {
-		return NewMultiKeyIndex("myindex", fn, false, func(b []byte) []byte { return b })
-	})
-}
-
-func TestNativeIndexImplementation(t *testing.T) {
-	testIndexImplementation(t, func(fn MultiKeyIndexer) Index {
-		return NewNativeIndex("myindex", fn, func(b []byte) []byte { return b })
-	})
-}
-
-func testIndexImplementation(t *testing.T, newIdx func(MultiKeyIndexer) Index) {
-	valueIdx := func(o Object) ([][]byte, error) {
-		c := o.Value().(*Counter).Count
-		return [][]byte{[]byte(fmt.Sprint(c))}, nil
-	}
-	idx := newIdx(valueIdx)
-
-	// Definition of a single Update method call and expected result.
-	type updateCall struct {
-		prev    Object
-		next    Object
-		wantErr *errors.Error
-	}
-
-	// Definition of a single Keys method call and expected results.
-	type keysCall struct {
-		value    []byte
-		wantKeys []string // []string and not [][]byte for nicer UI
-	}
-
-	cases := map[string]struct {
-		idx     Index
-		updates []updateCall
-		keys    []keysCall
-	}{
-		"no results found": {
-			idx:     idx,
-			updates: []updateCall{},
-			keys: []keysCall{
-				{value: []byte("random-value"), wantKeys: nil},
-			},
-		},
-		"a single item": {
-			idx: idx,
-			updates: []updateCall{
-				{prev: nil, next: NewSimpleObj([]byte("one"), &Counter{Count: 1})},
-			},
-			keys: []keysCall{
-				{value: []byte("1"), wantKeys: []string{"one"}},
-				{value: []byte("unindexed-value"), wantKeys: nil},
-			},
-		},
-		"two items, both with the same index value": {
-			idx: idx,
-			updates: []updateCall{
-				{prev: nil, next: NewSimpleObj([]byte("first"), &Counter{Count: 1})},
-				{prev: nil, next: NewSimpleObj([]byte("second"), &Counter{Count: 1})},
-			},
-			keys: []keysCall{
-				{value: []byte("1"), wantKeys: []string{"first", "second"}},
-				{value: []byte("unindexed-value"), wantKeys: nil},
-			},
-		},
-		"two items, each with a different index value": {
-			idx: idx,
-			updates: []updateCall{
-				{prev: nil, next: NewSimpleObj([]byte("one"), &Counter{Count: 1})},
-				{prev: nil, next: NewSimpleObj([]byte("two"), &Counter{Count: 2})},
-			},
-			keys: []keysCall{
-				{value: []byte("1"), wantKeys: []string{"one"}},
-				{value: []byte("2"), wantKeys: []string{"two"}},
-				{value: []byte("unindexed-value"), wantKeys: nil},
-			},
-		},
-		"many items, some with similar index value": {
-			idx: idx,
-			updates: []updateCall{
-				{prev: nil, next: NewSimpleObj([]byte("a"), &Counter{Count: 1})},
-				{prev: nil, next: NewSimpleObj([]byte("b"), &Counter{Count: 2})},
-				{prev: nil, next: NewSimpleObj([]byte("c"), &Counter{Count: 2})},
-				{prev: nil, next: NewSimpleObj([]byte("d"), &Counter{Count: 2})},
-				{prev: nil, next: NewSimpleObj([]byte("e"), &Counter{Count: 3})},
-			},
-			keys: []keysCall{
-				{value: []byte("1"), wantKeys: []string{"a"}},
-				{value: []byte("2"), wantKeys: []string{"b", "c", "d"}},
-				{value: []byte("3"), wantKeys: []string{"e"}},
-				{value: []byte("unindexed-value"), wantKeys: nil},
-			},
-		},
-		"deleting an item from an index": {
-			idx: idx,
-			updates: []updateCall{
-				{prev: nil, next: NewSimpleObj([]byte("one"), &Counter{Count: 1})},
-				{prev: nil, next: NewSimpleObj([]byte("two"), &Counter{Count: 2})},
-				{prev: NewSimpleObj([]byte("two"), &Counter{Count: 2}), next: nil},
-			},
-			keys: []keysCall{
-				{value: []byte("1"), wantKeys: []string{"one"}},
-				{value: []byte("2"), wantKeys: nil},
-			},
-		},
-		"reindexing an item with a different value": {
-			idx: idx,
-			updates: []updateCall{
-				{prev: nil, next: NewSimpleObj([]byte("two"), &Counter{Count: 1})},
-				{prev: nil, next: NewSimpleObj([]byte("one"), &Counter{Count: 1})},
-				{prev: NewSimpleObj([]byte("two"), &Counter{Count: 1}), next: NewSimpleObj([]byte("two"), &Counter{Count: 2})},
-			},
-			keys: []keysCall{
-				{value: []byte("1"), wantKeys: []string{"one"}},
-				{value: []byte("2"), wantKeys: []string{"two"}},
-				{value: []byte("unindexed-value"), wantKeys: nil},
-			},
-		},
-	}
-
-	for testName, tc := range cases {
-		t.Run(testName, func(t *testing.T) {
-			// Do not use MemStore because its implementation is
-			// not fully compatible with a real backend.
-			// db := store.MemStore()
-			store, cleanup := weavetest.CommitKVStore(t)
-			defer cleanup()
-
-			db := store.CacheWrap()
-
-			for i, u := range tc.updates {
-				if err := tc.idx.Update(db, u.prev, u.next); !u.wantErr.Is(err) {
-					t.Fatalf("%d update: want %q error, got %q", i, u.wantErr, err)
-				}
-			}
-
-			for i, k := range tc.keys {
-				keys, err := iteratorKeys(tc.idx.Keys(db, k.value))
-				if err != nil {
-					t.Fatalf("%d iterator keys failed: %s", i, err)
-				}
-
-				var want [][]byte
-				for _, k := range k.wantKeys {
-					want = append(want, []byte(k))
-				}
-				if !reflect.DeepEqual(keys, want) {
-					t.Logf("want keys: %q", want)
-					t.Logf(" got keys: %q", keys)
-					t.Errorf("%d keys call returned unexpected keys for value %q", i, k.value)
-				}
-			}
-
-			// Write so that the data is persisted in the database.
-			// This is a mandatory step, because in memory
-			// implementation is more permissive.
-			if err := db.Write(); err != nil {
-				t.Fatalf("cache wrap write: %s", err)
-			}
-		})
-	}
-}
-
-func iteratorKeys(it weave.Iterator) ([][]byte, error) {
-	defer it.Release()
-
-	var res [][]byte
-	for {
-		switch key, _, err := it.Next(); {
-		case err == nil:
-			res = append(res, key)
-		case errors.ErrIteratorDone.Is(err):
-			return res, nil
-		default:
-			return res, err
-		}
-	}
-}
-
-func TestParseIndexQueryRange(t *testing.T) {
-	hexit := func(s string) string {
-		return hex.EncodeToString([]byte(s))
-	}
-
-	cases := map[string]struct {
-		Raw    string
-		Start  string
-		Offset string
-		End    string
-		Err    *errors.Error
-	}{
-		"nil": {
-			Raw:    "",
-			Start:  "",
-			Offset: "",
-			End:    "",
-		},
-		"empty": {
-			Raw:    "",
-			Start:  "",
-			Offset: "",
-			End:    "",
-		},
-		"only start": {
-			Raw:    hexit("4d6f2031332e204a616e2"),
-			Start:  hexit("4d6f2031332e204a616e2"),
-			Offset: "",
-			End:    "",
-		},
-		"only start with separator": {
-			Raw:    hexit("4d6f2031332e204a616e2") + ":",
-			Start:  hexit("4d6f2031332e204a616e2"),
-			Offset: "",
-			End:    "",
-		},
-		"only end": {
-			Raw:    "::" + hexit("4d6f2031332e204a616e2"),
-			Start:  "",
-			Offset: "",
-			End:    hexit("4d6f2031332e204a616e2"),
-		},
-		"only offset": {
-			Raw:    ":" + hexit("4d6f2031332e204a616e2"),
-			Start:  "",
-			Offset: hexit("4d6f2031332e204a616e2"),
-			End:    "",
-		},
-		"only offset with two separators": {
-			Raw:    ":" + hexit("4d6f2031332e204a616e2") + ":",
-			Start:  "",
-			Offset: hexit("4d6f2031332e204a616e2"),
-			End:    "",
-		},
-		"start and offset": {
-			Raw:    hexit("4d6f2031332") + ":" + hexit("e204a616e2"),
-			Start:  hexit("4d6f2031332"),
-			Offset: hexit("e204a616e2"),
-			End:    "",
-		},
-		"start and end": {
-			Raw:    hexit("4d6f2031332") + "::" + hexit("e204a616e2"),
-			Start:  hexit("4d6f2031332"),
-			Offset: "",
-			End:    hexit("e204a616e2"),
-		},
-		"start offset and end": {
-			Raw:    hexit("4d6f2") + ":" + hexit("031332") + ":" + hexit("e204a616e2"),
-			Start:  hexit("4d6f2"),
-			Offset: hexit("031332"),
-			End:    hexit("e204a616e2"),
-		},
-	}
-
-	for testName, tc := range cases {
-		t.Run(testName, func(t *testing.T) {
-			start, offset, end, err := parseIndexQueryRange([]byte(tc.Raw))
-			if hex.EncodeToString(start) != tc.Start {
-				t.Errorf("unexpected start: %q", start)
-			}
-			if hex.EncodeToString(end) != tc.End {
-				t.Errorf("unexpected end: %q", end)
-			}
-			if hex.EncodeToString(offset) != tc.Offset {
-				t.Errorf("unexpected offset: %q", end)
-			}
-			if !tc.Err.Is(err) {
-				t.Errorf("unexpected error: %+v", err)
-			}
-		})
-	}
-}
-
-func TestNativeIndexRangeQuery(t *testing.T) {
-	b := NewModelBucket("mycounters", &Counter{},
-		WithNativeIndex("tix", func(o Object) ([][]byte, error) {
-			c := o.Value().(*Counter).Count
-			return [][]byte{[]byte(fmt.Sprint(c))}, nil
-		}),
-	)
-	db := store.MemStore()
-
-	for i := 1; i < 90; i++ {
-		count := int64(i % 20)
-		if _, err := b.Put(db, nil, &Counter{Count: count}); err != nil {
-			t.Fatalf("cannot insert counter: %s", err)
-		}
-	}
-
-	insertNoiseData(t, db)
-
-	defer withQueryRangeLimit(3)()
-
-	hexSeq := func(id uint64) string {
-		return hex.EncodeToString(weavetest.SequenceID(id))
-	}
-	hexInt := func(i int) string {
-		return hex.EncodeToString([]byte(fmt.Sprint(i)))
-	}
-
-	cases := map[string]struct {
-		Data    string
-		WantIDs []int64
-		Err     *errors.Error
-	}{
-		"empty query data": {
-			Data:    "",
-			WantIDs: []int64{20, 40, 60}, // First 3 that indexed value is 0
-		},
-		"start is inclusive": {
-			Data:    hexInt(3),
-			WantIDs: []int64{3, 23, 43},
-		},
-		"query start from 3rd id and use entity offset": {
-			Data:    hexInt(3) + ":" + hexSeq(43) + ":",
-			WantIDs: []int64{43, 63, 83},
-		},
-		"query start from 3rd id and use entity offset that exeeds start value index": {
-			Data: hexInt(3) + ":" + hexSeq(83) + ":",
-			WantIDs: []int64{
-				// 83 is matched for value 3 and provided offset
-				83,
-				// 4 and 24 are matching because all references
-				// for value 3 were returned and 4 is the next
-				// matching value.
-				4, 24,
-			},
-		},
-		"use entity offset that exeeds start value index with an end to limit to only single index value results": {
-			Data:    hexInt(3) + ":" + hexSeq(83) + ":" + hexInt(4),
-			WantIDs: []int64{83},
-		},
-		"end limit is exclusive": {
-			Data:    hexInt(5) + "::" + hexInt(5),
-			WantIDs: nil,
-		},
-		"end limit is exclusive even if offset is provided": {
-			Data:    hexInt(5) + ":" + hexSeq(20) + ":" + hexInt(5),
-			WantIDs: nil,
-		},
-		"start outside of indexed values": {
-			Data:    hexInt(100000),
-			WantIDs: nil,
-		},
-		"start after end": {
-			Data:    hexInt(99) + "::" + hexInt(1),
-			WantIDs: nil,
-		},
-		"non hex encoded data": {
-			Data: "qwerty",
-			Err:  errors.ErrInput,
-		},
-	}
-
-	for testName, tc := range cases {
-		t.Run(testName, func(t *testing.T) {
-			idx, err := b.Index("tix")
-			if err != nil {
-				t.Fatalf("index: %+v", err)
-			}
-			result, err := idx.Query(db, weave.RangeQueryMod, []byte(tc.Data))
-			if !tc.Err.Is(err) {
-				t.Fatalf("unexpected error: %+v", err)
-			}
-			assertModelIDs(t, "mycounters:", tc.WantIDs, result)
-		})
-	}
-}
-
-func TestCompactIndexRangeQuery(t *testing.T) {
-	b := NewModelBucket("mycounters", &Counter{},
-		WithIndex("tix", func(o Object) ([][]byte, error) {
-			c := o.Value().(*Counter).Count
-			return [][]byte{[]byte(fmt.Sprint(c))}, nil
-		}, false),
-	)
-	db := store.MemStore()
-
-	for i := 1; i < 90; i++ {
-		count := int64(i % 20)
-		if _, err := b.Put(db, nil, &Counter{Count: count}); err != nil {
-			t.Fatalf("cannot insert counter: %s", err)
-		}
-	}
-
-	insertNoiseData(t, db)
-
-	defer withQueryRangeLimit(3)()
-
-	hexSeq := func(id uint64) string {
-		return hex.EncodeToString(weavetest.SequenceID(id))
-	}
-	hexInt := func(i int) string {
-		return hex.EncodeToString([]byte(fmt.Sprint(i)))
-	}
-
-	cases := map[string]struct {
-		Data    string
-		WantIDs []int64
-		Err     *errors.Error
-	}{
-		"empty query data": {
-			Data:    "",
-			WantIDs: []int64{20, 40, 60}, // First 3 that indexed value is 0
-		},
-		"start is inclusive": {
-			Data:    hexInt(3),
-			WantIDs: []int64{3, 23, 43},
-		},
-		"query start from 3rd id and use entity offset": {
-			Data:    hexInt(3) + ":" + hexSeq(43) + ":",
-			WantIDs: []int64{43, 63, 83},
-		},
-		// This is passing for the native index but it cannot be done
-		// in the current compact index implementation.
-		// "query start from 3rd id and use entity offset that exeeds start value index": {
-		// 	Data: hexInt(3) + ":" + hexSeq(83) + ":",
-		// 	WantIDs: []int64{
-		// 		// 83 is matched for value 3 and provided offset
-		// 		83,
-		// 		// 4 and 24 are matching because all references
-		// 		// for value 3 were returned and 4 is the next
-		// 		// matching value.
-		// 		4, 24,
-		// 	},
-		// },
-		"use entity offset that exeeds start value index with an end to limit to only single index value results": {
-			Data:    hexInt(3) + ":" + hexSeq(83) + ":" + hexInt(4),
-			WantIDs: []int64{83},
-		},
-		"end limit is exclusive": {
-			Data:    hexInt(5) + "::" + hexInt(5),
-			WantIDs: nil,
-		},
-		"end limit is exclusive even if offset is provided": {
-			Data:    hexInt(5) + ":" + hexSeq(20) + ":" + hexInt(5),
-			WantIDs: nil,
-		},
-		"start outside of indexed values": {
-			Data:    hexInt(100000),
-			WantIDs: nil,
-		},
-		"start after end": {
-			Data:    hexInt(99) + "::" + hexInt(1),
-			WantIDs: nil,
-		},
-		"non hex encoded data": {
-			Data: "qwerty",
-			Err:  errors.ErrInput,
-		},
-	}
-
-	for testName, tc := range cases {
-		t.Run(testName, func(t *testing.T) {
-			idx, err := b.Index("tix")
-			if err != nil {
-				t.Fatalf("index: %+v", err)
-			}
-			result, err := idx.Query(db, weave.RangeQueryMod, []byte(tc.Data))
-			if !tc.Err.Is(err) {
-				t.Fatalf("unexpected error: %+v", err)
-			}
-			assertModelIDs(t, "mycounters:", tc.WantIDs, result)
-		})
-	}
-}
-
-func TestNativeIndexRangeQueryReturnValues(t *testing.T) {
-	db := store.MemStore()
-
-	b := NewModelBucket("mycounters", &Counter{},
-		WithNativeIndex("fixed", func(Object) ([][]byte, error) {
-			return [][]byte{[]byte("foo")}, nil
-		}),
-	)
-
-	for i := 0; i < 10; i++ {
-		if _, err := b.Put(db, nil, &Counter{Count: int64(i)}); err != nil {
-			t.Fatalf("cannot insert counter: %s", err)
-		}
-	}
-
-	idx, err := b.Index("fixed")
-	if err != nil {
-		t.Fatalf("index: %+v", err)
-	}
-	result, err := idx.Query(db, weave.RangeQueryMod, nil)
-	if err != nil {
-		t.Fatalf("unexpected error: %+v", err)
-	}
-
-	for i, kv := range result {
-		var c Counter
-		if err := c.Unmarshal(kv.Value); err != nil {
-			t.Fatalf("cannot unmarshal %d: %s", i, err)
-		}
-		if c.Count != int64(i) {
-			t.Errorf("expected %d, got %d (%q)", i, c.Count, kv.Key)
-		}
-	}
-}
-
-func assertModelIDs(t testing.TB, keyPrefix string, wantIDs []int64, models []weave.Model) {
-	t.Helper()
-
-	var ids []int64
-	for _, m := range models {
-		if !bytes.HasPrefix(m.Key, []byte(keyPrefix)) {
-			t.Fatalf("key does not have %q prefix: %q", keyPrefix, m.Key)
-		}
-		key := m.Key[len(keyPrefix):]
-		ids = append(ids, decodeSequence(key))
-	}
-
-	if got, want := len(models), len(wantIDs); want != got {
-		t.Errorf("want %d IDs, got %d", want, got)
-	}
-
-	if !reflect.DeepEqual(ids, wantIDs) {
-		t.Logf("want ids: %d", wantIDs)
-		t.Fatalf("got unexpected models: %d", ids)
-	}
-}
-
-func insertNoiseData(t testing.TB, db weave.KVStore) {
-	t.Helper()
-
-	b1 := NewModelBucket("aaa", &Counter{},
-		WithNativeIndex("a1", func(o Object) ([][]byte, error) {
-			c := o.Value().(*Counter).Count
-			return [][]byte{[]byte(fmt.Sprint(c))}, nil
-		}),
-		WithIndex("a2", func(o Object) ([][]byte, error) {
-			c := o.Value().(*Counter).Count
-			return [][]byte{[]byte(fmt.Sprint(c))}, nil
-		}, false),
-	)
-	b2 := NewModelBucket("zzzzzzzzz", &Counter{},
-		WithNativeIndex("ZZZZZZ1", func(o Object) ([][]byte, error) {
-			c := o.Value().(*Counter).Count
-			return [][]byte{[]byte(fmt.Sprint(c))}, nil
-		}),
-		WithIndex("ZZZZZZZZ2", func(o Object) ([][]byte, error) {
-			c := o.Value().(*Counter).Count
-			return [][]byte{[]byte(fmt.Sprint(c))}, nil
-		}, false),
-	)
-
-	for i := 1; i < 90; i++ {
-		count := int64(i)
-		if _, err := b1.Put(db, nil, &Counter{Count: count}); err != nil {
-			t.Fatalf("cannot insert counter: %s", err)
-		}
-		if _, err := b2.Put(db, nil, &Counter{Count: count}); err != nil {
-			t.Fatalf("cannot insert counter: %s", err)
-		}
-	}
-
 }

@@ -21,6 +21,8 @@ to your project.
 
 Join the Weave [community channel](https://riot.im/app/#/room/#weave:matrix.org) :loudspeaker:
 
+**Note: Requires Go 1.11.4+**
+
 It is inspired by the routing and middleware model of many web
 application frameworks, and informed by years of wrestling with
 blockchain state machines. More directly, it is based on the
@@ -50,11 +52,11 @@ For more details on the design goals, see the
 
 ## Prerequisites
 
-* [Go](https://golang.org/doc/install)
+* [golang 1.11.4+](https://golang.org/doc/install)
 * [docker](https://docs.docker.com/install/)
-* [tendermint 0.31.12](https://github.com/tendermint/tendermint/tree/v0.31.12)
+* [tendermint 0.31.5](https://github.com/tendermint/tendermint/tree/v0.31.5)
   * [Installation](https://github.com/tendermint/tendermint/blob/master/docs/introduction/install.md)
-
+  
 ## Instructions
 
 First, make sure you have
@@ -125,9 +127,5 @@ that organization in August 2018 to be developed further
 for their BNS blockchain, as well as a companion to
 [iov-core](https://github.com/iov-one/iov-core)
 client libraries that deprecated `confio/weave-js`
-
-## Audit
-
-Check out our latest [audit report](https://github.com/iov-one/weave/tree/master/audit).
 
 Thanks to [newfinal100](https://github.com/newfinal100) for designing the weave logo.

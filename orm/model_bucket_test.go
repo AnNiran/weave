@@ -2,11 +2,9 @@ package orm
 
 import (
 	"bytes"
-	"reflect"
 	"strconv"
 	"testing"
 
-	"github.com/iov-one/weave"
 	"github.com/iov-one/weave/errors"
 	"github.com/iov-one/weave/store"
 	"github.com/iov-one/weave/weavetest"
@@ -88,20 +86,26 @@ func TestModelBucketPutSequence(t *testing.T) {
 
 func TestModelBucketByIndex(t *testing.T) {
 	cases := map[string]struct {
+		IndexName  string
 		QueryKey   string
 		DestFn     func() ModelSlicePtr
+		WantErr    *errors.Error
 		WantResPtr []*Counter
 		WantRes    []Counter
 		WantKeys   [][]byte
 	}{
 		"find none": {
+			IndexName:  "value",
 			QueryKey:   "124089710947120",
+			WantErr:    nil,
 			WantResPtr: nil,
 			WantRes:    nil,
 			WantKeys:   nil,
 		},
 		"find one": {
-			QueryKey: "1",
+			IndexName: "value",
+			QueryKey:  "1",
+			WantErr:   nil,
 			WantResPtr: []*Counter{
 				{Count: 1001},
 			},
@@ -113,7 +117,9 @@ func TestModelBucketByIndex(t *testing.T) {
 			},
 		},
 		"find two": {
-			QueryKey: "4",
+			IndexName: "value",
+			QueryKey:  "4",
+			WantErr:   nil,
 			WantResPtr: []*Counter{
 				{Count: 4001},
 				{Count: 4002},
@@ -127,28 +133,26 @@ func TestModelBucketByIndex(t *testing.T) {
 				weavetest.SequenceID(4),
 			},
 		},
+		"non existing index name": {
+			IndexName: "xyz",
+			WantErr:   ErrInvalidIndex,
+		},
 	}
 
 	for testName, tc := range cases {
 		t.Run(testName, func(t *testing.T) {
 			db := store.MemStore()
 
-			indexByBigValue := func(obj Object) ([][]byte, error) {
+			indexByBigValue := func(obj Object) ([]byte, error) {
 				c, ok := obj.Value().(*Counter)
 				if !ok {
 					return nil, errors.Wrapf(errors.ErrType, "%T", obj.Value())
 				}
 				// Index by the value, ignoring anything below 1k.
 				raw := strconv.FormatInt(c.Count/1000, 10)
-				return [][]byte{[]byte(raw)}, nil
+				return []byte(raw), nil
 			}
-
-			// Use both native and compact index to test both
-			// implementation integrations.
-			b := NewModelBucket("cnts", &Counter{},
-				WithNativeIndex("native", indexByBigValue),
-				WithIndex("compact", indexByBigValue, false),
-			)
+			b := NewModelBucket("cnts", &Counter{}, WithIndex("value", indexByBigValue, false))
 
 			if _, err := b.Put(db, nil, &Counter{Count: 1001}); err != nil {
 				t.Fatalf("cannot save counter instance: %s", err)
@@ -163,26 +167,21 @@ func TestModelBucketByIndex(t *testing.T) {
 				t.Fatalf("cannot save counter instance: %s", err)
 			}
 
-			indexes := []string{"native", "compact"}
-			for _, indexName := range indexes {
-				t.Run(indexName, func(t *testing.T) {
-					var dest []Counter
-					keys, err := b.ByIndex(db, indexName, []byte(tc.QueryKey), &dest)
-					if err != nil {
-						t.Fatalf("unexpected error: %s", err)
-					}
-					assert.Equal(t, tc.WantKeys, keys)
-					assert.Equal(t, tc.WantRes, dest)
-
-					var destPtr []*Counter
-					keys, err = b.ByIndex(db, indexName, []byte(tc.QueryKey), &destPtr)
-					if err != nil {
-						t.Fatalf("unexpected error: %s", err)
-					}
-					assert.Equal(t, tc.WantKeys, keys)
-					assert.Equal(t, tc.WantResPtr, destPtr)
-				})
+			var dest []Counter
+			keys, err := b.ByIndex(db, tc.IndexName, []byte(tc.QueryKey), &dest)
+			if !tc.WantErr.Is(err) {
+				t.Fatalf("unexpected error: %s", err)
 			}
+			assert.Equal(t, tc.WantKeys, keys)
+			assert.Equal(t, tc.WantRes, dest)
+
+			var destPtr []*Counter
+			keys, err = b.ByIndex(db, tc.IndexName, []byte(tc.QueryKey), &destPtr)
+			if !tc.WantErr.Is(err) {
+				t.Fatalf("unexpected error: %s", err)
+			}
+			assert.Equal(t, tc.WantKeys, keys)
+			assert.Equal(t, tc.WantResPtr, destPtr)
 		})
 	}
 }
@@ -253,97 +252,5 @@ func TestModelBucketHas(t *testing.T) {
 
 	if err := b.Has(db, []byte("does-not-exist")); !errors.ErrNotFound.Is(err) {
 		t.Fatalf("a non exists entity must return ErrNotFound: %s", err)
-	}
-}
-
-func TestIterAll(t *testing.T) {
-	type obj struct {
-		Key   string
-		Model Counter
-	}
-
-	cases := map[string]struct {
-		Objs         []obj
-		WantKeys     []string
-		WantCounters []Counter
-	}{
-		"empty": {
-			Objs:         nil,
-			WantKeys:     nil,
-			WantCounters: nil,
-		},
-		"single element": {
-			Objs: []obj{
-				{Key: "a", Model: Counter{Count: 1}},
-			},
-			WantKeys:     []string{"a"},
-			WantCounters: []Counter{{Count: 1}},
-		},
-		"multiple elements": {
-			Objs: []obj{
-				{Key: "a", Model: Counter{Count: 1}},
-				{Key: "c", Model: Counter{Count: 3}},
-				{Key: "b", Model: Counter{Count: 2}},
-			},
-			WantKeys:     []string{"a", "b", "c"},
-			WantCounters: []Counter{{Count: 1}, {Count: 2}, {Count: 3}},
-		},
-	}
-
-	for testName, tc := range cases {
-		t.Run(testName, func(t *testing.T) {
-			db := store.MemStore()
-
-			b := NewModelBucket("cnts", &Counter{})
-			for i, o := range tc.Objs {
-				if _, err := b.Put(db, []byte(o.Key), &o.Model); err != nil {
-					t.Fatalf("%d: cannot put %q token: %s", i, o.Key, err)
-				}
-			}
-
-			// Add some rubbish to the database, so that any
-			// unexected result can be detected.
-			mustSet := func(k, v []byte) {
-				if err := db.Set(k, v); err != nil {
-					t.Fatalf("cannot set %q: %s", string(k), err)
-				}
-			}
-			mustSet([]byte{0}, []byte("xyz"))
-			mustSet([]byte{255}, []byte("z"))
-			mustSet([]byte("mystuff:abc"), []byte("mystuff"))
-
-			keys, counters := consumeIterAll(t, db, IterAll("cnts"))
-			if !reflect.DeepEqual(keys, tc.WantKeys) {
-				t.Logf("want: %q", tc.WantKeys)
-				t.Logf(" got: %q", keys)
-				t.Error("unexpected iterator keys")
-			}
-			if !reflect.DeepEqual(counters, tc.WantCounters) {
-				t.Logf("want: %+v", tc.WantCounters)
-				t.Logf(" got: %+v", counters)
-				t.Error("unexpected iterator values")
-			}
-		})
-	}
-}
-
-func consumeIterAll(t testing.TB, db weave.ReadOnlyKVStore, it *ModelBucketIterator) ([]string, []Counter) {
-	t.Helper()
-
-	var (
-		counters []Counter
-		keys     []string
-	)
-	for {
-		var c Counter
-		switch key, err := it.Next(db, &c); {
-		case err == nil:
-			keys = append(keys, string(key))
-			counters = append(counters, c)
-		case errors.ErrIteratorDone.Is(err):
-			return keys, counters
-		default:
-			t.Fatalf("next: %s", err)
-		}
 	}
 }

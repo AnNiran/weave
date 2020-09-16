@@ -10,12 +10,7 @@ import (
 
 	"github.com/iov-one/weave"
 	bnsd "github.com/iov-one/weave/cmd/bnsd/app"
-	"github.com/iov-one/weave/cmd/bnsd/x/account"
-	"github.com/iov-one/weave/cmd/bnsd/x/preregistration"
-	"github.com/iov-one/weave/cmd/bnsd/x/qualityscore"
-	"github.com/iov-one/weave/cmd/bnsd/x/termdeposit"
 	"github.com/iov-one/weave/cmd/bnsd/x/username"
-	"github.com/iov-one/weave/datamigration"
 	"github.com/iov-one/weave/migration"
 	"github.com/iov-one/weave/x/cash"
 	"github.com/iov-one/weave/x/currency"
@@ -24,7 +19,6 @@ import (
 	"github.com/iov-one/weave/x/gov"
 	"github.com/iov-one/weave/x/msgfee"
 	"github.com/iov-one/weave/x/multisig"
-	"github.com/iov-one/weave/x/txfee"
 	"github.com/iov-one/weave/x/validators"
 )
 
@@ -90,6 +84,10 @@ transaction (ie signatures) are being dropped.
 		option.Option = &bnsd.ProposalOptions_CurrencyCreateMsg{
 			CurrencyCreateMsg: msg,
 		}
+	case *msgfee.SetMsgFeeMsg:
+		option.Option = &bnsd.ProposalOptions_MsgfeeSetMsgFeeMsg{
+			MsgfeeSetMsgFeeMsg: msg,
+		}
 	case *bnsd.ExecuteBatchMsg:
 		msgs, err := msg.MsgList()
 		if err != nil {
@@ -98,6 +96,10 @@ transaction (ie signatures) are being dropped.
 		var messages []bnsd.ExecuteProposalBatchMsg_Union
 		for _, m := range msgs {
 			switch m := m.(type) {
+			case *msgfee.SetMsgFeeMsg:
+				option.Option = &bnsd.ProposalOptions_MsgfeeSetMsgFeeMsg{
+					MsgfeeSetMsgFeeMsg: m,
+				}
 			case *cash.SendMsg:
 				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
 					Sum: &bnsd.ExecuteProposalBatchMsg_Union_SendMsg{
@@ -146,12 +148,6 @@ transaction (ie signatures) are being dropped.
 						UsernameChangeTokenTargetsMsg: m,
 					},
 				})
-			case *username.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_UsernameUpdateConfigurationMsg{
-						UsernameUpdateConfigurationMsg: m,
-					},
-				})
 			case *distribution.CreateMsg:
 				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
 					Sum: &bnsd.ExecuteProposalBatchMsg_Union_DistributionCreateMsg{
@@ -188,156 +184,6 @@ transaction (ie signatures) are being dropped.
 						GovCreateTextResolutionMsg: m,
 					},
 				})
-			case *msgfee.SetMsgFeeMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_MsgfeeSetMsgFeeMsg{
-						MsgfeeSetMsgFeeMsg: m,
-					},
-				})
-			case *datamigration.ExecuteMigrationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_DatamigrationExecuteMigrationMsg{
-						DatamigrationExecuteMigrationMsg: m,
-					},
-				})
-			case *account.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountUpdateConfigurationMsg{
-						AccountUpdateConfigurationMsg: m,
-					},
-				})
-			case *account.RegisterDomainMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountRegisterDomainMsg{
-						AccountRegisterDomainMsg: m,
-					},
-				})
-			case *account.ReplaceAccountMsgFeesMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountReplaceAccountMsgFeesMsg{
-						AccountReplaceAccountMsgFeesMsg: m,
-					},
-				})
-			case *account.TransferDomainMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountTransferDomainMsg{
-						AccountTransferDomainMsg: m,
-					},
-				})
-			case *account.RenewDomainMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountRenewDomainMsg{
-						AccountRenewDomainMsg: m,
-					},
-				})
-			case *account.DeleteDomainMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountDeleteDomainMsg{
-						AccountDeleteDomainMsg: m,
-					},
-				})
-			case *account.RegisterAccountMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountRegisterAccountMsg{
-						AccountRegisterAccountMsg: m,
-					},
-				})
-			case *account.TransferAccountMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountTransferAccountMsg{
-						AccountTransferAccountMsg: m,
-					},
-				})
-			case *account.ReplaceAccountTargetsMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountReplaceAccountTargetsMsg{
-						AccountReplaceAccountTargetsMsg: m,
-					},
-				})
-			case *account.DeleteAccountMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountDeleteAccountMsg{
-						AccountDeleteAccountMsg: m,
-					},
-				})
-			case *account.FlushDomainMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountFlushDomainMsg{
-						AccountFlushDomainMsg: m,
-					},
-				})
-			case *account.RenewAccountMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountRenewAccountMsg{
-						AccountRenewAccountMsg: m,
-					},
-				})
-			case *account.AddAccountCertificateMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountAddAccountCertificateMsg{
-						AccountAddAccountCertificateMsg: m,
-					},
-				})
-			case *account.DeleteAccountCertificateMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_AccountDeleteAccountCertificateMsg{
-						AccountDeleteAccountCertificateMsg: m,
-					},
-				})
-			case *cash.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_CashUpdateConfigurationMsg{
-						CashUpdateConfigurationMsg: m,
-					},
-				})
-			case *txfee.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_TxfeeUpdateConfigurationMsg{
-						TxfeeUpdateConfigurationMsg: m,
-					},
-				})
-			case *termdeposit.CreateDepositContractMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_TermdepositCreateDepositContractMsg{
-						TermdepositCreateDepositContractMsg: m,
-					},
-				})
-			case *termdeposit.DepositMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_TermdepositDepositMsg{
-						TermdepositDepositMsg: m,
-					},
-				})
-			case *termdeposit.ReleaseDepositMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_TermdepositReleaseDepositMsg{
-						TermdepositReleaseDepositMsg: m,
-					},
-				})
-			case *termdeposit.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_TermdepositUpdateConfigurationMsg{
-						TermdepositUpdateConfigurationMsg: m,
-					},
-				})
-			case *qualityscore.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_QualityscoreUpdateConfigurationMsg{
-						QualityscoreUpdateConfigurationMsg: m,
-					},
-				})
-			case *preregistration.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_PreregistrationUpdateConfigurationMsg{
-						PreregistrationUpdateConfigurationMsg: m,
-					},
-				})
-			case *msgfee.UpdateConfigurationMsg:
-				messages = append(messages, bnsd.ExecuteProposalBatchMsg_Union{
-					Sum: &bnsd.ExecuteProposalBatchMsg_Union_MsgfeeUpdateConfigurationMsg{
-						MsgfeeUpdateConfigurationMsg: m,
-					},
-				})
 			}
 		}
 		option.Option = &bnsd.ProposalOptions_ExecuteProposalBatchMsg{
@@ -356,10 +202,6 @@ transaction (ie signatures) are being dropped.
 	case *username.ChangeTokenTargetsMsg:
 		option.Option = &bnsd.ProposalOptions_UsernameChangeTokenTargetsMsg{
 			UsernameChangeTokenTargetsMsg: msg,
-		}
-	case *username.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_UsernameUpdateConfigurationMsg{
-			UsernameUpdateConfigurationMsg: msg,
 		}
 	case *distribution.CreateMsg:
 		option.Option = &bnsd.ProposalOptions_DistributionCreateMsg{
@@ -388,106 +230,6 @@ transaction (ie signatures) are being dropped.
 	case *gov.CreateTextResolutionMsg:
 		option.Option = &bnsd.ProposalOptions_GovCreateTextResolutionMsg{
 			GovCreateTextResolutionMsg: msg,
-		}
-	case *msgfee.SetMsgFeeMsg:
-		option.Option = &bnsd.ProposalOptions_MsgfeeSetMsgFeeMsg{
-			MsgfeeSetMsgFeeMsg: msg,
-		}
-	case *datamigration.ExecuteMigrationMsg:
-		option.Option = &bnsd.ProposalOptions_DatamigrationExecuteMigrationMsg{
-			DatamigrationExecuteMigrationMsg: msg,
-		}
-	case *account.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_AccountUpdateConfigurationMsg{
-			AccountUpdateConfigurationMsg: msg,
-		}
-	case *account.RegisterDomainMsg:
-		option.Option = &bnsd.ProposalOptions_AccountRegisterDomainMsg{
-			AccountRegisterDomainMsg: msg,
-		}
-	case *account.ReplaceAccountMsgFeesMsg:
-		option.Option = &bnsd.ProposalOptions_AccountReplaceAccountMsgFeesMsg{
-			AccountReplaceAccountMsgFeesMsg: msg,
-		}
-	case *account.TransferDomainMsg:
-		option.Option = &bnsd.ProposalOptions_AccountTransferDomainMsg{
-			AccountTransferDomainMsg: msg,
-		}
-	case *account.RenewDomainMsg:
-		option.Option = &bnsd.ProposalOptions_AccountRenewDomainMsg{
-			AccountRenewDomainMsg: msg,
-		}
-	case *account.DeleteDomainMsg:
-		option.Option = &bnsd.ProposalOptions_AccountDeleteDomainMsg{
-			AccountDeleteDomainMsg: msg,
-		}
-	case *account.RegisterAccountMsg:
-		option.Option = &bnsd.ProposalOptions_AccountRegisterAccountMsg{
-			AccountRegisterAccountMsg: msg,
-		}
-	case *account.TransferAccountMsg:
-		option.Option = &bnsd.ProposalOptions_AccountTransferAccountMsg{
-			AccountTransferAccountMsg: msg,
-		}
-	case *account.ReplaceAccountTargetsMsg:
-		option.Option = &bnsd.ProposalOptions_AccountReplaceAccountTargetsMsg{
-			AccountReplaceAccountTargetsMsg: msg,
-		}
-	case *account.DeleteAccountMsg:
-		option.Option = &bnsd.ProposalOptions_AccountDeleteAccountMsg{
-			AccountDeleteAccountMsg: msg,
-		}
-	case *account.FlushDomainMsg:
-		option.Option = &bnsd.ProposalOptions_AccountFlushDomainMsg{
-			AccountFlushDomainMsg: msg,
-		}
-	case *account.RenewAccountMsg:
-		option.Option = &bnsd.ProposalOptions_AccountRenewAccountMsg{
-			AccountRenewAccountMsg: msg,
-		}
-	case *account.AddAccountCertificateMsg:
-		option.Option = &bnsd.ProposalOptions_AccountAddAccountCertificateMsg{
-			AccountAddAccountCertificateMsg: msg,
-		}
-	case *account.DeleteAccountCertificateMsg:
-		option.Option = &bnsd.ProposalOptions_AccountDeleteAccountCertificateMsg{
-			AccountDeleteAccountCertificateMsg: msg,
-		}
-	case *cash.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_CashUpdateConfigurationMsg{
-			CashUpdateConfigurationMsg: msg,
-		}
-	case *txfee.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_TxfeeUpdateConfigurationMsg{
-			TxfeeUpdateConfigurationMsg: msg,
-		}
-	case *termdeposit.CreateDepositContractMsg:
-		option.Option = &bnsd.ProposalOptions_TermdepositCreateDepositContractMsg{
-			TermdepositCreateDepositContractMsg: msg,
-		}
-	case *termdeposit.DepositMsg:
-		option.Option = &bnsd.ProposalOptions_TermdepositDepositMsg{
-			TermdepositDepositMsg: msg,
-		}
-	case *termdeposit.ReleaseDepositMsg:
-		option.Option = &bnsd.ProposalOptions_TermdepositReleaseDepositMsg{
-			TermdepositReleaseDepositMsg: msg,
-		}
-	case *termdeposit.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_TermdepositUpdateConfigurationMsg{
-			TermdepositUpdateConfigurationMsg: msg,
-		}
-	case *qualityscore.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_QualityscoreUpdateConfigurationMsg{
-			QualityscoreUpdateConfigurationMsg: msg,
-		}
-	case *preregistration.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_PreregistrationUpdateConfigurationMsg{
-			PreregistrationUpdateConfigurationMsg: msg,
-		}
-	case *msgfee.UpdateConfigurationMsg:
-		option.Option = &bnsd.ProposalOptions_MsgfeeUpdateConfigurationMsg{
-			MsgfeeUpdateConfigurationMsg: msg,
 		}
 	}
 
@@ -740,9 +482,9 @@ Creates a new version for an existing election rule. The new version is used for
 	}
 
 	var quorum *gov.Fraction
-	if frac := quorumFl.Fraction(); frac.Numerator != 0 {
+	if frac := quorumFl.Fraction(); frac != nil {
 		// If fraction value was provided, set it.
-		quorum = &gov.Fraction{Numerator: frac.Numerator, Denominator: frac.Denominator}
+		quorum = frac
 	}
 
 	govTx := &bnsd.Tx{

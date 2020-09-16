@@ -12,16 +12,10 @@ import (
 
 	"github.com/iov-one/weave"
 	"github.com/iov-one/weave/app"
-	"github.com/iov-one/weave/cmd/bnsd/x/account"
-	"github.com/iov-one/weave/cmd/bnsd/x/preregistration"
-	"github.com/iov-one/weave/cmd/bnsd/x/qualityscore"
-	"github.com/iov-one/weave/cmd/bnsd/x/termdeposit"
 	"github.com/iov-one/weave/cmd/bnsd/x/username"
 	"github.com/iov-one/weave/coin"
 	"github.com/iov-one/weave/commands/server"
-	"github.com/iov-one/weave/datamigration"
 	"github.com/iov-one/weave/errors"
-	"github.com/iov-one/weave/gconf"
 	"github.com/iov-one/weave/migration"
 	"github.com/iov-one/weave/orm"
 	"github.com/iov-one/weave/store/iavl"
@@ -37,7 +31,6 @@ import (
 	"github.com/iov-one/weave/x/msgfee"
 	"github.com/iov-one/weave/x/multisig"
 	"github.com/iov-one/weave/x/sigs"
-	"github.com/iov-one/weave/x/txfee"
 	"github.com/iov-one/weave/x/utils"
 	"github.com/iov-one/weave/x/validators"
 )
@@ -51,6 +44,10 @@ func Authenticator() x.Authenticator {
 // Chain returns a chain of decorators, to handle authentication,
 // fees, logging, and recovery
 func Chain(authFn x.Authenticator, minFee coin.Coin) app.Decorators {
+	// ctrl can be initialized with any implementation, but must be used
+	// consistently everywhere.
+	var ctrl cash.Controller = cash.NewController(cash.NewBucket())
+
 	return app.ChainDecorators(
 		utils.NewLogging(),
 		utils.NewRecovery(),
@@ -63,12 +60,6 @@ func Chain(authFn x.Authenticator, minFee coin.Coin) app.Decorators {
 		cash.NewDynamicFeeDecorator(authFn, ctrl),
 		msgfee.NewAntispamFeeDecorator(minFee),
 		msgfee.NewFeeDecorator(),
-		preregistration.NewZeroFeeDecorator(),
-		account.NewAccountMsgFeeDecorator(),
-		// txfee decorator must be before batch to count the main
-		// transaction once, not for every message present in the
-		// batch.
-		txfee.NewDecorator(),
 		batch.NewDecorator(),
 		utils.NewActionTagger(),
 	)
@@ -98,12 +89,6 @@ func Router(authFn x.Authenticator, issuer weave.Address) *app.Router {
 	gov.RegisterRoutes(r, authFn, decodeProposalOptions, proposalOptionsExecutor(ctrl), scheduler)
 	username.RegisterRoutes(r, authFn)
 	msgfee.RegisterRoutes(r, authFn)
-	datamigration.RegisterRoutes(r, authFn)
-	account.RegisterRoutes(r, authFn)
-	txfee.RegisterRoutes(r, authFn)
-	preregistration.RegisterRoutes(r, authFn)
-	termdeposit.RegisterRoutes(r, authFn, ctrl)
-	qualityscore.RegisterRoutes(r, authFn)
 	return r
 }
 
@@ -127,12 +112,6 @@ func QueryRouter(minFee coin.Coin) weave.QueryRouter {
 		gov.RegisterQuery,
 		username.RegisterQuery,
 		cron.RegisterQuery,
-		datamigration.RegisterQuery,
-		account.RegisterQuery,
-		termdeposit.RegisterQuery,
-		gconf.RegisterQuery,
-		preregistration.RegisterQuery,
-		msgfee.RegisterQuery,
 	)
 	return r
 }

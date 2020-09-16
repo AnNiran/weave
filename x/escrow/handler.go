@@ -66,6 +66,12 @@ func (h CreateEscrowHandler) Deliver(ctx weave.Context, db weave.KVStore, tx wea
 		return nil, err
 	}
 
+	// apply a default for source
+	source := msg.Source
+	if source == nil {
+		source = x.MainSigner(ctx, h.auth).Address()
+	}
+
 	key, err := escrowSeq.NextVal(db)
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot acquire key")
@@ -74,7 +80,7 @@ func (h CreateEscrowHandler) Deliver(ctx weave.Context, db weave.KVStore, tx wea
 	// create an escrow object
 	escrow := &Escrow{
 		Metadata:    &weave.Metadata{},
-		Source:      msg.Source,
+		Source:      source,
 		Arbiter:     msg.Arbiter,
 		Destination: msg.Destination,
 		Timeout:     msg.Timeout,
@@ -98,12 +104,18 @@ func (h CreateEscrowHandler) validate(ctx weave.Context, db weave.KVStore, tx we
 	if err := weave.LoadMsg(tx, &msg); err != nil {
 		return nil, errors.Wrap(err, "load msg")
 	}
+
 	if weave.IsExpired(ctx, msg.Timeout) {
 		return nil, errors.Wrap(errors.ErrInput, "timeout in the past")
 	}
-	if !h.auth.HasAddress(ctx, msg.Source) {
-		return nil, errors.ErrUnauthorized
+
+	// Source must authorize this (if not set, defaults to MainSigner).
+	if msg.Source != nil {
+		if !h.auth.HasAddress(ctx, msg.Source) {
+			return nil, errors.ErrUnauthorized
+		}
 	}
+
 	return &msg, nil
 }
 

@@ -2,12 +2,7 @@ syntax = "proto3";
 
 package bnsd;
 
-import "cmd/bnsd/x/account/codec.proto";
-import "cmd/bnsd/x/preregistration/codec.proto";
-import "cmd/bnsd/x/qualityscore/codec.proto";
-import "cmd/bnsd/x/termdeposit/codec.proto";
 import "cmd/bnsd/x/username/codec.proto";
-import "datamigration/codec.proto";
 import "gogoproto/gogo.proto";
 import "migration/codec.proto";
 import "x/aswap/codec.proto";
@@ -19,7 +14,6 @@ import "x/gov/codec.proto";
 import "x/msgfee/codec.proto";
 import "x/multisig/codec.proto";
 import "x/sigs/codec.proto";
-import "x/txfee/codec.proto";
 import "x/validators/codec.proto";
 
 // Tx contains the message.
@@ -72,31 +66,6 @@ message Tx {
     gov.UpdateElectionRuleMsg gov_update_election_rule_msg = 78;
     // 79 is reserved (see ProposalOptions: TextResolutionMsg)
     msgfee.SetMsgFeeMsg msgfee_set_msg_fee_msg = 80;
-    datamigration.ExecuteMigrationMsg datamigration_execute_migration_msg = 81;
-    account.UpdateConfigurationMsg account_update_configuration_msg = 82;
-    account.RegisterDomainMsg account_register_domain_msg = 83;
-    account.ReplaceAccountMsgFeesMsg account_replace_account_msg_fees_msg = 84;
-    account.TransferDomainMsg account_transfer_domain_msg = 85;
-    account.RenewDomainMsg account_renew_domain_msg = 86;
-    account.DeleteDomainMsg account_delete_domain_msg = 87;
-    account.RegisterAccountMsg account_register_account_msg = 88;
-    account.TransferAccountMsg account_transfer_account_msg = 89;
-    account.ReplaceAccountTargetsMsg account_replace_account_targets_msg = 90;
-    account.DeleteAccountMsg account_delete_account_msg = 91;
-    account.FlushDomainMsg account_flush_domain_msg = 92;
-    account.RenewAccountMsg account_renew_account_msg = 93;
-    account.AddAccountCertificateMsg account_add_account_certificate_msg = 94;
-    account.DeleteAccountCertificateMsg account_delete_account_certificate_msg = 95;
-    preregistration.RegisterMsg preregistration_register_msg = 96;
-    cash.UpdateConfigurationMsg cash_update_configuration_msg = 97;
-    txfee.UpdateConfigurationMsg txfee_update_configuration_msg = 98;
-    termdeposit.CreateDepositContractMsg termdeposit_create_deposit_contract_msg = 99;
-    termdeposit.DepositMsg termdeposit_deposit_msg = 100;
-    termdeposit.ReleaseDepositMsg termdeposit_release_deposit_msg = 101;
-    termdeposit.UpdateConfigurationMsg termdeposit_update_configuration_msg = 102;
-    qualityscore.UpdateConfigurationMsg qualityscore_update_configuration_msg = 103;
-    preregistration.UpdateConfigurationMsg preregistration_update_configuration_msg = 104;
-    msgfee.UpdateConfigurationMsg msgfee_update_configuration_msg = 105;
   }
 }
 
@@ -124,31 +93,6 @@ message ExecuteBatchMsg {
       // upgrade schema is important enough, it should be a solo action
       // aswap and gov don't make much sense as part of a batch (no vote buying)
       msgfee.SetMsgFeeMsg msgfee_set_msg_fee_msg = 80;
-      datamigration.ExecuteMigrationMsg datamigration_execute_migration_msg = 81;
-      account.UpdateConfigurationMsg account_update_configuration_msg = 82;
-      account.RegisterDomainMsg account_register_domain_msg = 83;
-      account.ReplaceAccountMsgFeesMsg account_replace_account_msg_fees_msg = 84;
-      account.TransferDomainMsg account_transfer_domain_msg = 85;
-      account.RenewDomainMsg account_renew_domain_msg = 86;
-      account.DeleteDomainMsg account_delete_domain_msg = 87;
-      account.RegisterAccountMsg account_register_account_msg = 88;
-      account.TransferAccountMsg account_transfer_account_msg = 89;
-      account.ReplaceAccountTargetsMsg account_replace_account_targets_msg = 90;
-      account.DeleteAccountMsg account_delete_account_msg = 91;
-      account.FlushDomainMsg account_flush_domain_msg = 92;
-      account.RenewAccountMsg account_renew_account_msg = 93;
-      account.AddAccountCertificateMsg account_add_account_certificate_msg = 94;
-      account.DeleteAccountCertificateMsg account_delete_account_certificate_msg = 95;
-      // 96 is used by preregistration
-      cash.UpdateConfigurationMsg cash_update_configuration_msg = 97;
-      txfee.UpdateConfigurationMsg txfee_update_configuration_msg = 98;
-      termdeposit.CreateDepositContractMsg termdeposit_create_deposit_contract_msg = 99;
-      termdeposit.DepositMsg termdeposit_deposit_msg = 100;
-      termdeposit.ReleaseDepositMsg termdeposit_release_deposit_msg = 101;
-      termdeposit.UpdateConfigurationMsg termdeposit_update_configuration_msg = 102;
-      qualityscore.UpdateConfigurationMsg qualityscore_update_configuration_msg = 103;
-      preregistration.UpdateConfigurationMsg preregistration_update_configuration_msg = 104;
-      msgfee.UpdateConfigurationMsg msgfee_update_configuration_msg = 105;
     }
   }
   repeated Union messages = 1 [(gogoproto.nullable) = false];
@@ -177,30 +121,6 @@ message ProposalOptions {
     gov.UpdateElectionRuleMsg gov_update_election_rule_msg = 78;
     gov.CreateTextResolutionMsg gov_create_text_resolution_msg = 79;
     msgfee.SetMsgFeeMsg msgfee_set_msg_fee_msg = 80;
-    datamigration.ExecuteMigrationMsg datamigration_execute_migration_msg = 81;
-    account.UpdateConfigurationMsg account_update_configuration_msg = 82;
-    account.RegisterDomainMsg account_register_domain_msg = 83;
-    account.ReplaceAccountMsgFeesMsg account_replace_account_msg_fees_msg = 84;
-    account.TransferDomainMsg account_transfer_domain_msg = 85;
-    account.RenewDomainMsg account_renew_domain_msg = 86;
-    account.DeleteDomainMsg account_delete_domain_msg = 87;
-    account.RegisterAccountMsg account_register_account_msg = 88;
-    account.TransferAccountMsg account_transfer_account_msg = 89;
-    account.ReplaceAccountTargetsMsg account_replace_account_targets_msg = 90;
-    account.DeleteAccountMsg account_delete_account_msg = 91;
-    account.FlushDomainMsg account_flush_domain_msg = 92;
-    account.RenewAccountMsg account_renew_account_msg = 93;
-    account.AddAccountCertificateMsg account_add_account_certificate_msg = 94;
-    account.DeleteAccountCertificateMsg account_delete_account_certificate_msg = 95;
-    cash.UpdateConfigurationMsg cash_update_configuration_msg = 97;
-    txfee.UpdateConfigurationMsg txfee_update_configuration_msg = 98;
-    termdeposit.CreateDepositContractMsg termdeposit_create_deposit_contract_msg = 99;
-    termdeposit.DepositMsg termdeposit_deposit_msg = 100;
-    termdeposit.ReleaseDepositMsg termdeposit_release_deposit_msg = 101;
-    termdeposit.UpdateConfigurationMsg termdeposit_update_configuration_msg = 102;
-    qualityscore.UpdateConfigurationMsg qualityscore_update_configuration_msg = 103;
-    preregistration.UpdateConfigurationMsg preregistration_update_configuration_msg = 104;
-    msgfee.UpdateConfigurationMsg msgfee_update_configuration_msg = 105;
   }
 }
 
@@ -225,30 +145,6 @@ message ExecuteProposalBatchMsg {
       gov.UpdateElectionRuleMsg gov_update_election_rule_msg = 78;
       gov.CreateTextResolutionMsg gov_create_text_resolution_msg = 79;
       msgfee.SetMsgFeeMsg msgfee_set_msg_fee_msg = 80;
-      datamigration.ExecuteMigrationMsg datamigration_execute_migration_msg = 81;
-      account.UpdateConfigurationMsg account_update_configuration_msg = 82;
-      account.RegisterDomainMsg account_register_domain_msg = 83;
-      account.ReplaceAccountMsgFeesMsg account_replace_account_msg_fees_msg = 84;
-      account.TransferDomainMsg account_transfer_domain_msg = 85;
-      account.RenewDomainMsg account_renew_domain_msg = 86;
-      account.DeleteDomainMsg account_delete_domain_msg = 87;
-      account.RegisterAccountMsg account_register_account_msg = 88;
-      account.TransferAccountMsg account_transfer_account_msg = 89;
-      account.ReplaceAccountTargetsMsg account_replace_account_targets_msg = 90;
-      account.DeleteAccountMsg account_delete_account_msg = 91;
-      account.FlushDomainMsg account_flush_domain_msg = 92;
-      account.RenewAccountMsg account_renew_account_msg = 93;
-      account.AddAccountCertificateMsg account_add_account_certificate_msg = 94;
-      account.DeleteAccountCertificateMsg account_delete_account_certificate_msg = 95;
-      cash.UpdateConfigurationMsg cash_update_configuration_msg = 97;
-      txfee.UpdateConfigurationMsg txfee_update_configuration_msg = 98;
-      termdeposit.CreateDepositContractMsg termdeposit_create_deposit_contract_msg = 99;
-      termdeposit.DepositMsg termdeposit_deposit_msg = 100;
-      termdeposit.ReleaseDepositMsg termdeposit_release_deposit_msg = 101;
-      termdeposit.UpdateConfigurationMsg termdeposit_update_configuration_msg = 102;
-      qualityscore.UpdateConfigurationMsg qualityscore_update_configuration_msg = 103;
-      preregistration.UpdateConfigurationMsg preregistration_update_configuration_msg = 104;
-      msgfee.UpdateConfigurationMsg msgfee_update_configuration_msg = 105;
     }
   }
   repeated Union messages = 1 [(gogoproto.nullable) = false];
